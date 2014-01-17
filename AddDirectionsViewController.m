@@ -35,8 +35,10 @@
 //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Please enter all fields." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
 //        [alertView show];
     }else{
-    
-        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode];
+        self.direction = [Direction object];
+        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode direction:self.direction];
+        
+//        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode];
     
 //        13406 Philadelphia St, Whittier, CA 90601
     

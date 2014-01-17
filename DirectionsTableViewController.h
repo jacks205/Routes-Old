@@ -10,17 +10,21 @@
 #import <MapKit/MapKit.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Parse/Parse.h>
+
 #import "Direction.h"
 #import "AddDirectionsViewController.h"
 #import "DirectionsCustomTableViewCell.h"
 #import "SVProgressHUD.h"
 
-@interface DirectionsTableViewController : UITableViewController <SecondDelegate, CLLocationManagerDelegate>{
+@interface DirectionsTableViewController : UITableViewController <SecondDelegate, CLLocationManagerDelegate,UIAlertViewDelegate>{
     CLLocationManager *locationManager;
 }
 
 @property(nonatomic,strong) NSMutableArray *directions;
 @property(nonatomic)CLLocationCoordinate2D currentCoords;
+@property(nonatomic, strong) Direction *selectedDirection;
+
 - (IBAction)addDirections:(id)sender;
 @property(nonatomic,strong)UIRefreshControl *refreshControl;
 

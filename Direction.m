@@ -7,8 +7,28 @@
 //
 
 #import "Direction.h"
+#import <Parse/PFObject+Subclass.h>
 
 @implementation Direction
+
+@dynamic address;
+@dynamic city;
+@dynamic zipcode;
+@dynamic state;
+
+@dynamic distance;
+@dynamic baseTime;
+@dynamic trafficTime;
+@dynamic travelTime;
+
+@dynamic latitude;
+@dynamic longitude;
+
++(NSString *)parseClassName{
+    return @"Direction";
+}
+
+
 
 -(id)initWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode{
     self = [super init];
@@ -22,8 +42,12 @@
     return self;
 }
 
-+ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode{
-    return [[self alloc] initWithAddress:address city:city state:state zipcode:zipcode];
++ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction{
+    direction.address = address;
+    direction.city = city;
+    direction.state = state;
+    direction.zipcode = zipcode;
+    return direction;
     
 }
 

@@ -9,28 +9,29 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CLGeocoder.h>
 #import <CoreLocation/CLPlacemark.h>
+#import <Parse/Parse.h>
 #import "Constants.h"
 
 
-@interface Direction : NSObject
+@interface Direction : PFObject<PFSubclassing>
 
++(NSString *)parseClassName;
 
-@property(nonatomic, strong) NSString *address;
-@property(nonatomic, strong) NSString *city;
-@property(nonatomic, strong) NSString *state;
-@property(nonatomic, strong) NSString *zipcode;
+@property(retain) NSString *address;
+@property(retain) NSString *city;
+@property(retain) NSString *state;
+@property(retain) NSString *zipcode;
 
-@property(nonatomic) NSNumber *distance;
-@property(nonatomic) NSNumber *baseTime;
-@property(nonatomic) NSNumber *trafficTime;
-@property(nonatomic) NSNumber *travelTime;
+@property(retain) NSNumber *distance;
+@property(retain) NSNumber *baseTime;
+@property(retain) NSNumber *trafficTime;
+@property(retain) NSNumber *travelTime;
 
-@property(nonatomic, strong)NSString *latitude;
-@property(nonatomic, strong)NSString *longitude;
+@property(retain)NSString *latitude;
+@property(retain)NSString *longitude;
 
 -(id)initWithAddress:(NSString*)destAddress city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode;
 
-+ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*) zipcode;
-
++ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction;
 -(NSURL*)buildUrl: (CLLocationCoordinate2D) currentCoords;
 @end

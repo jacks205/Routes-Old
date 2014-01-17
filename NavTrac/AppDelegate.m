@@ -6,12 +6,24 @@
 //  Copyright (c) 2014 Mark Jackson. All rights reserved.
 //
 
+#import <Parse/Parse.h>
+#import "Constants.h"
+#import "Direction.h"
 #import "AppDelegate.h"
+
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+//    [Parse setApplicationId:P_APP_ID clientKey:P_CLIENT_ID];
+    [Direction registerSubclass];
+    [Parse setApplicationId:@"Vq2fNjeIH7rBk7ZHwkyD82bXqq96iWCSW8HM52sT"
+                  clientKey:@"gvtUQ5CDAbLqnsy1v2zPNhSnKMUV7JPzRTm7jxf4"];
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     return YES;
 }
 

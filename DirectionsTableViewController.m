@@ -18,6 +18,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //TODO: Create Login and Sign up controllers
+    
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        // do stuff with the user
+        NSLog(@"%@", currentUser);
+    } else {
+        // show the signup or login screen
+        NSLog(@"Not Current User");
+        [PFUser logInWithUsernameInBackground:@"ianjcksn" password:@"password"
+            block:^(PFUser *user, NSError *error) {
+                if (user) {
+                    // Do stuff after successful login.
+                    NSLog(@"Not Logged in");
+                } else {
+                    // The login failed. Check error to see why.
+                    PFUser *user = [PFUser user];
+                    user.username = @"ianjcksn";
+                    user.password = @"password";
+                    user.email = @"ianjcksn93@gmail.com";
+                    
+                    // other fields can be set just like with PFObject
+                    
+                    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (!error) {
+                            // Hooray! Let them use the app now.
+                            NSLog(@"Signed Up!!");
+                        } else {
+                            NSString *errorString = [error userInfo][@"error"];
+                            // Show the errorString somewhere and let the user try again.
+                            NSLog(@"%@", errorString);
+                        }
+                    }];
+                }
+            }];
+        
+    }
+    
+    //TODO: Create Login and Sign up controllers
+
     self.directions = [NSMutableArray array];
     
     locationManager = [[CLLocationManager alloc] init];
@@ -29,6 +70,8 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshDirections) forControlEvents:UIControlEventValueChanged];
+    
+    PFObject *object = [PFObject objectWithClassName:@"Direction"];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -78,14 +121,11 @@
     static NSString *CellIdentifier = @"DirectionsCustomCell";
     DirectionsCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    Direction* direction = [self.directions objectAtIndex:indexPath.row];
+    self.selectedDirection = [self.directions objectAtIndex:indexPath.row];
     
-    CLLocationDegrees latitude = [direction.latitude doubleValue];
-    CLLocationDegrees longitude = [direction.longitude doubleValue];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leaving App!" message:@"Do you want to start directions for this destination?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"Cancel", nil];
     
-    CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(latitude, longitude);
-    
-    [self launchMapApp:coordinates withName:direction.address];
+    [alertView show];
 }
 
 #pragma mark - Conversion Methods
@@ -132,6 +172,7 @@
     if ([self.directions count] != 0){
         for(Direction* direction in self.directions){
             NSURL *routeUrl = [direction buildUrl: self.currentCoords];
+            NSLog(@"%@", routeUrl);
             NSData *jsonData = [NSData dataWithContentsOfURL:routeUrl];
             
         //    TODO: Error checking in case JSON Data isn't recieved from API
@@ -163,6 +204,8 @@
 
 }
 
+#pragma mark - Launching Map App
+
 -(void)launchMapApp: (CLLocationCoordinate2D) coordinates withName:(NSString*) name{
     MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate: coordinates addressDictionary: nil];
     MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
@@ -174,10 +217,33 @@
     [MKMapItem openMapsWithItems: items launchOptions: options];
 }
 
+#pragma mark - Current Location Delegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *location = [locations lastObject];
     self.currentCoords = [location coordinate];
-    NSLog(@"%f", self.currentCoords.latitude);
+//    NSLog(@"%f", self.currentCoords.latitude);
 //    self.currentCoords = CLLocationCoordinate2DMake(33.876349, -117.797041);
+}
+
+
+#pragma mark - UIAlertView Method
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"Yes"])
+    {
+        CLLocationDegrees latitude = [self.selectedDirection.latitude doubleValue];
+        CLLocationDegrees longitude = [self.selectedDirection.longitude doubleValue];
+        
+        CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(latitude, longitude);
+        
+        [self launchMapApp:coordinates withName:self.selectedDirection.address];
+        NSLog(@"Launching Map app");
+    }
+    else if([title isEqualToString:@"Cancel"])
+    {
+        NSLog(@"Cancelling");
+    }
+
 }
 @end
