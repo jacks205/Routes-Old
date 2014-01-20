@@ -35,8 +35,10 @@
 //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Please enter all fields." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
 //        [alertView show];
     }else{
-        self.direction = [Direction object];
-        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode direction:self.direction];
+        
+        self.direction = [Direction objectWithClassName:[Direction parseClassName]];
+        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode direction:self.direction user: [PFUser currentUser]];
+        [self generateCoordinatesFromAddress];
         
 //        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode];
     
@@ -65,6 +67,11 @@
                 //                NSLog(@"%@, %@", self.latitude, self.longitude);
                 
             }
+            [self.direction saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if(error){
+                    [self.direction saveEventually];
+                }
+            }];
             [self cancelModal:YES sender:self];
         }
     }];
@@ -73,7 +80,6 @@
 
 - (IBAction)addDestination:(id)sender {
     [self processDirections];
-    [self generateCoordinatesFromAddress];
     
 }
 

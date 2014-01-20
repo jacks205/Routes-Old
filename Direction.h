@@ -30,8 +30,12 @@
 @property(retain)NSString *latitude;
 @property(retain)NSString *longitude;
 
+@property(retain)NSString *userId;
+@property(retain)NSString *username;
+
 -(id)initWithAddress:(NSString*)destAddress city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode;
 
-+ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction;
++ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction user:(PFUser *) user;
+
 -(NSURL*)buildUrl: (CLLocationCoordinate2D) currentCoords;
 @end

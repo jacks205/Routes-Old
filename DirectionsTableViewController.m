@@ -22,9 +22,11 @@
     //TODO: Create Login and Sign up controllers
     
     PFUser *currentUser = [PFUser currentUser];
+//    [PFUser logOut];
     if (currentUser) {
         // do stuff with the user
         NSLog(@"%@", currentUser);
+        [self sendRefreshQuery];
     } else {
         // show the signup or login screen
         NSLog(@"Not Current User");
@@ -32,14 +34,14 @@
             block:^(PFUser *user, NSError *error) {
                 if (user) {
                     // Do stuff after successful login.
-                    NSLog(@"Not Logged in");
+                    NSLog(@"Logged in");
                 } else {
                     // The login failed. Check error to see why.
                     PFUser *user = [PFUser user];
                     user.username = @"ianjcksn";
                     user.password = @"password";
                     user.email = @"ianjcksn93@gmail.com";
-                    
+                    NSLog(@"Logged in as %@", user);
                     // other fields can be set just like with PFObject
                     
                     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -52,14 +54,16 @@
                             NSLog(@"%@", errorString);
                         }
                     }];
+                    [self sendRefreshQuery];
                 }
             }];
         
     }
-    
-    //TODO: Create Login and Sign up controllers
-
     self.directions = [NSMutableArray array];
+    
+//    PFRelation *directionRelation = [currentUser objectForKey:@"Directions"];
+//    PFQuery *query = [directionRelation query];
+    
     
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -71,8 +75,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshDirections) forControlEvents:UIControlEventValueChanged];
     
-    PFObject *object = [PFObject objectWithClassName:@"Direction"];
-}
+//    PFObject *object = [PFObject objectWithClassName:@"Direction"];
+    }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -140,7 +144,11 @@
 
 -(NSString*)secondsToHoursAndMinutes: (NSNumber*)seconds{
     int intSeconds = [seconds intValue];
-    NSString *formattedString = [NSString stringWithFormat:@"%dh %dm",(intSeconds / 3600) , (intSeconds % 60)];
+    int hours = intSeconds / 3600;
+    int minutes = intSeconds % 3600 / 60;
+    NSString *formattedString = [NSString stringWithFormat:@"%dh %dm", hours, minutes];
+//    NSString *formattedString = [NSString stringWithFormat:@"%dh %dm",(intSeconds / 3600) , (intSeconds % 60)];
+//    NSLog(@"%@", formattedString);
     return formattedString;
 }
 
@@ -151,6 +159,7 @@
 {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [self.directions addObject:direction];
+    
     [self.tableView reloadData];
     [SVProgressHUD dismiss];
 }
@@ -167,12 +176,29 @@
     [self performSegueWithIdentifier:@"addDirections" sender:self];
 }
 
+#pragma mark - Parse
+-(void)sendRefreshQuery{
+    PFQuery *query = [PFQuery queryWithClassName:@"Directions"];
+    NSLog(@"%@", [[PFUser currentUser] objectId]);
+    [query whereKey:@"userId" equalTo:[[PFUser currentUser] objectId]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"%@", [error userInfo]);
+        }else{
+            self.directions = (NSMutableArray *)objects;
+            [self refreshDirections];
+//            NSLog(@"%@", self.directions);
+        }
+    }];
+
+}
+
 #pragma mark Refresh
 -(void)refreshDirections{
     if ([self.directions count] != 0){
         for(Direction* direction in self.directions){
             NSURL *routeUrl = [direction buildUrl: self.currentCoords];
-            NSLog(@"%@", routeUrl);
+//            NSLog(@"%@", routeUrl);
             NSData *jsonData = [NSData dataWithContentsOfURL:routeUrl];
             
         //    TODO: Error checking in case JSON Data isn't recieved from API
@@ -188,7 +214,7 @@
             
             NSDictionary *summaryDictionary = [NSDictionary dictionaryWithDictionary:[routeDictionary objectForKey:SUMMARY_KEY]];
             
-            NSLog(@"%@", summaryDictionary);
+//            NSLog(@"%@", summaryDictionary);
             
             direction.distance = [summaryDictionary objectForKey:DISTANCE_KEY];
             direction.baseTime = [summaryDictionary objectForKey:BASE_TIME_KEY];

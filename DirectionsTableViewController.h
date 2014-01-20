@@ -28,8 +28,10 @@
 - (IBAction)addDirections:(id)sender;
 @property(nonatomic,strong)UIRefreshControl *refreshControl;
 
+
 -(NSString*)secondsToHoursAndMinutes: (NSNumber*)seconds;
 -(NSString*)metersToMiles:(NSNumber*) meters;
-
+-(void)saveDirectionInBackground: (Direction *) direction;
+-(void)sendRefreshQuery;
 -(void)refreshDirections;
 @end

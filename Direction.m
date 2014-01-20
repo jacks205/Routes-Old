@@ -24,8 +24,11 @@
 @dynamic latitude;
 @dynamic longitude;
 
+@dynamic userId;
+@dynamic username;
+
 +(NSString *)parseClassName{
-    return @"Direction";
+    return @"Directions";
 }
 
 
@@ -42,11 +45,13 @@
     return self;
 }
 
-+ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction{
++ (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction user:(PFUser *)user{
     direction.address = address;
     direction.city = city;
     direction.state = state;
     direction.zipcode = zipcode;
+    direction.username = [user username];
+    direction.userId = [user objectId];
     return direction;
     
 }
