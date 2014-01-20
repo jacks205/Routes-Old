@@ -37,5 +37,6 @@
 
 + (id)directionWithAddress:(NSString*)address city:(NSString*)city state:(NSString*)state zipcode:(NSString*)zipcode direction:(Direction *) direction user:(PFUser *) user;
 
+// Build url each time to go with users current location
 -(NSURL*)buildUrl: (CLLocationCoordinate2D) currentCoords;
 @end

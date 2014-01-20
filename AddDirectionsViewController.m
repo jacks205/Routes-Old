@@ -26,33 +26,34 @@
 }
 
 -(void)processDirections{
+    // Start progress overlay
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    
+    // Get trimmed text values from form
     NSString* destAddress = [[self.address text]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString* destCity = [[self.city text]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString* destState = [[self.state text]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString* destZipcode = [[self.zipcode text]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    //Check if fields are empty
     if([destAddress length] == 0 || [destCity length] == 0  || [destState length] == 0 || [destZipcode length] == 0){
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Please enter all fields." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//        [alertView show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Please enter all fields." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alertView show];
     }else{
         
         self.direction = [Direction objectWithClassName:[Direction parseClassName]];
         self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode direction:self.direction user: [PFUser currentUser]];
         [self generateCoordinatesFromAddress];
-        
-//        self.direction = [Direction directionWithAddress:destAddress city:destCity state:destState zipcode:destZipcode];
-    
-//        13406 Philadelphia St, Whittier, CA 90601
-    
-//        self.direction = [Direction directionWithAddress:@"13406 Philadelphia St" city:@"Whittier" state:@"CA" zipcode:@"90601"];
-    
     }
 }
 
+// iOS Geocoder to get coordinates for an address
 -(void)generateCoordinatesFromAddress{
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    // Geocoder Formatted string
     NSString *formattedString = [NSString stringWithFormat:@"%@, %@, %@, %@", self.direction.address, self.direction.city, self.direction.state, self.direction.zipcode];
     [geocoder geocodeAddressString:formattedString completionHandler:^(NSArray* placemarks, NSError* error){
+        // Error with Geocoder getting the address
         if(error){
             [SVProgressHUD dismiss];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"There was an error generating the route. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -67,8 +68,10 @@
                 //                NSLog(@"%@, %@", self.latitude, self.longitude);
                 
             }
+            // Save direction object in Parse
             [self.direction saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if(error){
+                    // If there is an error, then save later
                     [self.direction saveEventually];
                 }
             }];

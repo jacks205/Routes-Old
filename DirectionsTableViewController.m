@@ -20,9 +20,9 @@
     [super viewDidLoad];
     
     //TODO: Create Login and Sign up controllers
-    
+    // Temporary sign in
+    [PFUser logOut];
     PFUser *currentUser = [PFUser currentUser];
-//    [PFUser logOut];
     if (currentUser) {
         // do stuff with the user
         NSLog(@"%@", currentUser);
@@ -30,17 +30,18 @@
     } else {
         // show the signup or login screen
         NSLog(@"Not Current User");
-        [PFUser logInWithUsernameInBackground:@"ianjcksn" password:@"password"
+        [PFUser logInWithUsernameInBackground:@"testname" password:@"password"
             block:^(PFUser *user, NSError *error) {
                 if (user) {
                     // Do stuff after successful login.
                     NSLog(@"Logged in");
+                    [self sendRefreshQuery];
                 } else {
                     // The login failed. Check error to see why.
                     PFUser *user = [PFUser user];
-                    user.username = @"ianjcksn";
+                    user.username = @"testname";
                     user.password = @"password";
-                    user.email = @"ianjcksn93@gmail.com";
+                    user.email = @"testname@gmail.com";
                     NSLog(@"Logged in as %@", user);
                     // other fields can be set just like with PFObject
                     
@@ -53,30 +54,29 @@
                             // Show the errorString somewhere and let the user try again.
                             NSLog(@"%@", errorString);
                         }
+                        [self sendRefreshQuery];
                     }];
-                    [self sendRefreshQuery];
                 }
             }];
         
     }
+    
+    
     self.directions = [NSMutableArray array];
     
-//    PFRelation *directionRelation = [currentUser objectForKey:@"Directions"];
-//    PFQuery *query = [directionRelation query];
     
-    
+    // Setting up Location Manager to keep iPhone's current location updating
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
-//    self.currentCoords = CLLocationCoordinate2DMake(33.876349, -117.797041);
     
+    //Init pull to refresh
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshDirections) forControlEvents:UIControlEventValueChanged];
-    
-//    PFObject *object = [PFObject objectWithClassName:@"Direction"];
-    }
+
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -103,6 +103,7 @@
     static NSString *CellIdentifier = @"DirectionsCustomCell";
     DirectionsCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    // Fill up DirectionsCustomCell fields
     Direction* direction = [self.directions objectAtIndex:indexPath.row];
     cell.addressLabel.text = [direction address];
     cell.cityStateLabel.text = [NSString stringWithFormat:@"%@, %@", direction.city, direction.state];
@@ -111,6 +112,7 @@
     NSNumber *distance = [direction distance];
     NSNumber *trafficTime = [direction trafficTime];
     
+    //Calculate user friendly values for distance and time
     NSString *distanceString = [self metersToMiles:distance];
     NSString *travelTimeString = [self secondsToHoursAndMinutes:trafficTime];
     
@@ -127,6 +129,7 @@
     
     self.selectedDirection = [self.directions objectAtIndex:indexPath.row];
     
+    // Alert view to open the iPhone's map app
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leaving App!" message:@"Do you want to start directions for this destination?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"Cancel", nil];
     
     [alertView show];
@@ -195,10 +198,14 @@
 
 #pragma mark Refresh
 -(void)refreshDirections{
+    // Directions exist
     if ([self.directions count] != 0){
         for(Direction* direction in self.directions){
             NSURL *routeUrl = [direction buildUrl: self.currentCoords];
 //            NSLog(@"%@", routeUrl);
+            
+            // Parsing through json from API
+            
             NSData *jsonData = [NSData dataWithContentsOfURL:routeUrl];
             
         //    TODO: Error checking in case JSON Data isn't recieved from API
@@ -214,8 +221,7 @@
             
             NSDictionary *summaryDictionary = [NSDictionary dictionaryWithDictionary:[routeDictionary objectForKey:SUMMARY_KEY]];
             
-//            NSLog(@"%@", summaryDictionary);
-            
+            // Fill Direction fields
             direction.distance = [summaryDictionary objectForKey:DISTANCE_KEY];
             direction.baseTime = [summaryDictionary objectForKey:BASE_TIME_KEY];
             direction.trafficTime =[summaryDictionary objectForKey:TRAFFIC_TIME_KEY];
@@ -223,6 +229,7 @@
         }
         
     }
+    // End pull to refresh view
     [self.tableView reloadData];
     if ([self.refreshControl isRefreshing]) {
         [self.refreshControl endRefreshing];
@@ -233,6 +240,7 @@
 #pragma mark - Launching Map App
 
 -(void)launchMapApp: (CLLocationCoordinate2D) coordinates withName:(NSString*) name{
+    // Launching map app with location and name of destination
     MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate: coordinates addressDictionary: nil];
     MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
     destination.name = name;
@@ -248,12 +256,12 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *location = [locations lastObject];
     self.currentCoords = [location coordinate];
-//    NSLog(@"%f", self.currentCoords.latitude);
-//    self.currentCoords = CLLocationCoordinate2DMake(33.876349, -117.797041);
 }
 
 
 #pragma mark - UIAlertView Method
+
+// Alert View delegate method to open Map app
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if([title isEqualToString:@"Yes"])
