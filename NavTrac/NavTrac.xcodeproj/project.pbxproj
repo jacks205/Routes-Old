@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA973008188E51E300C2CBDC /* AddDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA972FFF188E51E300C2CBDC /* AddDirectionsViewController.m */; };
+		EA973009188E51E300C2CBDC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973001188E51E300C2CBDC /* Constants.m */; };
+		EA97300A188E51E300C2CBDC /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973003188E51E300C2CBDC /* Direction.m */; };
+		EA97300B188E51E300C2CBDC /* DirectionsCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973005188E51E300C2CBDC /* DirectionsCustomTableViewCell.m */; };
+		EA97300C188E51E300C2CBDC /* DirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973007188E51E300C2CBDC /* DirectionsTableViewController.m */; };
 		EAE10B66188924EC00122104 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10B65188924EC00122104 /* Foundation.framework */; };
 		EAE10B68188924EC00122104 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10B67188924EC00122104 /* CoreGraphics.framework */; };
 		EAE10B6A188924EC00122104 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10B69188924EC00122104 /* UIKit.framework */; };
@@ -20,11 +25,6 @@
 		EAE10B89188924EC00122104 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAE10B87188924EC00122104 /* InfoPlist.strings */; };
 		EAE10B8B188924EC00122104 /* NavTracTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10B8A188924EC00122104 /* NavTracTests.m */; };
 		EAE10B951889253E00122104 /* mainstoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAE10B941889253E00122104 /* mainstoryboard.storyboard */; };
-		EAE10BA01889257700122104 /* AddDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10B971889257700122104 /* AddDirectionsViewController.m */; };
-		EAE10BA11889257700122104 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10B991889257700122104 /* Constants.m */; };
-		EAE10BA21889257700122104 /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10B9B1889257700122104 /* Direction.m */; };
-		EAE10BA31889257700122104 /* DirectionsCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10B9D1889257700122104 /* DirectionsCustomTableViewCell.m */; };
-		EAE10BA41889257700122104 /* DirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10B9F1889257700122104 /* DirectionsTableViewController.m */; };
 		EAE10BA9188925B700122104 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAE10BA6188925B700122104 /* SVProgressHUD.bundle */; };
 		EAE10BAA188925B700122104 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE10BA8188925B700122104 /* SVProgressHUD.m */; };
 		EAE10BAC188925CF00122104 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10BAB188925CF00122104 /* CoreLocation.framework */; };
@@ -51,6 +51,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA972FFE188E51E300C2CBDC /* AddDirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDirectionsViewController.h; sourceTree = "<group>"; };
+		EA972FFF188E51E300C2CBDC /* AddDirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDirectionsViewController.m; sourceTree = "<group>"; };
+		EA973000188E51E300C2CBDC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		EA973001188E51E300C2CBDC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		EA973002188E51E300C2CBDC /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
+		EA973003188E51E300C2CBDC /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
+		EA973004188E51E300C2CBDC /* DirectionsCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsCustomTableViewCell.h; sourceTree = "<group>"; };
+		EA973005188E51E300C2CBDC /* DirectionsCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsCustomTableViewCell.m; sourceTree = "<group>"; };
+		EA973006188E51E300C2CBDC /* DirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsTableViewController.h; sourceTree = "<group>"; };
+		EA973007188E51E300C2CBDC /* DirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsTableViewController.m; sourceTree = "<group>"; };
 		EAE10B62188924EC00122104 /* NavTrac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavTrac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAE10B65188924EC00122104 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EAE10B67188924EC00122104 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -68,16 +78,6 @@
 		EAE10B88188924EC00122104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EAE10B8A188924EC00122104 /* NavTracTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavTracTests.m; sourceTree = "<group>"; };
 		EAE10B941889253E00122104 /* mainstoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = mainstoryboard.storyboard; path = ../mainstoryboard.storyboard; sourceTree = "<group>"; };
-		EAE10B961889257700122104 /* AddDirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDirectionsViewController.h; path = ../AddDirectionsViewController.h; sourceTree = "<group>"; };
-		EAE10B971889257700122104 /* AddDirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDirectionsViewController.m; path = ../AddDirectionsViewController.m; sourceTree = "<group>"; };
-		EAE10B981889257700122104 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Constants.h; sourceTree = "<group>"; };
-		EAE10B991889257700122104 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = ../Constants.m; sourceTree = "<group>"; };
-		EAE10B9A1889257700122104 /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Direction.h; path = ../Direction.h; sourceTree = "<group>"; };
-		EAE10B9B1889257700122104 /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Direction.m; path = ../Direction.m; sourceTree = "<group>"; };
-		EAE10B9C1889257700122104 /* DirectionsCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectionsCustomTableViewCell.h; path = ../DirectionsCustomTableViewCell.h; sourceTree = "<group>"; };
-		EAE10B9D1889257700122104 /* DirectionsCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectionsCustomTableViewCell.m; path = ../DirectionsCustomTableViewCell.m; sourceTree = "<group>"; };
-		EAE10B9E1889257700122104 /* DirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectionsTableViewController.h; path = ../DirectionsTableViewController.h; sourceTree = "<group>"; };
-		EAE10B9F1889257700122104 /* DirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectionsTableViewController.m; path = ../DirectionsTableViewController.m; sourceTree = "<group>"; };
 		EAE10BA5188925B700122104 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
 		EAE10BA6188925B700122104 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		EAE10BA7188925B700122104 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
@@ -218,16 +218,16 @@
 		EAE10BAF1889268A00122104 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				EAE10B961889257700122104 /* AddDirectionsViewController.h */,
-				EAE10B971889257700122104 /* AddDirectionsViewController.m */,
-				EAE10B981889257700122104 /* Constants.h */,
-				EAE10B991889257700122104 /* Constants.m */,
-				EAE10B9A1889257700122104 /* Direction.h */,
-				EAE10B9B1889257700122104 /* Direction.m */,
-				EAE10B9C1889257700122104 /* DirectionsCustomTableViewCell.h */,
-				EAE10B9D1889257700122104 /* DirectionsCustomTableViewCell.m */,
-				EAE10B9E1889257700122104 /* DirectionsTableViewController.h */,
-				EAE10B9F1889257700122104 /* DirectionsTableViewController.m */,
+				EA972FFE188E51E300C2CBDC /* AddDirectionsViewController.h */,
+				EA972FFF188E51E300C2CBDC /* AddDirectionsViewController.m */,
+				EA973000188E51E300C2CBDC /* Constants.h */,
+				EA973001188E51E300C2CBDC /* Constants.m */,
+				EA973002188E51E300C2CBDC /* Direction.h */,
+				EA973003188E51E300C2CBDC /* Direction.m */,
+				EA973004188E51E300C2CBDC /* DirectionsCustomTableViewCell.h */,
+				EA973005188E51E300C2CBDC /* DirectionsCustomTableViewCell.m */,
+				EA973006188E51E300C2CBDC /* DirectionsTableViewController.h */,
+				EA973007188E51E300C2CBDC /* DirectionsTableViewController.m */,
 				EAE10B74188924EC00122104 /* AppDelegate.h */,
 				EAE10B75188924EC00122104 /* AppDelegate.m */,
 			);
@@ -340,13 +340,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAE10B76188924EC00122104 /* AppDelegate.m in Sources */,
+				EA973008188E51E300C2CBDC /* AddDirectionsViewController.m in Sources */,
 				EAE10BAA188925B700122104 /* SVProgressHUD.m in Sources */,
-				EAE10BA01889257700122104 /* AddDirectionsViewController.m in Sources */,
+				EA97300B188E51E300C2CBDC /* DirectionsCustomTableViewCell.m in Sources */,
 				EAE10B72188924EC00122104 /* main.m in Sources */,
-				EAE10BA41889257700122104 /* DirectionsTableViewController.m in Sources */,
-				EAE10BA21889257700122104 /* Direction.m in Sources */,
-				EAE10BA31889257700122104 /* DirectionsCustomTableViewCell.m in Sources */,
-				EAE10BA11889257700122104 /* Constants.m in Sources */,
+				EA97300C188E51E300C2CBDC /* DirectionsTableViewController.m in Sources */,
+				EA973009188E51E300C2CBDC /* Constants.m in Sources */,
+				EA97300A188E51E300C2CBDC /* Direction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +555,7 @@
 				EAE10B90188924EC00122104 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EAE10B91188924EC00122104 /* Build configuration list for PBXNativeTarget "NavTracTests" */ = {
 			isa = XCConfigurationList;
@@ -563,6 +564,7 @@
 				EAE10B93188924EC00122104 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
