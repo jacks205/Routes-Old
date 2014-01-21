@@ -25,16 +25,16 @@
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
         // do stuff with the user
-        NSLog(@"%@", currentUser);
+//        NSLog(@"%@", currentUser);
         [self sendRefreshQuery];
     } else {
         // show the signup or login screen
-        NSLog(@"Not Current User");
+//        NSLog(@"Not Current User");
         [PFUser logInWithUsernameInBackground:@"testname" password:@"password"
             block:^(PFUser *user, NSError *error) {
                 if (user) {
                     // Do stuff after successful login.
-                    NSLog(@"Logged in");
+//                    NSLog(@"Logged in");
                     [self sendRefreshQuery];
                 } else {
                     // The login failed. Check error to see why.
@@ -42,13 +42,13 @@
                     user.username = @"testname";
                     user.password = @"password";
                     user.email = @"testname@gmail.com";
-                    NSLog(@"Logged in as %@", user);
+//                    NSLog(@"Logged in as %@", user);
                     // other fields can be set just like with PFObject
                     
                     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (!error) {
                             // Hooray! Let them use the app now.
-                            NSLog(@"Signed Up!!");
+//                            NSLog(@"Signed Up!!");
                         } else {
                             NSString *errorString = [error userInfo][@"error"];
                             // Show the errorString somewhere and let the user try again.
@@ -135,6 +135,24 @@
     [alertView show];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Direction *direction = [self.directions objectAtIndex:indexPath.row];
+        [self.directions removeObject:direction];
+        
+        [direction deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            code
+        }];
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - Conversion Methods
 
 -(NSString*)metersToMiles: (NSNumber*) meters{
@@ -182,7 +200,7 @@
 #pragma mark - Parse
 -(void)sendRefreshQuery{
     PFQuery *query = [PFQuery queryWithClassName:@"Directions"];
-    NSLog(@"%@", [[PFUser currentUser] objectId]);
+//    NSLog(@"%@", [[PFUser currentUser] objectId]);
     [query whereKey:@"userId" equalTo:[[PFUser currentUser] objectId]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {

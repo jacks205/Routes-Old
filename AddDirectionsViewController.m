@@ -74,6 +74,7 @@
                     // If there is an error, then save later
                     [self.direction saveEventually];
                 }
+                NSLog(@"Saved in the Background!");
             }];
             [self cancelModal:YES sender:self];
         }

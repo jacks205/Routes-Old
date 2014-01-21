@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AddDirectionsViewController.m"
-            timestampString = "411904464.161659"
+            timestampString = "411977197.134336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "-generateCoordinatesFromAddress"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
+            timestampString = "411977970.465124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "-secondViewControllerDismissed:"
             landmarkType = "5">
          </BreakpointContent>
@@ -152,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
+            timestampString = "411977970.465124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-refreshDirections"
             landmarkType = "5">
          </BreakpointContent>
@@ -168,11 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
+            timestampString = "411977970.465124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-refreshDirections"
             landmarkType = "5">
          </BreakpointContent>
@@ -184,13 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
+            timestampString = "411977970.465124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "@implementation DirectionsTableViewController"
-            landmarkType = "3">
+            startingLineNumber = "302"
+            endingLineNumber = "302">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -200,43 +198,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "-refreshDirections"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
-            landmarkName = "-refreshDirections"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DirectionsTableViewController.m"
-            timestampString = "411904839.497262"
+            timestampString = "411977970.465124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "223"
             endingLineNumber = "223"
+            landmarkName = "-refreshDirections"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DirectionsTableViewController.m"
+            timestampString = "411977970.465124"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "-refreshDirections"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DirectionsTableViewController.m"
+            timestampString = "411977970.465124"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "-refreshDirections"
             landmarkType = "5">
          </BreakpointContent>
