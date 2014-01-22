@@ -39,6 +39,7 @@
     if([destAddress length] == 0 || [destCity length] == 0  || [destState length] == 0 || [destZipcode length] == 0){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Please enter all fields." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alertView show];
+        [SVProgressHUD dismiss];
     }else{
         
         self.direction = [Direction objectWithClassName:[Direction parseClassName]];

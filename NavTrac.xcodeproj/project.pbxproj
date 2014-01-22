@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		EA973008188E51E300C2CBDC /* AddDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA972FFF188E51E300C2CBDC /* AddDirectionsViewController.m */; };
-		EA973009188E51E300C2CBDC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973001188E51E300C2CBDC /* Constants.m */; };
 		EA97300A188E51E300C2CBDC /* Direction.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973003188E51E300C2CBDC /* Direction.m */; };
 		EA97300B188E51E300C2CBDC /* DirectionsCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973005188E51E300C2CBDC /* DirectionsCustomTableViewCell.m */; };
 		EA97300C188E51E300C2CBDC /* DirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973007188E51E300C2CBDC /* DirectionsTableViewController.m */; };
+		EA97300F188E53F800C2CBDC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = EA97300E188E53F800C2CBDC /* Constants.m */; };
+		EA973011188E95DB00C2CBDC /* CustomCellOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA973010188E95DB00C2CBDC /* CustomCellOptionsView.xib */; };
+		EA973014188EA4C200C2CBDC /* CustomSwipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA973013188EA4C200C2CBDC /* CustomSwipeCell.m */; };
 		EAE10B66188924EC00122104 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10B65188924EC00122104 /* Foundation.framework */; };
 		EAE10B68188924EC00122104 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10B67188924EC00122104 /* CoreGraphics.framework */; };
 		EAE10B6A188924EC00122104 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE10B69188924EC00122104 /* UIKit.framework */; };
@@ -53,14 +55,17 @@
 /* Begin PBXFileReference section */
 		EA972FFE188E51E300C2CBDC /* AddDirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddDirectionsViewController.h; sourceTree = "<group>"; };
 		EA972FFF188E51E300C2CBDC /* AddDirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddDirectionsViewController.m; sourceTree = "<group>"; };
-		EA973000188E51E300C2CBDC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		EA973001188E51E300C2CBDC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		EA973002188E51E300C2CBDC /* Direction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
 		EA973003188E51E300C2CBDC /* Direction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Direction.m; sourceTree = "<group>"; };
 		EA973004188E51E300C2CBDC /* DirectionsCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsCustomTableViewCell.h; sourceTree = "<group>"; };
 		EA973005188E51E300C2CBDC /* DirectionsCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsCustomTableViewCell.m; sourceTree = "<group>"; };
 		EA973006188E51E300C2CBDC /* DirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsTableViewController.h; sourceTree = "<group>"; };
 		EA973007188E51E300C2CBDC /* DirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsTableViewController.m; sourceTree = "<group>"; };
+		EA97300D188E53F800C2CBDC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		EA97300E188E53F800C2CBDC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		EA973010188E95DB00C2CBDC /* CustomCellOptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCellOptionsView.xib; sourceTree = "<group>"; };
+		EA973012188EA4C200C2CBDC /* CustomSwipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSwipeCell.h; sourceTree = "<group>"; };
+		EA973013188EA4C200C2CBDC /* CustomSwipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSwipeCell.m; sourceTree = "<group>"; };
 		EAE10B62188924EC00122104 /* NavTrac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavTrac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAE10B65188924EC00122104 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EAE10B67188924EC00122104 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -220,8 +225,6 @@
 			children = (
 				EA972FFE188E51E300C2CBDC /* AddDirectionsViewController.h */,
 				EA972FFF188E51E300C2CBDC /* AddDirectionsViewController.m */,
-				EA973000188E51E300C2CBDC /* Constants.h */,
-				EA973001188E51E300C2CBDC /* Constants.m */,
 				EA973002188E51E300C2CBDC /* Direction.h */,
 				EA973003188E51E300C2CBDC /* Direction.m */,
 				EA973004188E51E300C2CBDC /* DirectionsCustomTableViewCell.h */,
@@ -230,6 +233,8 @@
 				EA973007188E51E300C2CBDC /* DirectionsTableViewController.m */,
 				EAE10B74188924EC00122104 /* AppDelegate.h */,
 				EAE10B75188924EC00122104 /* AppDelegate.m */,
+				EA97300D188E53F800C2CBDC /* Constants.h */,
+				EA97300E188E53F800C2CBDC /* Constants.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -238,6 +243,9 @@
 			isa = PBXGroup;
 			children = (
 				EAE10B941889253E00122104 /* mainstoryboard.storyboard */,
+				EA973010188E95DB00C2CBDC /* CustomCellOptionsView.xib */,
+				EA973012188EA4C200C2CBDC /* CustomSwipeCell.h */,
+				EA973013188EA4C200C2CBDC /* CustomSwipeCell.m */,
 			);
 			name = Storyboard;
 			sourceTree = "<group>";
@@ -318,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAE10B70188924EC00122104 /* InfoPlist.strings in Resources */,
+				EA973011188E95DB00C2CBDC /* CustomCellOptionsView.xib in Resources */,
 				EAE10B78188924EC00122104 /* Images.xcassets in Resources */,
 				EAE10B951889253E00122104 /* mainstoryboard.storyboard in Resources */,
 				EAE10BA9188925B700122104 /* SVProgressHUD.bundle in Resources */,
@@ -342,10 +351,11 @@
 				EAE10B76188924EC00122104 /* AppDelegate.m in Sources */,
 				EA973008188E51E300C2CBDC /* AddDirectionsViewController.m in Sources */,
 				EAE10BAA188925B700122104 /* SVProgressHUD.m in Sources */,
+				EA973014188EA4C200C2CBDC /* CustomSwipeCell.m in Sources */,
+				EA97300F188E53F800C2CBDC /* Constants.m in Sources */,
 				EA97300B188E51E300C2CBDC /* DirectionsCustomTableViewCell.m in Sources */,
 				EAE10B72188924EC00122104 /* main.m in Sources */,
 				EA97300C188E51E300C2CBDC /* DirectionsTableViewController.m in Sources */,
-				EA973009188E51E300C2CBDC /* Constants.m in Sources */,
 				EA97300A188E51E300C2CBDC /* Direction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
