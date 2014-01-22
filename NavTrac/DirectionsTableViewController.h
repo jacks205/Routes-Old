@@ -14,7 +14,6 @@
 #import "Constants.h"
 #import "Direction.h"
 #import "AddDirectionsViewController.h"
-#import "DirectionsCustomTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "CustomSwipeCell.h"
 
