@@ -18,13 +18,15 @@
 #import "SVProgressHUD.h"
 #import "CustomSwipeCell.h"
 
-@interface DirectionsTableViewController : UITableViewController <SecondDelegate, CLLocationManagerDelegate>{
+
+@interface DirectionsTableViewController : UITableViewController <SecondDelegate, CLLocationManagerDelegate, CustomSwipeCellDelegate, UIActionSheetDelegate, UIAlertViewDelegate>{
     CLLocationManager *locationManager;
 }
 
 @property(nonatomic,strong) NSMutableArray *directions;
 @property(nonatomic)CLLocationCoordinate2D currentCoords;
 @property(nonatomic, strong) Direction *selectedDirection;
+@property(nonatomic, strong) CustomSwipeCell *chosenCell;
 
 - (IBAction)addDirections:(id)sender;
 @property(nonatomic,strong)UIRefreshControl *refreshControl;

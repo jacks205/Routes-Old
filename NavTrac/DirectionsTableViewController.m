@@ -79,6 +79,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"CustomCellOptionsView"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"DirectionsCustomCell"];
+    
+    
 
 }
 
@@ -112,6 +114,7 @@
 
     // Fill up DirectionsCustomCell fields
     Direction* direction = [self.directions objectAtIndex:indexPath.row];
+    cell.delegate = self;
     cell.direction = direction;
     cell.addressLabel.text = [direction address];
     cell.cityStateLabel.text = [NSString stringWithFormat:@"%@, %@", direction.city, direction.state];
@@ -130,7 +133,7 @@
     
     return cell;
 }
-C
+
 
 
 #pragma mark - Conversion Methods
@@ -244,6 +247,61 @@ C
     self.currentCoords = [location coordinate];
 }
 
+#pragma mark - Custom Swipe Delegate Methods
 
+-(void)cellDidSelectDelete:(CustomSwipeCell *)cell{
+    [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    [self.directions removeObjectAtIndex:indexPath.row];
+    
+    NSLog(@"Deleted Cell");
+    
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    //    TODO: Remove from Parse
+}
+
+
+-(void)cellDidSelectMore:(CustomSwipeCell *)cell{
+    [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+    self.chosenCell = cell;
+    NSLog(@"More Cell");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leaving the App!" message:@"Do you want to open the directions in Apple Maps?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alertView show];
+}
+
+
+#pragma mark - Alert View Delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"Yes"])
+    {
+        CLLocationDegrees latitude = [[self.chosenCell.direction latitude] doubleValue];
+        CLLocationDegrees longitude = [[self.chosenCell.direction longitude] doubleValue];
+        
+        CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(latitude, longitude);
+        
+        [self launchMapApp:coordinates withName:self.chosenCell.direction.address];
+        NSLog(@"Launching Map app");
+        [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+    }
+
+}
+
+#pragma mark - Launching Map App
+
+-(void)launchMapApp: (CLLocationCoordinate2D) coordinates withName:(NSString*) name{
+    // Launching map app with location and name of destination
+    MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate: coordinates addressDictionary: nil];
+    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
+    destination.name = name;
+    NSArray* items = [[NSArray alloc] initWithObjects: destination, nil];
+    NSDictionary* options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             MKLaunchOptionsDirectionsModeDriving,
+                             MKLaunchOptionsDirectionsModeKey, nil];
+    [MKMapItem openMapsWithItems: items launchOptions: options];
+}
 
 @end
