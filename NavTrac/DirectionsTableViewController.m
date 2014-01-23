@@ -75,6 +75,12 @@
     //Init pull to refresh
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshDirections) forControlEvents:UIControlEventValueChanged];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"CustomCellOptionsView"
+                                               bundle:[NSBundle mainBundle]]
+         forCellReuseIdentifier:@"DirectionsCustomCell"];
+    
+    
 
 }
 
@@ -100,22 +106,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"DirectionsCustomCell";
-    DirectionsCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"Cell";
+    CustomSwipeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+//    static NSString *CellIdentifier = @"DirectionsCustomCell";
+//    DirectionsCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
     // Fill up DirectionsCustomCell fields
     Direction* direction = [self.directions objectAtIndex:indexPath.row];
+    cell.delegate = self;
+    cell.direction = direction;
     cell.addressLabel.text = [direction address];
     cell.cityStateLabel.text = [NSString stringWithFormat:@"%@, %@", direction.city, direction.state];
     cell.zipcodeLabel.text = [direction zipcode];
     
     NSNumber *distance = [direction distance];
     NSNumber *trafficTime = [direction trafficTime];
-    
-    //Calculate user friendly values for distance and time
+//
+//    //Calculate user friendly values for distance and time
     NSString *distanceString = [self metersToMiles:distance];
     NSString *travelTimeString = [self secondsToHoursAndMinutes:trafficTime];
-    
+//
     cell.distanceLabel.text = distanceString;
     cell.travelTimeLabel.text = travelTimeString;
     
@@ -123,35 +134,7 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"DirectionsCustomCell";
-    DirectionsCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    self.selectedDirection = [self.directions objectAtIndex:indexPath.row];
-    
-    // Alert view to open the iPhone's map app
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leaving App!" message:@"Do you want to start directions for this destination?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"Cancel", nil];
-    
-    [alertView show];
-}
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return YES if you want the specified item to be editable.
-    return YES;
-}
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Direction *direction = [self.directions objectAtIndex:indexPath.row];
-        [self.directions removeObject:direction];
-        
-        [direction deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            code
-        }];
-    }
-    [self.tableView reloadData];
-}
 
 #pragma mark - Conversion Methods
 
@@ -255,6 +238,58 @@
 
 }
 
+
+
+#pragma mark - Current Location Delegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    CLLocation *location = [locations lastObject];
+    self.currentCoords = [location coordinate];
+}
+
+#pragma mark - Custom Swipe Delegate Methods
+
+-(void)cellDidSelectDelete:(CustomSwipeCell *)cell{
+    [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    [self.directions removeObjectAtIndex:indexPath.row];
+    
+    NSLog(@"Deleted Cell");
+    
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    //    TODO: Remove from Parse
+}
+
+
+-(void)cellDidSelectMore:(CustomSwipeCell *)cell{
+    [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+    self.chosenCell = cell;
+    NSLog(@"More Cell");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leaving the App!" message:@"Do you want to open the directions in Apple Maps?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alertView show];
+}
+
+
+#pragma mark - Alert View Delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"Yes"])
+    {
+        CLLocationDegrees latitude = [[self.chosenCell.direction latitude] doubleValue];
+        CLLocationDegrees longitude = [[self.chosenCell.direction longitude] doubleValue];
+        
+        CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(latitude, longitude);
+        
+        [self launchMapApp:coordinates withName:self.chosenCell.direction.address];
+        NSLog(@"Launching Map app");
+        [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+    }
+
+}
+
 #pragma mark - Launching Map App
 
 -(void)launchMapApp: (CLLocationCoordinate2D) coordinates withName:(NSString*) name{
@@ -269,33 +304,4 @@
     [MKMapItem openMapsWithItems: items launchOptions: options];
 }
 
-#pragma mark - Current Location Delegate
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    CLLocation *location = [locations lastObject];
-    self.currentCoords = [location coordinate];
-}
-
-
-#pragma mark - UIAlertView Method
-
-// Alert View delegate method to open Map app
--(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if([title isEqualToString:@"Yes"])
-    {
-        CLLocationDegrees latitude = [self.selectedDirection.latitude doubleValue];
-        CLLocationDegrees longitude = [self.selectedDirection.longitude doubleValue];
-        
-        CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(latitude, longitude);
-        
-        [self launchMapApp:coordinates withName:self.selectedDirection.address];
-        NSLog(@"Launching Map app");
-    }
-    else if([title isEqualToString:@"Cancel"])
-    {
-        NSLog(@"Cancelling");
-    }
-
-}
 @end

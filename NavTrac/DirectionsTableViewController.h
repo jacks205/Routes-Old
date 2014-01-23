@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <Parse/Parse.h>
@@ -15,16 +14,18 @@
 #import "Constants.h"
 #import "Direction.h"
 #import "AddDirectionsViewController.h"
-#import "DirectionsCustomTableViewCell.h"
 #import "SVProgressHUD.h"
+#import "CustomSwipeCell.h"
 
-@interface DirectionsTableViewController : UITableViewController <SecondDelegate, CLLocationManagerDelegate,UIAlertViewDelegate>{
+
+@interface DirectionsTableViewController : UITableViewController <SecondDelegate, CLLocationManagerDelegate, CustomSwipeCellDelegate, UIActionSheetDelegate, UIAlertViewDelegate>{
     CLLocationManager *locationManager;
 }
 
 @property(nonatomic,strong) NSMutableArray *directions;
 @property(nonatomic)CLLocationCoordinate2D currentCoords;
 @property(nonatomic, strong) Direction *selectedDirection;
+@property(nonatomic, strong) CustomSwipeCell *chosenCell;
 
 - (IBAction)addDirections:(id)sender;
 @property(nonatomic,strong)UIRefreshControl *refreshControl;
@@ -32,7 +33,6 @@
 
 -(NSString*)secondsToHoursAndMinutes: (NSNumber*)seconds;
 -(NSString*)metersToMiles:(NSNumber*) meters;
--(void)saveDirectionInBackground: (Direction *) direction;
 -(void)sendRefreshQuery;
 -(void)refreshDirections;
 @end
