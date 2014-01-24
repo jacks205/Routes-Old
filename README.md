@@ -1,4 +1,4 @@
-NavTrac iOS Traffic Tracker App
+Routes iOS Traffic Tracker App
 ===============================
 
 This app will take a list of destinations and time range you provide and calculate the best time to leave based on the level of traffic. The app calculates the travel time throughout each day and presents the best time to leave at. 
