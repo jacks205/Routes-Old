@@ -107,6 +107,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="address" destination="P9i-z6-tCw" id="tOa-3H-hme"/>
                         <outlet property="city" destination="ey6-ue-gXo" id="UGe-YN-XBb"/>

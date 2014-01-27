@@ -80,8 +80,6 @@
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"DirectionsCustomCell"];
     
-    
-
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -203,8 +201,20 @@
     if ([self.directions count] != 0){
         for(Direction* direction in self.directions){
             NSURL *routeUrl = [direction buildUrl: self.currentCoords];
-//            NSLog(@"%@", routeUrl);
             
+//            NSLog(@"BEFORE");
+//            
+//            NSURLRequest *request = [NSURLRequest requestWithURL:routeUrl];
+//            AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+//            op.responseSerializer = [AFJSONResponseSerializer serializer];
+//            [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                NSLog(@"JSON: %@", responseObject);
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                NSLog(@"Error: %@", error);
+//            }];
+//            [[NSOperationQueue mainQueue] addOperation:op];
+//            
+//            NSLog(@"AFTER");
             // Parsing through json from API
             
             NSData *jsonData = [NSData dataWithContentsOfURL:routeUrl];
@@ -238,8 +248,6 @@
 
 }
 
-
-
 #pragma mark - Current Location Delegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -267,17 +275,22 @@
     [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
     self.chosenCell = cell;
     NSLog(@"More Cell");
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leaving the App!" message:@"Do you want to open the directions in Apple Maps?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-    [alertView show];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Open in Apple Maps" otherButtonTitles:nil, nil];
+    [actionSheet showFromToolbar:self.navigationController.toolbar];
 }
 
 
 #pragma mark - Alert View Delegate
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if([title isEqualToString:@"Yes"])
-    {
+
+}
+
+#pragma mark - Action Sheet Delegate
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if([buttonTitle isEqualToString:@"Open in Apple Maps"]){
         CLLocationDegrees latitude = [[self.chosenCell.direction latitude] doubleValue];
         CLLocationDegrees longitude = [[self.chosenCell.direction longitude] doubleValue];
         
@@ -286,8 +299,8 @@
         [self launchMapApp:coordinates withName:self.chosenCell.direction.address];
         NSLog(@"Launching Map app");
         [self.chosenCell.scrollView setContentOffset:CGPointMake(0,0) animated:YES];
-    }
 
+    }
 }
 
 #pragma mark - Launching Map App
