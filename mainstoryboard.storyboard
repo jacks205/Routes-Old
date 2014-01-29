@@ -104,12 +104,19 @@
                                     <action selector="cancel:" destination="ZKN-jF-VVj" eventType="touchUpInside" id="ge3-cq-K36"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Autocomplete" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pzk-C2-KFX">
+                                <rect key="frame" x="20" y="73" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="address" destination="P9i-z6-tCw" id="tOa-3H-hme"/>
+                        <outlet property="autocompleteTextField" destination="pzk-C2-KFX" id="EKw-T0-bER"/>
                         <outlet property="city" destination="ey6-ue-gXo" id="UGe-YN-XBb"/>
                         <outlet property="state" destination="JxS-hr-UM2" id="pT6-CF-jQD"/>
                         <outlet property="zipcode" destination="vm1-1W-M4V" id="NNg-e5-pEN"/>

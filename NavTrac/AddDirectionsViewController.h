@@ -16,13 +16,14 @@
 -(void) secondViewControllerDismissed:(Direction *)direction;
 @end
 
-@interface AddDirectionsViewController : UIViewController
+@interface AddDirectionsViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITextField *address;
 @property (strong, nonatomic) IBOutlet UITextField *city;
 @property (strong, nonatomic) IBOutlet UITextField *state;
 @property (strong, nonatomic) IBOutlet UITextField *zipcode;
 
 @property (nonatomic, assign) id<SecondDelegate> directionTableDelegate;
+@property (strong, nonatomic) IBOutlet UITextField *autocompleteTextField;
 
 -(void)processDirections;
 //-(void)sendJsonReq;
@@ -30,6 +31,12 @@
 - (IBAction)addDestination:(id)sender;
 -(void)cancelModal:(bool)validAddress sender:(id)sender;
 - (IBAction)cancel:(id)sender;
+
+
+#pragma mark - Autocomplete
+@property(nonatomic,strong)UITableView *autocompleteTableView;
+
+-(void)createAutocompleteTableView;
 
 
 @end
