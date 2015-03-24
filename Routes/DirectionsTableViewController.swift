@@ -25,7 +25,7 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
         //TODO: Place in function
         self.tableView.allowsSelection = false
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
+        self.tableView.backgroundColor = UIColor.clearColor()
         self.addGradientToBackground()
         
 //        self.view.backgroundColor = UIColor.blueColor()
@@ -61,10 +61,7 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
     }
     
     func addGradientToBackground(){
-        var gradient : CAGradientLayer = CAGradientLayer()
-        gradient.frame = self.tableView.bounds
-        gradient.colors = [Colors.TableViewGradient.Start, Colors.TableViewGradient.End]
-        self.tableView.layer.insertSublayer(gradient, atIndex: 0)
+        
     }
     
     func refreshRoutes(){
@@ -135,7 +132,7 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
         
         //Must set this in the cellForRowAtIndexPath: method
         cell.backgroundColor = UIColor.clearColor()
-        
+
         return cell
     }
     

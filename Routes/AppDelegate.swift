@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        var gradient : CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.window!.frame
+        gradient.colors = [Colors.TableViewGradient.Start, Colors.TableViewGradient.End]
+        self.window!.layer.insertSublayer(gradient, atIndex: 0)
+        
         return true
     }
 
