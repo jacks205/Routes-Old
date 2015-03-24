@@ -1,4 +1,4 @@
-![icon](Design/icons/Icon-60@2x@3x.png)
+![icon](Design/icons/Icon-60@2x@2x.png)
 Routes iOS Traffic Tracker App
 ===============================
 
@@ -8,5 +8,6 @@ If you are planning a trip in a week, and don't know what time to leave at, this
 
 Design
 -----
-![Primary Search](Design/views/primary-search.png)
-![Add Route](Design/views/add-route.png)
+<a href="url"><img src="Design/views/primary-search.png" height="667" width="375" ></a>
+<a href="url"><img src="Design/views/add-route.png" height="667" width="375" ></a>
+</a>
