@@ -8,6 +8,6 @@ If you are planning a trip in a week, and don't know what time to leave at, this
 
 Design
 -----
-<a href="url"><img src="Design/views/primary-search.png" height="667" width="375" ></a>
+<a href="url"><img src="Design/views/primary.png" height="667" width="375" ></a>
 <a href="url"><img src="Design/views/add-route.png" height="667" width="375" ></a>
 </a>
