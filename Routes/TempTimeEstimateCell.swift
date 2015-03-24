@@ -18,6 +18,7 @@ class TempTimeEstimateCell: UITableViewCell {
     required override init(frame: CGRect) {
         super.init(frame: frame)
         //Initialize
+                
     }
 
     required init(coder aDecoder: NSCoder) {

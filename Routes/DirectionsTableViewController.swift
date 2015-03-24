@@ -25,16 +25,32 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
         //TODO: Place in function
         self.tableView.allowsSelection = false
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.title = "Routes"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.35, green: 0.35, blue: 0.35, alpha: 1)
+        
+        self.addGradientToBackground()
+        
+//        self.view.backgroundColor = UIColor.blueColor()
         
         //Load in directions from user
         self.directions = NSMutableArray()
+        for(var i = 0; i < 5; ++i){
+            let dir : Direction = Direction(address: "12345 A Street", city: "Some City", state: "CA",  zipcode: "12345")
+            dir.distance = 123412
+            dir.trafficTime = 12313
+            dir.travelTime = 213131
+            self.directions?.addObject(dir)
+        }
         
+        //Initialize Location Manager and update location
+        initializeLocationManager()
         
-        //TODO: Place in function
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+//        self.refreshRoutes()
+    }
+    
+    func initializeLocationManager(){
         self.locationManager = CLLocationManager()
         if let locationManagerOp = self.locationManager{
             locationManagerOp.delegate = self;
@@ -44,9 +60,11 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.refreshRoutes()
+    func addGradientToBackground(){
+        var gradient : CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.tableView.bounds
+        gradient.colors = [Colors.TableViewGradient.Start, Colors.TableViewGradient.End]
+        self.tableView.layer.insertSublayer(gradient, atIndex: 0)
     }
     
     func refreshRoutes(){
@@ -114,6 +132,9 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
         
         cell.distanceLabel.text = distanceString;
         cell.travelTimeLabel.text = trafficTimeString;
+        
+        //Must set this in the cellForRowAtIndexPath: method
+        cell.backgroundColor = UIColor.clearColor()
         
         return cell
     }

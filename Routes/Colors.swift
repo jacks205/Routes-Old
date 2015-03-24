@@ -8,17 +8,32 @@
 import UIKit
 
 struct Colors{
-    static var ColorSpaceRef : CGColorSpaceRef?
+    //TODO: Delete Colors
     static var DarkGray : CGColorRef?
     static var DefaultWhite : CGColorRef?
     static var LightBlack : CGColorRef?
-    
     struct MediumTrafficColor{
         static var Light : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.98,0.81,0.65,1])
         static var Medium : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.97,0.70,0.45,1])
         static var Dark : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.82,0.54,0.28,1])
     }
+    //////////////////
     
+    //New Design Colors
+    static var ColorSpaceRef : CGColorSpaceRef?
+    struct TableViewGradient {
+        static var Start    : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.02, 0.02, 0.02, 1])
+        static var End      : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.28, 0.34, 0.38, 1])
+    }
+    
+    //TODO: Dark to Light Gradient
+    struct TrafficColors {
+        static var Green    : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.42, 0.72, 0.25, 1])
+        static var Red      : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.89, 0.28, 0.45, 1])
+        static var Yellow   : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.84, 0.80, 0.33, 1])
+    }
+    
+
     //MARK: Get Colors Convienence Methods
     static func genericRGBSpace() -> CGColorSpaceRef{
         if (Colors.ColorSpaceRef  == nil){
@@ -27,6 +42,8 @@ struct Colors{
         return Colors.ColorSpaceRef!;
     }
     
+    /////////////////
+    //TODO: DELETE
     //Dark Gray for bottom layer of Cell
     static func darkGrayColor() -> CGColorRef{
         
