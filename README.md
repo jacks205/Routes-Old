@@ -1,4 +1,4 @@
-![icon](Design/icons/Icon-60@2x@2x.png)
+![icon](Design/icons/Icon-60@2x.png)
 Routes iOS Traffic Tracker App
 ===============================
 
