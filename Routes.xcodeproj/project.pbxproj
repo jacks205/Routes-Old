@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA04E24E1ABE22BD00EF47AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E24D1ABE22BD00EF47AE /* AppDelegate.swift */; };
-		EA04E2501ABE22BD00EF47AE /* DirectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E24F1ABE22BD00EF47AE /* DirectionsTableViewController.swift */; };
+		EA04E2501ABE22BD00EF47AE /* DirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E24F1ABE22BD00EF47AE /* DirectionsViewController.swift */; };
 		EA04E2531ABE22BD00EF47AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA04E2511ABE22BD00EF47AE /* Main.storyboard */; };
 		EA04E2551ABE22BD00EF47AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA04E2541ABE22BD00EF47AE /* Images.xcassets */; };
 		EA04E2581ABE22BD00EF47AE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA04E2561ABE22BD00EF47AE /* LaunchScreen.xib */; };
@@ -79,7 +79,7 @@
 		EA04E2481ABE22BD00EF47AE /* Routes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Routes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA04E24C1ABE22BD00EF47AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA04E24D1ABE22BD00EF47AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA04E24F1ABE22BD00EF47AE /* DirectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsTableViewController.swift; sourceTree = "<group>"; };
+		EA04E24F1ABE22BD00EF47AE /* DirectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsViewController.swift; sourceTree = "<group>"; };
 		EA04E2521ABE22BD00EF47AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA04E2541ABE22BD00EF47AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EA04E2571ABE22BD00EF47AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 			children = (
 				EA04E26D1ABE250E00EF47AE /* Constants.swift */,
 				EA04E24D1ABE22BD00EF47AE /* AppDelegate.swift */,
-				EA04E24F1ABE22BD00EF47AE /* DirectionsTableViewController.swift */,
+				EA04E24F1ABE22BD00EF47AE /* DirectionsViewController.swift */,
 				EA86AF6A1ABF9EBF002BADF6 /* TempTimeEstimateCell.swift */,
 				EA04E2711ABE2DD900EF47AE /* TimeEstimateCell.swift */,
 				EA04E2511ABE22BD00EF47AE /* Main.storyboard */,
@@ -487,7 +487,7 @@
 				EA04E2721ABE2DD900EF47AE /* TimeEstimateCell.swift in Sources */,
 				EA86AF691ABEDEF7002BADF6 /* Colors.swift in Sources */,
 				EA86AF6B1ABF9EBF002BADF6 /* TempTimeEstimateCell.swift in Sources */,
-				EA04E2501ABE22BD00EF47AE /* DirectionsTableViewController.swift in Sources */,
+				EA04E2501ABE22BD00EF47AE /* DirectionsViewController.swift in Sources */,
 				EA04E24E1ABE22BD00EF47AE /* AppDelegate.swift in Sources */,
 				EA04E26E1ABE250E00EF47AE /* Constants.swift in Sources */,
 			);
@@ -808,6 +808,7 @@
 				EA9706411AC2161200805E72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA9706431AC2161200805E72 /* Build configuration list for PBXNativeTarget "RoutesModulesTests" */ = {
 			isa = XCConfigurationList;
@@ -816,6 +817,7 @@
 				EA9706451AC2161200805E72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

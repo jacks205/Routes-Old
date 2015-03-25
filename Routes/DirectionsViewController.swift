@@ -12,7 +12,7 @@ import MapKit
 import Alamofire
 import SwiftyJSON
 
-class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
+class DirectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
     
     var locationManager : CLLocationManager?
     var directions : NSMutableArray?
@@ -37,6 +37,12 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
         self.initializeTableView()
         self.initializeSearchBar()
         self.initializeLocationManager()
+        
+        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
+//        tap.addTarget(self.searchBar, action: "handleTouch:")
+//        tap.addTarget(self.searchBarView, action: "handleTouch:")
+        self.view.addGestureRecognizer(tap)
+        
         
         //TODO: Remove and implement real dataset
         //Load in directions from user
@@ -170,6 +176,32 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
 //        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
 //    }
     
+    //MARK: SearchBar Delegate Methods
+    func searchBarTextDidEndEditing(searchBar: UISearchBar){
+        println("searchBarTextDidEndEditing")
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        println("searchBarCancelButtonClicked")
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+//        println(searchText)
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        println("searchBarSearchButtonClicked")
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        println("searchBarShouldEndEditing")
+        return true
+    }
+    
+    
     //MARK: AddRouteProtocol
     //AddRouteProtocol method
     func addRouteViewControllerDismissed(direction : Direction){
@@ -209,6 +241,13 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
         let hours = intSeconds / 3600;
         let minutes = intSeconds % 3600 / 60;
         return "\(hours)h \(minutes)m"
+    }
+    
+    // Handler for dismissing keyboard
+    func handleTouch(recognizer : UITapGestureRecognizer){
+        if recognizer.view != self.searchBar && self.searchBar.isFirstResponder() {
+            self.searchBar.resignFirstResponder()
+        }
     }
     
     //MARK: Launching Map App

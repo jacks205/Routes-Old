@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Directions Table View Controller-->
+        <!--Directions View Controller-->
         <scene sceneID="GLm-0S-PyB">
             <objects>
-                <viewController id="TMO-UV-JOS" customClass="DirectionsTableViewController" customModule="Routes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TMO-UV-JOS" customClass="DirectionsViewController" customModule="Routes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Ia-q4-ajU"/>
                         <viewControllerLayoutGuide type="bottom" id="6kG-nN-fLE"/>
@@ -124,7 +124,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="searchBar" destination="xze-ZD-6SM" id="v7z-0f-Jzf"/>
+                        <outlet property="searchBar" destination="xze-ZD-6SM" id="Ujp-GB-Aj8"/>
                         <outlet property="searchBarView" destination="uXV-A6-3Gr" id="Mms-XE-cJ8"/>
                         <outlet property="tableView" destination="zq2-Ip-iGO" id="k52-GI-aA4"/>
                     </connections>
