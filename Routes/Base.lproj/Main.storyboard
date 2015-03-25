@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Directions View Controller-->
+        <!--Routes View Controller-->
         <scene sceneID="GLm-0S-PyB">
             <objects>
-                <viewController id="TMO-UV-JOS" customClass="DirectionsViewController" customModule="Routes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TMO-UV-JOS" customClass="RoutesViewController" customModule="Routes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Ia-q4-ajU"/>
                         <viewControllerLayoutGuide type="bottom" id="6kG-nN-fLE"/>
@@ -21,49 +21,38 @@
                                 <rect key="frame" x="0.0" y="71" width="320" height="497"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="189" id="GAy-Yg-eCD" customClass="TempTimeEstimateCell" customModule="Routes" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="189" id="GAy-Yg-eCD" customClass="RouteTableViewCell" customModule="Routes" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GAy-Yg-eCD" id="3L6-jY-fTd">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iql-Yu-HzN">
-                                                    <rect key="frame" x="133" y="17" width="179" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AK4-23-FWC">
-                                                    <rect key="frame" x="133" y="46" width="179" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7AI-iF-hUc">
-                                                    <rect key="frame" x="133" y="75" width="179" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffy-Z0-Qyv">
-                                                    <rect key="frame" x="21" y="17" width="109" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrr-Vs-oTq">
-                                                    <rect key="frame" x="21" y="46" width="98" height="21"/>
+                                                    <rect key="frame" x="8" y="8" width="304" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcI-7a-bOp">
+                                                    <rect key="frame" x="8" y="37" width="44" height="44"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDG-Xi-Sn7">
+                                                    <rect key="frame" x="60" y="48" width="252" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ6-Tg-JvD">
+                                                    <rect key="frame" x="8" y="89" width="88" height="46"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                                     <color key="textColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="addressLabel" destination="iql-Yu-HzN" id="y8y-HX-f5z"/>
-                                            <outlet property="cityLabel" destination="AK4-23-FWC" id="VXf-Ya-ddY"/>
-                                            <outlet property="distanceLabel" destination="yrr-Vs-oTq" id="0jP-js-Io8"/>
-                                            <outlet property="travelTimeLabel" destination="Ffy-Z0-Qyv" id="3qC-rF-YY2"/>
-                                            <outlet property="zipcodeLabel" destination="7AI-iF-hUc" id="pAh-23-6g9"/>
+                                            <outlet property="distanceLabel" destination="JQ6-Tg-JvD" id="VxB-Ki-o2f"/>
+                                            <outlet property="startToEndLocation" destination="yrr-Vs-oTq" id="MeE-SA-vly"/>
+                                            <outlet property="viaRouteDescription" destination="HDG-Xi-Sn7" id="Way-pf-OpY"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

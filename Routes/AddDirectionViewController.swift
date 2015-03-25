@@ -70,7 +70,7 @@ class AddDirectionViewController: UIViewController {
         if(countElements(address) == 0 || countElements(city) == 0  || countElements(state) == 0 || countElements(zipcode) == 0){
             self.createAlertView("Oops", message: "Please enter all fields")
         }else{
-            let direction : Direction = Direction(address: address, city: city, state: state, zipcode: zipcode)
+            let direction : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: address, city: city, state: state, zipcode: zipcode)
             self.generateCoordinatesFromAddress(direction)
         }
     }

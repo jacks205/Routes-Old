@@ -12,7 +12,7 @@ import MapKit
 import Alamofire
 import SwiftyJSON
 
-class DirectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
+class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
     
     var locationManager : CLLocationManager?
     var directions : NSMutableArray?
@@ -48,7 +48,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         //Load in directions from user
         self.directions = NSMutableArray()
         for(var i = 0; i < 5; ++i){
-            let dir : Direction = Direction(address: "12345 A Street", city: "Some City", state: "CA",  zipcode: "12345")
+            let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: "12345 A Street", city: "Some City", state: "CA",  zipcode: "12345")
             dir.distance = 123412
             dir.trafficTime = 12313
             dir.travelTime = 213131
@@ -148,12 +148,11 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : TempTimeEstimateCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as TempTimeEstimateCell
+        var cell : RouteTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as RouteTableViewCell
 
         let direction : Direction = self.directions?.objectAtIndex(indexPath.row) as Direction
-        cell.addressLabel.text = direction.address
-        cell.cityLabel.text = "\(direction.city), \(direction.state)"
-        cell.zipcodeLabel.text = direction.zipcode
+        cell.startToEndLocation.text = "\(direction.startingLocation!) -> \(direction.endingLocation!)"
+        cell.setViaRouteDescription(direction.viaDirections)
         
         let distance = direction.distance
         let trafficTime = direction.trafficTime
@@ -163,7 +162,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         let trafficTimeString = secondsToHoursAndMinutesString(trafficTime!)
         
         cell.distanceLabel.text = distanceString;
-        cell.travelTimeLabel.text = trafficTimeString;
+        cell.totalTravelTime = trafficTimeString;
         
         //Must set this in the cellForRowAtIndexPath: method
         cell.backgroundColor = UIColor.clearColor()

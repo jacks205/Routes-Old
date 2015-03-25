@@ -8,6 +8,10 @@
 import CoreLocation
 
 class Direction {
+    var startingLocation : String?
+    var endingLocation : String?
+    var viaDirections : [String]?
+
     var address : String?
     var city : String?
     var zipcode : String?
@@ -21,7 +25,10 @@ class Direction {
     var latitude : Float?
     var longitude : Float?
     
-    init(address : String, city: String, state : String, zipcode : String){
+    init(startingLocation : String, endingLocation : String, viaDirections : [String], address : String, city: String, state : String, zipcode : String){
+        self.startingLocation = startingLocation
+        self.endingLocation = endingLocation
+        self.viaDirections = viaDirections
         self.address = address;
         self.city = city;
         self.state = state;
