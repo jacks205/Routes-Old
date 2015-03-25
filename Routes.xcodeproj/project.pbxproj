@@ -20,6 +20,11 @@
 		EA86AF6B1ABF9EBF002BADF6 /* TempTimeEstimateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6A1ABF9EBF002BADF6 /* TempTimeEstimateCell.swift */; };
 		EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */; };
 		EA86AF6F1ABFD5B2002BADF6 /* AddDirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6E1ABFD5B2002BADF6 /* AddDirectionViewController.swift */; };
+		EA97062B1AC2161200805E72 /* RoutesModules.h in Headers */ = {isa = PBXBuildFile; fileRef = EA97062A1AC2161200805E72 /* RoutesModules.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EA9706311AC2161200805E72 /* RoutesModules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9706261AC2161100805E72 /* RoutesModules.framework */; };
+		EA97063A1AC2161200805E72 /* RoutesModulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9706391AC2161200805E72 /* RoutesModulesTests.swift */; };
+		EA97063D1AC2161200805E72 /* RoutesModules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9706261AC2161100805E72 /* RoutesModules.framework */; };
+		EA97063E1AC2161200805E72 /* RoutesModules.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA9706261AC2161100805E72 /* RoutesModules.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDF0C1C65BFD4AA97AB7E78C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB67944D67BD7CA2AAB6A5A /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -31,7 +36,42 @@
 			remoteGlobalIDString = EA04E2471ABE22BD00EF47AE;
 			remoteInfo = Routes;
 		};
+		EA9706321AC2161200805E72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA04E2401ABE22BD00EF47AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA9706251AC2161100805E72;
+			remoteInfo = RoutesModules;
+		};
+		EA9706341AC2161200805E72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA04E2401ABE22BD00EF47AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA04E2471ABE22BD00EF47AE;
+			remoteInfo = Routes;
+		};
+		EA97063B1AC2161200805E72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA04E2401ABE22BD00EF47AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA9706251AC2161100805E72;
+			remoteInfo = RoutesModules;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EA9706421AC2161200805E72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EA97063E1AC2161200805E72 /* RoutesModules.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3558F86C58CCC9CB7E2CFD05 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -53,6 +93,12 @@
 		EA86AF6A1ABF9EBF002BADF6 /* TempTimeEstimateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempTimeEstimateCell.swift; sourceTree = "<group>"; };
 		EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		EA86AF6E1ABFD5B2002BADF6 /* AddDirectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDirectionViewController.swift; sourceTree = "<group>"; };
+		EA9706261AC2161100805E72 /* RoutesModules.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RoutesModules.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA9706291AC2161200805E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA97062A1AC2161200805E72 /* RoutesModules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoutesModules.h; sourceTree = "<group>"; };
+		EA9706301AC2161200805E72 /* RoutesModulesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutesModulesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA9706381AC2161200805E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA9706391AC2161200805E72 /* RoutesModulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesModulesTests.swift; sourceTree = "<group>"; };
 		F4856C3EE9852339B381BB8B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA97063D1AC2161200805E72 /* RoutesModules.framework in Frameworks */,
 				EA04E2701ABE26A600EF47AE /* CoreLocation.framework in Frameworks */,
 				FDF0C1C65BFD4AA97AB7E78C /* Pods.framework in Frameworks */,
 			);
@@ -70,6 +117,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA9706221AC2161100805E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA97062D1AC2161200805E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA9706311AC2161200805E72 /* RoutesModules.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +161,8 @@
 			children = (
 				EA04E24A1ABE22BD00EF47AE /* Routes */,
 				EA04E2601ABE22BD00EF47AE /* RoutesTests */,
+				EA9706271AC2161200805E72 /* RoutesModules */,
+				EA9706361AC2161200805E72 /* RoutesModulesTests */,
 				EA04E2491ABE22BD00EF47AE /* Products */,
 				E6A6B6290FB51030C8E0A1FC /* Pods */,
 				297301F42640782BA485ED25 /* Frameworks */,
@@ -110,6 +174,8 @@
 			children = (
 				EA04E2481ABE22BD00EF47AE /* Routes.app */,
 				EA04E25D1ABE22BD00EF47AE /* RoutesTests.xctest */,
+				EA9706261AC2161100805E72 /* RoutesModules.framework */,
+				EA9706301AC2161200805E72 /* RoutesModulesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,7 +224,52 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EA9706271AC2161200805E72 /* RoutesModules */ = {
+			isa = PBXGroup;
+			children = (
+				EA97062A1AC2161200805E72 /* RoutesModules.h */,
+				EA9706281AC2161200805E72 /* Supporting Files */,
+			);
+			path = RoutesModules;
+			sourceTree = "<group>";
+		};
+		EA9706281AC2161200805E72 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA9706291AC2161200805E72 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EA9706361AC2161200805E72 /* RoutesModulesTests */ = {
+			isa = PBXGroup;
+			children = (
+				EA9706391AC2161200805E72 /* RoutesModulesTests.swift */,
+				EA9706371AC2161200805E72 /* Supporting Files */,
+			);
+			path = RoutesModulesTests;
+			sourceTree = "<group>";
+		};
+		EA9706371AC2161200805E72 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA9706381AC2161200805E72 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EA9706231AC2161100805E72 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA97062B1AC2161200805E72 /* RoutesModules.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		EA04E2471ABE22BD00EF47AE /* Routes */ = {
@@ -171,10 +282,12 @@
 				EA04E2461ABE22BD00EF47AE /* Resources */,
 				F0C99FEF73355443C162C22F /* Embed Pods Frameworks */,
 				E6EA9248DA6C74408EC96C9F /* Copy Pods Resources */,
+				EA9706421AC2161200805E72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EA97063C1AC2161200805E72 /* PBXTargetDependency */,
 			);
 			name = Routes;
 			productName = Routes;
@@ -199,6 +312,43 @@
 			productReference = EA04E25D1ABE22BD00EF47AE /* RoutesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EA9706251AC2161100805E72 /* RoutesModules */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA97063F1AC2161200805E72 /* Build configuration list for PBXNativeTarget "RoutesModules" */;
+			buildPhases = (
+				EA9706211AC2161100805E72 /* Sources */,
+				EA9706221AC2161100805E72 /* Frameworks */,
+				EA9706231AC2161100805E72 /* Headers */,
+				EA9706241AC2161100805E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RoutesModules;
+			productName = RoutesModules;
+			productReference = EA9706261AC2161100805E72 /* RoutesModules.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EA97062F1AC2161200805E72 /* RoutesModulesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA9706431AC2161200805E72 /* Build configuration list for PBXNativeTarget "RoutesModulesTests" */;
+			buildPhases = (
+				EA97062C1AC2161200805E72 /* Sources */,
+				EA97062D1AC2161200805E72 /* Frameworks */,
+				EA97062E1AC2161200805E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA9706331AC2161200805E72 /* PBXTargetDependency */,
+				EA9706351AC2161200805E72 /* PBXTargetDependency */,
+			);
+			name = RoutesModulesTests;
+			productName = RoutesModulesTests;
+			productReference = EA9706301AC2161200805E72 /* RoutesModulesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -212,6 +362,13 @@
 						CreatedOnToolsVersion = 6.2;
 					};
 					EA04E25C1ABE22BD00EF47AE = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = EA04E2471ABE22BD00EF47AE;
+					};
+					EA9706251AC2161100805E72 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					EA97062F1AC2161200805E72 = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = EA04E2471ABE22BD00EF47AE;
 					};
@@ -232,6 +389,8 @@
 			targets = (
 				EA04E2471ABE22BD00EF47AE /* Routes */,
 				EA04E25C1ABE22BD00EF47AE /* RoutesTests */,
+				EA9706251AC2161100805E72 /* RoutesModules */,
+				EA97062F1AC2161200805E72 /* RoutesModulesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -248,6 +407,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EA04E25B1ABE22BD00EF47AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA9706241AC2161100805E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA97062E1AC2161200805E72 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -328,6 +501,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EA9706211AC2161100805E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA97062C1AC2161200805E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA97063A1AC2161200805E72 /* RoutesModulesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -335,6 +523,21 @@
 			isa = PBXTargetDependency;
 			target = EA04E2471ABE22BD00EF47AE /* Routes */;
 			targetProxy = EA04E25E1ABE22BD00EF47AE /* PBXContainerItemProxy */;
+		};
+		EA9706331AC2161200805E72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA9706251AC2161100805E72 /* RoutesModules */;
+			targetProxy = EA9706321AC2161200805E72 /* PBXContainerItemProxy */;
+		};
+		EA9706351AC2161200805E72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA04E2471ABE22BD00EF47AE /* Routes */;
+			targetProxy = EA9706341AC2161200805E72 /* PBXContainerItemProxy */;
+		};
+		EA97063C1AC2161200805E72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA9706251AC2161100805E72 /* RoutesModules */;
+			targetProxy = EA97063B1AC2161200805E72 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -491,6 +694,83 @@
 			};
 			name = Release;
 		};
+		EA9706401AC2161200805E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RoutesModules/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EA9706411AC2161200805E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RoutesModules/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EA9706441AC2161200805E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RoutesModulesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Routes.app/Routes";
+			};
+			name = Debug;
+		};
+		EA9706451AC2161200805E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RoutesModulesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Routes.app/Routes";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -520,6 +800,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		EA97063F1AC2161200805E72 /* Build configuration list for PBXNativeTarget "RoutesModules" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA9706401AC2161200805E72 /* Debug */,
+				EA9706411AC2161200805E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		EA9706431AC2161200805E72 /* Build configuration list for PBXNativeTarget "RoutesModulesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA9706441AC2161200805E72 /* Debug */,
+				EA9706451AC2161200805E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

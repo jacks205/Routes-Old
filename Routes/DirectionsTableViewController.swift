@@ -12,21 +12,38 @@ import MapKit
 import Alamofire
 import SwiftyJSON
 
-class DirectionsTableViewController: UITableViewController, CLLocationManagerDelegate, AddRouteProtocol {
+class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
     
     var locationManager : CLLocationManager?
     var directions : NSMutableArray?
     var currentCoords : CLLocationCoordinate2D?
+    
+    @IBOutlet weak var searchBarView: UIView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        addGradientLayer()
+        
         
         //TODO: Place in function
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        println(self.tableView)
         self.tableView.allowsSelection = false
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.backgroundColor = UIColor.clearColor()
-        self.addGradientToBackground()
+        println(self.tableView.backgroundColor)
+        
+        //TODO: Place in function
+        self.searchBar.delegate = self
+        UITextField.appearance().textColor = UIColor.whiteColor()
+        self.searchBarView.backgroundColor = UIColor.clearColor()
         
 //        self.view.backgroundColor = UIColor.blueColor()
         
@@ -60,8 +77,12 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
         }
     }
     
-    func addGradientToBackground(){
-        
+    func addGradientLayer(){
+        var gradient : CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.view!.frame
+        gradient.colors = [Colors.TableViewGradient.Start, Colors.TableViewGradient.End]
+        self.view!.layer.insertSublayer(gradient, atIndex: 0)
+
     }
     
     func refreshRoutes(){
@@ -102,16 +123,16 @@ class DirectionsTableViewController: UITableViewController, CLLocationManagerDel
     }
     
     //MARK: TableView Delegate Methods
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         return 1;
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.directions!.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : TempTimeEstimateCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as TempTimeEstimateCell
 
