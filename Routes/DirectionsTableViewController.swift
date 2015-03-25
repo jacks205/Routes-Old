@@ -28,25 +28,17 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        addGradientLayer()
+        
+        // Add gradient background
+        self.addGradientLayer()
         
         
-        //TODO: Place in function
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        println(self.tableView)
-        self.tableView.allowsSelection = false
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.tableView.backgroundColor = UIColor.clearColor()
-        println(self.tableView.backgroundColor)
+        //Initializers
+        self.initializeTableView()
+        self.initializeSearchBar()
+        self.initializeLocationManager()
         
-        //TODO: Place in function
-        self.searchBar.delegate = self
-        UITextField.appearance().textColor = UIColor.whiteColor()
-        self.searchBarView.backgroundColor = UIColor.clearColor()
-        
-//        self.view.backgroundColor = UIColor.blueColor()
-        
+        //TODO: Remove and implement real dataset
         //Load in directions from user
         self.directions = NSMutableArray()
         for(var i = 0; i < 5; ++i){
@@ -57,16 +49,13 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
             self.directions?.addObject(dir)
         }
         
-        //Initialize Location Manager and update location
-        initializeLocationManager()
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        self.refreshRoutes()
     }
     
+    //Initialize Location Manager and update location
     func initializeLocationManager(){
         self.locationManager = CLLocationManager()
         if let locationManagerOp = self.locationManager{
@@ -77,6 +66,23 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    //Initializes table view and sets delegates
+    func initializeTableView(){
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.allowsSelection = false
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView.backgroundColor = UIColor.clearColor()
+    }
+    
+    //Initializes search bar and sets delegates
+    func initializeSearchBar(){
+        self.searchBar.delegate = self
+        UITextField.appearance().textColor = UIColor.whiteColor()
+        self.searchBarView.backgroundColor = UIColor.clearColor()
+    }
+    
+    //Creates and adds background gradient color
     func addGradientLayer(){
         var gradient : CAGradientLayer = CAGradientLayer()
         gradient.frame = self.view!.frame
@@ -85,6 +91,7 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
 
     }
     
+    //For refreshing current routes and parsing data from API
     func refreshRoutes(){
         //Directions exist
         for direction in self.directions!{
@@ -100,6 +107,7 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
                             let json = JSON(json!)
                             if let summary = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY].string{
                                 println(summary)
+                                //TODO: Fix SwiftyJSON Parsing
 //                                if let distance = summary[Constants.DISTANCE_KEY].int{
 //                                    dir.distance = distance
 //                                }
@@ -162,15 +170,19 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
 //        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
 //    }
     
+    //MARK: AddRouteProtocol
+    //AddRouteProtocol method
     func addRouteViewControllerDismissed(direction : Direction){
         self.directions?.addObject(direction)
         self.tableView.reloadData()
     }
     
+    //IBAction for addButton to add a route and present a modal
     @IBAction func addDirection(sender: AnyObject) {
        self.performSegueWithIdentifier("addDirection", sender: self)
     }
     
+    //Segue method
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "addDirection"){
             let vc : AddDirectionViewController = segue.destinationViewController as AddDirectionViewController
@@ -179,18 +191,19 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     //MARK: Current Location Delegate
-    
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         let location : CLLocation = locations.last as CLLocation
         self.currentCoords = location.coordinate
     }
     
     //MARK: Convienence Methods
+    //Converts meters to a string containing miles and formated .2f
     func metersToMilesString(meters : Float) -> String{
         let distance = meters * 0.000621371
         return String(format: "%.2f", distance)
     }
     
+    //Takes in total seconds and converts it to a string formatted "00h 00m"
     func secondsToHoursAndMinutesString(seconds : Int) -> String{
         let intSeconds = seconds;
         let hours = intSeconds / 3600;
@@ -198,7 +211,7 @@ class DirectionsTableViewController: UIViewController, UITableViewDelegate, UITa
         return "\(hours)h \(minutes)m"
     }
     
-    //Mark: Launching Map App
+    //MARK: Launching Map App
     func launchMapApp(coordinates : CLLocationCoordinate2D, name: String) -> Void{
         // Launching map app with location and name of destination
         let place : MKPlacemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
