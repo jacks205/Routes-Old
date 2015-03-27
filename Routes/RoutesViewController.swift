@@ -165,7 +165,15 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         //Must set this in the cellForRowAtIndexPath: method
         cell.backgroundColor = UIColor.clearColor()
-
+        
+        let indicatorXPosition : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
+        let indicatorYPosition : CGFloat = cell.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
+        let baseWidth : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
+        let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
+        travelTimeLabel.text = trafficTimeString
+        travelTimeLabel.textColor = UIColor.whiteColor()
+        travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+        cell.contentView.addSubview(travelTimeLabel)
         return cell
     }
     
@@ -238,7 +246,7 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let intSeconds = seconds;
         let hours = intSeconds / 3600;
         let minutes = intSeconds % 3600 / 60;
-        return "\(hours)h \(minutes)m"
+        return "\(hours) hrs \(minutes) min"
     }
     
     // Handler for dismissing keyboard

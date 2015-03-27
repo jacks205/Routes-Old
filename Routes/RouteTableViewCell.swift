@@ -8,9 +8,16 @@
 
 import UIKit
 
+struct RouteTableViewCellConst {
+    static let IndicatorRectXOffset : CGFloat = 0.05
+    static let TrafficIndicatorOffsetPercentage : CGFloat = 0.75
+    static let IndicatorBaseWidthPercentage : CGFloat = 0.4
+    static let IndicatorBaseHeight : CGFloat = 30
+}
+
 class RouteTableViewCell: UITableViewCell {
     @IBOutlet weak var startToEndLocation : UILabel!
-     @IBOutlet weak var viaRouteDescription : UILabel!
+    @IBOutlet weak var viaRouteDescription : UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     
     var totalDistance : String!
@@ -18,43 +25,30 @@ class RouteTableViewCell: UITableViewCell {
     
     var trafficColor : UIColor!
     
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
-        //Initialize
-                
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     override func drawRect(rect: CGRect) {
         //Drawing code
         let ref  = UIGraphicsGetCurrentContext()
-        
+//        println("drawRect")
+//        println("drawRect")
         //Draw Line across cell
-        let trafficIndicatorOffsetPercentage : CGFloat = 0.75
-        let indicatorYPosition : CGFloat = self.frame.height * trafficIndicatorOffsetPercentage
         let lineWidth :CGFloat = 1
+        let indicatorYPosition : CGFloat = self.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
         self.drawWidthLine(ref, lineWidth: lineWidth, yPosition: indicatorYPosition)
         
         //Draw rounded rectangle
-        let indicatorRectXOffset : CGFloat = 0.05
-        let baseWidthPercentage : CGFloat = 0.4
-        let baseWidth : CGFloat = self.frame.width * baseWidthPercentage
-        let baseHeight : CGFloat = 30
         let indicatorCornerRadius : CGFloat = 70
-        let indicatorXPosition : CGFloat = self.frame.width * indicatorRectXOffset
-        let indicatorRect = CGRectMake(indicatorXPosition, indicatorYPosition -  baseHeight / 2, baseWidth, baseHeight)
+        let indicatorXPosition : CGFloat = self.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
+        let baseWidth : CGFloat = self.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
+        let indicatorRect = CGRectMake(indicatorXPosition, indicatorYPosition -  RouteTableViewCellConst.IndicatorBaseHeight / 2, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight)
         self.drawTrafficIndicatorBase(indicatorRect, cornerRadius: indicatorCornerRadius)
         
         //Fill rounded rectangle
         //TODO: Logic for setting colors
-        let colorLight : CGColorRef = Colors.TrafficColors.RedLight
-        let colorDark : CGColorRef = Colors.TrafficColors.RedDark
+        let colorLight : CGColorRef = Colors.TrafficColors.GreenLight
+        let colorDark : CGColorRef = Colors.TrafficColors.GreenDark
         let percentageFill : CGFloat = 0.7
         let fillWidth : CGFloat = baseWidth * percentageFill
-        let fillRect : CGRect = CGRectMake(indicatorXPosition, indicatorYPosition -  baseHeight / 2, fillWidth, baseHeight)
+        let fillRect : CGRect = CGRectMake(indicatorXPosition, indicatorYPosition -  RouteTableViewCellConst.IndicatorBaseHeight / 2, fillWidth, RouteTableViewCellConst.IndicatorBaseHeight)
         self.fillTrafficIndicatorBase(ref, rect: fillRect, cornerRadius: indicatorCornerRadius, colorLight: colorLight, colorDark: colorDark, fillWidth: fillWidth)
     }
     
