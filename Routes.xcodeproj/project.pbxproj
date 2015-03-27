@@ -183,7 +183,6 @@
 		EA04E24A1ABE22BD00EF47AE /* Routes */ = {
 			isa = PBXGroup;
 			children = (
-				EA04E26D1ABE250E00EF47AE /* Constants.swift */,
 				EA04E24D1ABE22BD00EF47AE /* AppDelegate.swift */,
 				EA04E24F1ABE22BD00EF47AE /* RoutesViewController.swift */,
 				EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */,
@@ -201,6 +200,7 @@
 		EA04E24B1ABE22BD00EF47AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA04E26D1ABE250E00EF47AE /* Constants.swift */,
 				EA86AF681ABEDEF7002BADF6 /* Colors.swift */,
 				EA04E24C1ABE22BD00EF47AE /* Info.plist */,
 			);

@@ -30,6 +30,59 @@ class RouteTableViewCell: UITableViewCell {
     
     override func drawRect(rect: CGRect) {
         //Drawing code
+        let ref  = UIGraphicsGetCurrentContext()
+        
+        //Draw Line across cell
+        let trafficIndicatorOffsetPercentage : CGFloat = 0.75
+        let indicatorYPosition : CGFloat = self.frame.height * trafficIndicatorOffsetPercentage
+        let lineWidth :CGFloat = 1
+        self.drawWidthLine(ref, lineWidth: lineWidth, yPosition: indicatorYPosition)
+        
+        //Draw rounded rectangle
+        let indicatorRectXOffset : CGFloat = 0.05
+        let baseWidthPercentage : CGFloat = 0.4
+        let baseWidth : CGFloat = self.frame.width * baseWidthPercentage
+        let baseHeight : CGFloat = 30
+        let indicatorCornerRadius : CGFloat = 70
+        let indicatorXPosition : CGFloat = self.frame.width * indicatorRectXOffset
+        let indicatorRect = CGRectMake(indicatorXPosition, indicatorYPosition -  baseHeight / 2, baseWidth, baseHeight)
+        self.drawTrafficIndicatorBase(indicatorRect, cornerRadius: indicatorCornerRadius)
+        
+        //Fill rounded rectangle
+        //TODO: Logic for setting colors
+        let colorLight : CGColorRef = Colors.TrafficColors.RedLight
+        let colorDark : CGColorRef = Colors.TrafficColors.RedDark
+        let percentageFill : CGFloat = 0.7
+        let fillWidth : CGFloat = baseWidth * percentageFill
+        let fillRect : CGRect = CGRectMake(indicatorXPosition, indicatorYPosition -  baseHeight / 2, fillWidth, baseHeight)
+        self.fillTrafficIndicatorBase(ref, rect: fillRect, cornerRadius: indicatorCornerRadius, colorLight: colorLight, colorDark: colorDark, fillWidth: fillWidth)
+    }
+    
+    func fillTrafficIndicatorBase(ref : CGContextRef, rect : CGRect, cornerRadius : CGFloat, colorLight : CGColorRef, colorDark: CGColorRef, fillWidth : CGFloat){
+        CGContextSaveGState(ref)
+        let gradient : CGGradientRef = CGGradientCreateWithColors(Colors.genericRGBSpace(), [colorLight, colorDark], nil)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+        path.fill()
+        path.addClip()
+        CGContextDrawLinearGradient(ref, gradient, CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect)), CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect)), 0)
+        CGContextRestoreGState(ref)
+    }
+    
+    func drawTrafficIndicatorBase(rect : CGRect, cornerRadius : CGFloat){
+        let color : UIColor = UIColor(CGColor: Colors.IndicatorBackground)
+        color.setFill()
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+        path.fill()
+    }
+    
+    func drawWidthLine(ref : CGContextRef, lineWidth : CGFloat, yPosition : CGFloat){
+        CGContextSaveGState(ref)
+        CGContextSetLineWidth(ref, lineWidth)
+        CGContextSetStrokeColorWithColor(ref, Colors.IndicatorBackground)
+        CGContextMoveToPoint(ref, 0, yPosition)
+        CGContextAddLineToPoint(ref, self.frame.width, yPosition)
+        CGContextStrokePath(ref)
+        CGContextRestoreGState(ref)
     }
     
     func setViaRouteDescription(mainRoads : [String]?){

@@ -21,6 +21,8 @@ struct Colors{
     
     //New Design Colors
     static var ColorSpaceRef : CGColorSpaceRef?
+    static var IndicatorBackground : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.20,0.26,0.28,1])
+    static var TableText : CGColorRef = CGColorCreate(Colors.genericRGBSpace(),[125/255,126/255,126/255,1])
     struct TableViewGradient {
         static var Start    : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.02, 0.02, 0.02, 1])
         static var End      : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.28, 0.34, 0.38, 1])
@@ -28,9 +30,12 @@ struct Colors{
     
     //TODO: Dark to Light Gradient
     struct TrafficColors {
-        static var Green    : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.42, 0.72, 0.25, 1])
-        static var Red      : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.89, 0.28, 0.45, 1])
-        static var Yellow   : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.84, 0.80, 0.33, 1])
+        static var GreenLight   : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.54, 0.76, 0.38, 1])
+        static var GreenDark    : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.40, 0.74, 0.23, 1])
+        static var RedLight          : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.92, 0.34, 0.50, 1])
+        static var RedDark          : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.85, 0.20, 0.38, 1])
+        static var YellowLight       : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.87, 0.83, 0.39, 1])
+        static var YellowDark       : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.80, 0.76, 0.27, 1])
     }
     
 

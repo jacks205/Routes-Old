@@ -94,7 +94,6 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         gradient.frame = self.view!.frame
         gradient.colors = [Colors.TableViewGradient.Start, Colors.TableViewGradient.End]
         self.view!.layer.insertSublayer(gradient, atIndex: 0)
-
     }
     
     //For refreshing current routes and parsing data from API
@@ -231,7 +230,7 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Converts meters to a string containing miles and formated .2f
     func metersToMilesString(meters : Float) -> String{
         let distance = meters * 0.000621371
-        return String(format: "%.2f", distance)
+        return String(format: "%.1f mi", distance)
     }
     
     //Takes in total seconds and converts it to a string formatted "00h 00m"
