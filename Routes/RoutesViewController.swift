@@ -84,6 +84,8 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             locationManagerOp.delegate = self;
             locationManagerOp.distanceFilter = kCLDistanceFilterNone
             locationManagerOp.desiredAccuracy = kCLLocationAccuracyBest
+            locationManagerOp.requestWhenInUseAuthorization()
+            locationManagerOp.startMonitoringSignificantLocationChanges()
             locationManagerOp.startUpdatingLocation()
         }
     }
@@ -219,7 +221,6 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        //        println(searchText)
         //Check if user is searching for specific route
         if(countElements(searchText) > 0){
             //Populate searchDirections
@@ -256,16 +257,19 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
-    //IBAction for addButton to add a route and present a modal
+    //IBAction for addButton to present modal
     @IBAction func addDirection(sender: AnyObject) {
-        self.performSegueWithIdentifier("addDirection", sender: self)
+
     }
     
     //Segue method
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println(segue.identifier)
         if(segue.identifier == "addDirection"){
             let vc : AddDirectionViewController = segue.destinationViewController as AddDirectionViewController
             vc.directionTableDelegate = self
+            vc.currentCoords = self.currentCoords
+//            println(self.currentCoords)
         }
     }
     

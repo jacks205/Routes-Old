@@ -99,6 +99,10 @@
                                             <color key="titleColor" red="0.21681609469999999" green="0.55931568789999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="addDirection:" destination="TMO-UV-JOS" eventType="touchUpInside" id="ROJ-Qf-rlc"/>
+                                            <segue destination="EAz-bp-gSp" kind="modal" identifier="addDirection" id="dLB-pJ-ngo"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PeD-0r-Qm4">
                                         <rect key="frame" x="266" y="26" width="46" height="30"/>
@@ -148,7 +152,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UB2-54-azp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="-658"/>
+            <point key="canvasLocation" x="742" y="-751"/>
         </scene>
         <!--Add Direction View Controller-->
         <scene sceneID="V50-xh-CyC">
@@ -173,26 +177,6 @@
                                     <action selector="addRoute:" destination="EAz-bp-gSp" eventType="touchUpInside" id="MzL-CI-tDq"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Foa-tc-dEW">
-                                <rect key="frame" x="112" y="81" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l8f-FJ-sjX">
-                                <rect key="frame" x="112" y="119" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="State" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bKd-QW-PXj">
-                                <rect key="frame" x="112" y="157" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zipcode" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JpA-Fo-hKo">
-                                <rect key="frame" x="112" y="195" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kt2-CN-8Lc">
                                 <rect key="frame" x="254" y="28" width="50" height="30"/>
                                 <state key="normal" title="Cancel">
@@ -202,19 +186,33 @@
                                     <action selector="cancel:" destination="EAz-bp-gSp" eventType="touchUpInside" id="k7e-K4-NNe"/>
                                 </connections>
                             </button>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AqO-A8-mvJ">
+                                <rect key="frame" x="0.0" y="74" width="320" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="EAz-bp-gSp" id="qQ4-u5-a4U"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="addressTextField" destination="Foa-tc-dEW" id="VPH-fM-4cI"/>
-                        <outlet property="cityTextField" destination="l8f-FJ-sjX" id="Mwl-7P-9ec"/>
-                        <outlet property="stateTextField" destination="bKd-QW-PXj" id="c33-XB-iUm"/>
-                        <outlet property="zipcodeTextField" destination="JpA-Fo-hKo" id="w5l-Jt-dLn"/>
+                        <outlet property="searchBarController" destination="AqO-A8-mvJ" id="mlL-eu-W0W"/>
+                        <outlet property="searchDisplayController" destination="2Cl-pR-Ubq" id="9bz-rF-b1v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybU-AD-4BW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="2Cl-pR-Ubq">
+                    <connections>
+                        <outlet property="delegate" destination="EAz-bp-gSp" id="1va-dL-Ga9"/>
+                        <outlet property="searchBar" destination="AqO-A8-mvJ" id="xD3-Fi-HOt"/>
+                        <outlet property="searchContentsController" destination="EAz-bp-gSp" id="QVU-SK-Sap"/>
+                        <outlet property="searchResultsDataSource" destination="EAz-bp-gSp" id="W8c-BX-r3s"/>
+                        <outlet property="searchResultsDelegate" destination="EAz-bp-gSp" id="wHn-cz-z9H"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1096" y="154"/>
+            <point key="canvasLocation" x="1218" y="-764"/>
         </scene>
     </scenes>
     <resources>

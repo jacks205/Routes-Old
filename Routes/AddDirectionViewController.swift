@@ -7,6 +7,7 @@
 //
 import UIKit
 import CoreLocation
+import SPGooglePlacesAutocomplete
 
 protocol AddRouteProtocol{
     func addRouteViewControllerDismissed(direction : Direction)
@@ -14,14 +15,10 @@ protocol AddRouteProtocol{
 
 class AddDirectionViewController: UIViewController {
 
-    @IBOutlet weak var addressTextField: UITextField!
-    
-    @IBOutlet weak var cityTextField: UITextField!
-
-    @IBOutlet weak var stateTextField: UITextField!
-    @IBOutlet weak var zipcodeTextField: UITextField!
+    @IBOutlet weak var searchBarController: UISearchBar!
     
     var directionTableDelegate : AddRouteProtocol?
+    var currentCoords : CLLocationCoordinate2D?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -29,12 +26,35 @@ class AddDirectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
+        query.input = "13406 Ph"; // search key word
+        query.location = self.currentCoords!;  // user's current location
+        query.radius = 50;   // search addresses close to user
+        query.language = "en"; // optional
+        query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeGeocode; // Only return geocoding (address) results.
+        query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
+            if (error != nil){
+                println(error.localizedDescription)
+            }else{
+                for place in places {
+                    let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
+                    if let placeMark = googlePlaceMark {
+                        placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
+                            if (error != nil){
+                                println(error.localizedDescription)
+                            }else{
+                                println(addressString)
+                            }
+                        })
+                    }
+                }
+            }
+        }
     }
     
     
     @IBAction func addRoute(sender: AnyObject) {
-        self.processRoute()
+//        self.processRoute()
     }
     
     func generateCoordinatesFromAddress(direction : Direction){
@@ -62,25 +82,27 @@ class AddDirectionViewController: UIViewController {
     }
     
     func processRoute(){
-        let address : String = self.addressTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        let city : String = self.cityTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        let state : String = self.stateTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        let zipcode : String = self.zipcodeTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        
-        if(countElements(address) == 0 || countElements(city) == 0  || countElements(state) == 0 || countElements(zipcode) == 0){
-            self.createAlertView("Oops", message: "Please enter all fields")
-        }else{
-            let direction : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: address, city: city, state: state, zipcode: zipcode)
-            self.generateCoordinatesFromAddress(direction)
-        }
+//        let address : String = self.addressTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//        let city : String = self.cityTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//        let state : String = self.stateTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//        let zipcode : String = self.zipcodeTextField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+//        
+//        if(countElements(address) == 0 || countElements(city) == 0  || countElements(state) == 0 || countElements(zipcode) == 0){
+//            self.createAlertView("Oops", message: "Please enter all fields")
+//        }else{
+//            let direction : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: address, city: city, state: state, zipcode: zipcode)
+//            self.generateCoordinatesFromAddress(direction)
+//        }
     }
     
     func cancelModal(direction : Direction){
-        self.directionTableDelegate!.addRouteViewControllerDismissed(direction)
+        println("cancelModal")
+//        self.directionTableDelegate!.addRouteViewControllerDismissed(direction)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func cancel(sender: AnyObject) {
+        println("cancel")
         self.navigationController?.popViewControllerAnimated(true)
     }
     

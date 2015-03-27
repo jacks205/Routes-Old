@@ -1,13 +1,16 @@
 PODS:
   - Alamofire (1.1.4)
+  - SPGooglePlacesAutocomplete (1.0.4)
   - SwiftyJSON (2.1.3)
 
 DEPENDENCIES:
   - Alamofire (~> 1.1)
+  - SPGooglePlacesAutocomplete
   - SwiftyJSON (~> 2.1.3)
 
 SPEC CHECKSUMS:
   Alamofire: 524225da382071ee3e6d0badd0ee4b4dc36740de
+  SPGooglePlacesAutocomplete: 6352d38dedf40ccac6d728fa50c50fd370d183b9
   SwiftyJSON: 48be7490a3989a58a3f511cd54167f0a2b466e76
 
 COCOAPODS: 0.36.0
