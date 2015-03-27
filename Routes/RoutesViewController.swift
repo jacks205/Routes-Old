@@ -15,19 +15,21 @@ import SwiftyJSON
 class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
     
     var locationManager : CLLocationManager?
-    var directions : NSMutableArray?
+    var directions : [Direction]?
+    var searchDirections : [Direction]?
     var currentCoords : CLLocationCoordinate2D?
     
+    var isSearching : Bool!
     @IBOutlet weak var searchBarView: UIView!
-    
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var tableView: UITableView!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.isSearching = false
         
         // Add gradient background
         self.addGradientLayer()
@@ -39,20 +41,34 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.initializeLocationManager()
         
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-//        tap.addTarget(self.searchBar, action: "handleTouch:")
-//        tap.addTarget(self.searchBarView, action: "handleTouch:")
+        //        tap.addTarget(self.searchBar, action: "handleTouch:")
+        //        tap.addTarget(self.searchBarView, action: "handleTouch:")
         self.view.addGestureRecognizer(tap)
         
         
         //TODO: Remove and implement real dataset
         //Load in directions from user
-        self.directions = NSMutableArray()
-        for(var i = 0; i < 5; ++i){
+        self.directions = [Direction]()
+        for(var i = 0; i < 3; ++i){
             let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: "12345 A Street", city: "Some City", state: "CA",  zipcode: "12345")
             dir.distance = 123412
             dir.trafficTime = 12313
             dir.travelTime = 213131
-            self.directions?.addObject(dir)
+            self.directions?.append(dir)
+        }
+        for(var i = 0; i < 3; ++i){
+            let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "Work", viaDirections: ["I-57S","Lambert"], address: "12345 A Road", city: "Some Town", state: "CA",  zipcode: "54321")
+            dir.distance = 13445
+            dir.trafficTime = 13445
+            dir.travelTime = 13445
+            self.directions?.append(dir)
+        }
+        for(var i = 0; i < 3; ++i){
+            let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "Winterfell", viaDirections: ["Kings Road", "The Twins", "Kings Landing"], address: "12345 A Road", city: "Some Town", state: "CA",  zipcode: "54321")
+            dir.distance = 13445
+            dir.trafficTime = 133445
+            dir.travelTime = 134245
+            self.directions?.append(dir)
         }
         
     }
@@ -100,38 +116,36 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func refreshRoutes(){
         //Directions exist
         for direction in self.directions!{
-            if let dir : Direction = direction as? Direction{
-                Alamofire.request(.GET, dir.buildUrl(self.currentCoords!)!, parameters: nil, encoding: ParameterEncoding.URL)
-                    .responseJSON(options: nil, completionHandler: { (
-                        req, res, json, error) -> Void in
-                        if(error != nil){
-                            println("Error: \(error)")
-                            println(req)
-                            println(res)
+            Alamofire.request(.GET, direction.buildUrl(self.currentCoords!)!, parameters: nil, encoding: ParameterEncoding.URL)
+                .responseJSON(options: nil, completionHandler: { (
+                    req, res, json, error) -> Void in
+                    if(error != nil){
+                        println("Error: \(error)")
+                        println(req)
+                        println(res)
+                    }else{
+                        let json = JSON(json!)
+                        if let summary = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY].string{
+                            println(summary)
+                            //TODO: Fix SwiftyJSON Parsing
+                            //                                if let distance = summary[Constants.DISTANCE_KEY].int{
+                            //                                    dir.distance = distance
+                            //                                }
+                            //                                if let baseTime = summary[Constants.BASE_TIME_KEY].int{
+                            //                                    dir.baseTime = baseTime
+                            //                                }
+                            //                                if let trafficTime = summary[Constants.TRAFFIC_TIME_KEY].int{
+                            //                                    dir.trafficTime = trafficTime
+                            //                                }
+                            //                                if let travelTime = summary[Constants.TRAVEL_TIME_KEY].int{
+                            //                                    dir.travelTime = travelTime
+                            //                                }
                         }else{
-                            let json = JSON(json!)
-                            if let summary = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY].string{
-                                println(summary)
-                                //TODO: Fix SwiftyJSON Parsing
-//                                if let distance = summary[Constants.DISTANCE_KEY].int{
-//                                    dir.distance = distance
-//                                }
-//                                if let baseTime = summary[Constants.BASE_TIME_KEY].int{
-//                                    dir.baseTime = baseTime
-//                                }
-//                                if let trafficTime = summary[Constants.TRAFFIC_TIME_KEY].int{
-//                                    dir.trafficTime = trafficTime
-//                                }
-//                                if let travelTime = summary[Constants.TRAVEL_TIME_KEY].int{
-//                                    dir.travelTime = travelTime
-//                                }
-                            }else{
-                                println("Error: \(json.string)")
-                            }
+                            println("Error: \(json.string)")
                         }
-                    })
-                self.tableView.reloadData()
-            }
+                    }
+                })
+            self.tableView.reloadData()
         }
     }
     
@@ -142,45 +156,56 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.directions!.count
+        if self.isSearching! {
+            return self.searchDirections!.count
+        }else{
+            return self.directions!.count
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : RouteTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as RouteTableViewCell
-
-        let direction : Direction = self.directions?.objectAtIndex(indexPath.row) as Direction
-        cell.startToEndLocation.text = "\(direction.startingLocation!) -> \(direction.endingLocation!)"
-        cell.setViaRouteDescription(direction.viaDirections)
-        
-        let distance = direction.distance
-        let trafficTime = direction.trafficTime
-        
-        //Calculate user friendly values for distance and time
-        let distanceString = metersToMilesString(Float(distance!))
-        let trafficTimeString = secondsToHoursAndMinutesString(trafficTime!)
-        
-        cell.distanceLabel.text = distanceString;
-        cell.totalTravelTime = trafficTimeString;
-        
-        //Must set this in the cellForRowAtIndexPath: method
-        cell.backgroundColor = UIColor.clearColor()
-        
-        let indicatorXPosition : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
-        let indicatorYPosition : CGFloat = cell.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
-        let baseWidth : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
-        let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
-        travelTimeLabel.text = trafficTimeString
-        travelTimeLabel.textColor = UIColor.whiteColor()
-        travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
-        cell.contentView.addSubview(travelTimeLabel)
+        var directionEntry : Direction?
+        if !self.isSearching! {
+            directionEntry = self.directions![indexPath.row]
+        }else{
+            directionEntry = self.searchDirections![indexPath.row]
+        }
+        if let direction = directionEntry {
+            cell.startToEndLocation.text = "\(direction.startingLocation!) -> \(direction.endingLocation!)"
+            cell.setViaRouteDescription(direction.viaDirections)
+            
+            let distance = direction.distance
+            let trafficTime = direction.trafficTime
+            
+            //Calculate user friendly values for distance and time
+            let distanceString = metersToMilesString(Float(distance!))
+            let trafficTimeString = secondsToHoursAndMinutesString(trafficTime!)
+            
+            cell.distanceLabel.text = distanceString;
+            cell.totalTravelTime = trafficTimeString;
+            
+            //Must set this in the cellForRowAtIndexPath: method
+            cell.backgroundColor = UIColor.clearColor()
+            
+            let indicatorXPosition : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
+            let indicatorYPosition : CGFloat = cell.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
+            let baseWidth : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
+            let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
+            travelTimeLabel.text = trafficTimeString
+            travelTimeLabel.textColor = UIColor.whiteColor()
+            travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+            cell.contentView.addSubview(travelTimeLabel)
+        }
         return cell
     }
     
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        println("You selected cell #\(indexPath.row)!")
-//        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//    }
+    //    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    //        println("You selected cell #\(indexPath.row)!")
+    //        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    //    }
     
     //MARK: SearchBar Delegate Methods
     func searchBarTextDidEndEditing(searchBar: UISearchBar){
@@ -194,7 +219,23 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        println(searchText)
+        //        println(searchText)
+        //Check if user is searching for specific route
+        if(countElements(searchText) > 0){
+            //Populate searchDirections
+            self.searchDirections = [Direction]()
+            for route in self.directions! {
+                println(route.endingLocation!.lowercaseString)
+                let range : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.endIndex)
+                if (route.endingLocation?.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: range, locale: nil) != nil) {
+                    self.searchDirections?.append(route)
+                }
+            }
+            self.isSearching = true
+        }else{
+            self.isSearching = false
+        }
+        self.tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -211,13 +252,13 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: AddRouteProtocol
     //AddRouteProtocol method
     func addRouteViewControllerDismissed(direction : Direction){
-        self.directions?.addObject(direction)
+        self.directions?.append(direction)
         self.tableView.reloadData()
     }
     
     //IBAction for addButton to add a route and present a modal
     @IBAction func addDirection(sender: AnyObject) {
-       self.performSegueWithIdentifier("addDirection", sender: self)
+        self.performSegueWithIdentifier("addDirection", sender: self)
     }
     
     //Segue method
@@ -266,7 +307,7 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let options = NSDictionary(object: MKLaunchOptionsDirectionsModeDriving, forKey: MKLaunchOptionsDirectionsModeKey)
         MKMapItem.openMapsWithItems(items, launchOptions: options)
     }
-
-
+    
+    
 }
 

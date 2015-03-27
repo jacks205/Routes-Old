@@ -9,9 +9,9 @@
 import UIKit
 
 struct RouteTableViewCellConst {
-    static let IndicatorRectXOffset : CGFloat = 0.05
+    static let IndicatorRectXOffset : CGFloat = 0.025
     static let TrafficIndicatorOffsetPercentage : CGFloat = 0.75
-    static let IndicatorBaseWidthPercentage : CGFloat = 0.4
+    static let IndicatorBaseWidthPercentage : CGFloat = 0.45
     static let IndicatorBaseHeight : CGFloat = 30
 }
 
