@@ -13,9 +13,9 @@ protocol AddRouteProtocol{
     func addRouteViewControllerDismissed(direction : Direction)
 }
 
-class AddDirectionViewController: UIViewController {
-
-    @IBOutlet weak var searchBarController: UISearchBar!
+class AddDirectionViewController: UIViewController, UISearchBarDelegate {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var directionTableDelegate : AddRouteProtocol?
     var currentCoords : CLLocationCoordinate2D?
@@ -26,30 +26,42 @@ class AddDirectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
-        query.input = "13406 Ph"; // search key word
-        query.location = self.currentCoords!;  // user's current location
-        query.radius = 50;   // search addresses close to user
-        query.language = "en"; // optional
-        query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeGeocode; // Only return geocoding (address) results.
-        query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
-            if (error != nil){
-                println(error.localizedDescription)
-            }else{
-                for place in places {
-                    let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
-                    if let placeMark = googlePlaceMark {
-                        placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
-                            if (error != nil){
-                                println(error.localizedDescription)
-                            }else{
-                                println(addressString)
-                            }
-                        })
-                    }
-                }
-            }
-        }
+        self.view.alpha = 0.85
+        //Initialization
+//        println("here")
+        self.initializeSearchBar()
+        
+//        var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
+//        query.input = "13406 Ph"; // search key word
+//        if let location = self.currentCoords{
+//            query.location = location;  // user's current location
+//        }
+//        query.radius = 50;   // search addresses close to user
+//        query.language = "en"; // optional
+//        query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeGeocode; // Only return geocoding (address) results.
+//        query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
+//            if (error != nil){
+//                println(error.localizedDescription)
+//            }else{
+//                for place in places {
+//                    let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
+//                    if let placeMark = googlePlaceMark {
+//                        placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
+//                            if (error != nil){
+//                                println(error.localizedDescription)
+//                            }else{
+//                                println(addressString)
+//                            }
+//                        })
+//                    }
+//                }
+//            }
+//        }
+    }
+    
+    func initializeSearchBar(){
+        self.searchBar.delegate = self
+        UITextField.appearance().textColor = UIColor.whiteColor()
     }
     
     
@@ -103,7 +115,7 @@ class AddDirectionViewController: UIViewController {
     
     @IBAction func cancel(sender: AnyObject) {
         println("cancel")
-        self.navigationController?.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func createAlertView(title : String, message : String){

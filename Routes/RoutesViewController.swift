@@ -58,16 +58,16 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         for(var i = 0; i < 3; ++i){
             let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "Work", viaDirections: ["I-57S","Lambert"], address: "12345 A Road", city: "Some Town", state: "CA",  zipcode: "54321")
-            dir.distance = 13445
+            dir.distance = 13745
             dir.trafficTime = 13445
             dir.travelTime = 13445
             self.directions?.append(dir)
         }
         for(var i = 0; i < 3; ++i){
             let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "Winterfell", viaDirections: ["Kings Road", "The Twins", "Kings Landing"], address: "12345 A Road", city: "Some Town", state: "CA",  zipcode: "54321")
-            dir.distance = 13445
-            dir.trafficTime = 133445
-            dir.travelTime = 134245
+            dir.distance = 139995
+            dir.trafficTime = 135445
+            dir.travelTime = 135245
             self.directions?.append(dir)
         }
         
@@ -191,15 +191,15 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             //Must set this in the cellForRowAtIndexPath: method
             cell.backgroundColor = UIColor.clearColor()
-            
-            let indicatorXPosition : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
-            let indicatorYPosition : CGFloat = cell.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
-            let baseWidth : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
-            let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
-            travelTimeLabel.text = trafficTimeString
-            travelTimeLabel.textColor = UIColor.whiteColor()
-            travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
-            cell.contentView.addSubview(travelTimeLabel)
+//            let indicatorXPosition : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
+//            let indicatorYPosition : CGFloat = cell.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
+//            let baseWidth : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
+//            let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
+//            travelTimeLabel.text = trafficTimeString
+//            travelTimeLabel.textColor = UIColor.whiteColor()
+//            travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+//            travelTimeLabel.tag = 100
+//            cell.contentView.addSubview(travelTimeLabel)
         }
         return cell
     }
@@ -257,7 +257,7 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
-    //IBAction for addButton to present modal
+    //IBAction for addButton to add a route and present a modal
     @IBAction func addDirection(sender: AnyObject) {
 
     }
@@ -266,6 +266,7 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println(segue.identifier)
         if(segue.identifier == "addDirection"){
+            println("here")
             let vc : AddDirectionViewController = segue.destinationViewController as AddDirectionViewController
             vc.directionTableDelegate = self
             vc.currentCoords = self.currentCoords

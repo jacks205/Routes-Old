@@ -25,8 +25,39 @@ class RouteTableViewCell: UITableViewCell {
     
     var trafficColor : UIColor!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.createTravelTimeLabel()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.removeTravelTimeLabel()
+    }
+    
+    func removeTravelTimeLabel(){
+        for subView in self.contentView.subviews{
+            if subView.tag == 100{
+                subView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func createTravelTimeLabel(){
+        let indicatorXPosition : CGFloat = self.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
+        let indicatorYPosition : CGFloat = self.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
+        let baseWidth : CGFloat = self.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
+        let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
+        travelTimeLabel.text = self.totalTravelTime
+        travelTimeLabel.textColor = UIColor.whiteColor()
+        travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+        travelTimeLabel.tag = 100
+        self.contentView.addSubview(travelTimeLabel)
+    }
+    
     override func drawRect(rect: CGRect) {
         //Drawing code
+        
         let ref  = UIGraphicsGetCurrentContext()
 //        println("drawRect")
 //        println("drawRect")
