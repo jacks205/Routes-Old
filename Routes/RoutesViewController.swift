@@ -12,7 +12,7 @@ import MapKit
 import Alamofire
 import SwiftyJSON
 
-class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate, AddRouteProtocol {
+class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate, AddRouteProtocol {
     
     var locationManager : CLLocationManager?
     var directions : [Direction]?
@@ -259,20 +259,31 @@ class RoutesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //IBAction for addButton to add a route and present a modal
     @IBAction func addDirection(sender: AnyObject) {
-
+        let vc : AddDirectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("addDirectionViewController") as AddDirectionViewController
+        vc.directionTableDelegate = self
+//        self.providesPresentationContextTransitionStyle = true
+//        self.definesPresentationContext = true
+//        vc.modalPresentationStyle = .OverCurrentContext
+        vc.currentCoords = self.currentCoords
+        self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    //Segue method
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(segue.identifier)
-        if(segue.identifier == "addDirection"){
-            println("here")
-            let vc : AddDirectionViewController = segue.destinationViewController as AddDirectionViewController
-            vc.directionTableDelegate = self
-            vc.currentCoords = self.currentCoords
-//            println(self.currentCoords)
-        }
-    }
+//    //Segue method
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        println(segue.identifier)
+//        if(segue.identifier == "addDirection"){
+//            let vc : AddDirectionViewController = segue.destinationViewController as AddDirectionViewController
+//            vc.directionTableDelegate = self
+////            self.definesPresentationContext = true
+//            vc.view.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+//            self.providesPresentationContextTransitionStyle = true
+//            self.definesPresentationContext = true
+////            self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+//            vc.modalPresentationStyle = .OverCurrentContext
+//            vc.currentCoords = self.currentCoords
+////            println(self.currentCoords)
+//        }
+//    }
     
     //MARK: Current Location Delegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
