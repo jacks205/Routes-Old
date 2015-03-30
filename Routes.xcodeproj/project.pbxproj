@@ -15,10 +15,11 @@
 		EA04E2641ABE22BD00EF47AE /* RoutesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E2631ABE22BD00EF47AE /* RoutesTests.swift */; };
 		EA04E26E1ABE250E00EF47AE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E26D1ABE250E00EF47AE /* Constants.swift */; };
 		EA04E2701ABE26A600EF47AE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */; };
+		EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */; };
 		EA86AF691ABEDEF7002BADF6 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF681ABEDEF7002BADF6 /* Colors.swift */; };
 		EA86AF6B1ABF9EBF002BADF6 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */; };
 		EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */; };
-		EA86AF6F1ABFD5B2002BADF6 /* AddDirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6E1ABFD5B2002BADF6 /* AddDirectionViewController.swift */; };
+		EA86AF6F1ABFD5B2002BADF6 /* AddStartRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6E1ABFD5B2002BADF6 /* AddStartRouteViewController.swift */; };
 		EA97062B1AC2161200805E72 /* RoutesModules.h in Headers */ = {isa = PBXBuildFile; fileRef = EA97062A1AC2161200805E72 /* RoutesModules.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA9706311AC2161200805E72 /* RoutesModules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9706261AC2161100805E72 /* RoutesModules.framework */; };
 		EA97063A1AC2161200805E72 /* RoutesModulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9706391AC2161200805E72 /* RoutesModulesTests.swift */; };
@@ -87,10 +88,11 @@
 		EA04E2631ABE22BD00EF47AE /* RoutesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTests.swift; sourceTree = "<group>"; };
 		EA04E26D1ABE250E00EF47AE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		EA86AF681ABEDEF7002BADF6 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
 		EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
-		EA86AF6E1ABFD5B2002BADF6 /* AddDirectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDirectionViewController.swift; sourceTree = "<group>"; };
+		EA86AF6E1ABFD5B2002BADF6 /* AddStartRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddStartRouteViewController.swift; sourceTree = "<group>"; };
 		EA9706261AC2161100805E72 /* RoutesModules.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RoutesModules.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9706291AC2161200805E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA97062A1AC2161200805E72 /* RoutesModules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoutesModules.h; sourceTree = "<group>"; };
@@ -183,13 +185,12 @@
 			children = (
 				EA04E24D1ABE22BD00EF47AE /* AppDelegate.swift */,
 				EA04E24F1ABE22BD00EF47AE /* RoutesViewController.swift */,
-				EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */,
 				EA04E2511ABE22BD00EF47AE /* Main.storyboard */,
 				EA04E2541ABE22BD00EF47AE /* Images.xcassets */,
 				EA04E2561ABE22BD00EF47AE /* LaunchScreen.xib */,
 				EA04E24B1ABE22BD00EF47AE /* Supporting Files */,
 				EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */,
-				EA86AF6E1ABFD5B2002BADF6 /* AddDirectionViewController.swift */,
+				EA86AF6E1ABFD5B2002BADF6 /* AddStartRouteViewController.swift */,
 			);
 			path = Routes;
 			sourceTree = "<group>";
@@ -197,9 +198,11 @@
 		EA04E24B1ABE22BD00EF47AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */,
 				EA04E26D1ABE250E00EF47AE /* Constants.swift */,
 				EA86AF681ABEDEF7002BADF6 /* Colors.swift */,
 				EA04E24C1ABE22BD00EF47AE /* Info.plist */,
+				EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -479,8 +482,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA86AF6F1ABFD5B2002BADF6 /* AddDirectionViewController.swift in Sources */,
+				EA86AF6F1ABFD5B2002BADF6 /* AddStartRouteViewController.swift in Sources */,
 				EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */,
+				EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */,
 				EA86AF691ABEDEF7002BADF6 /* Colors.swift in Sources */,
 				EA86AF6B1ABF9EBF002BADF6 /* RouteTableViewCell.swift in Sources */,
 				EA04E2501ABE22BD00EF47AE /* RoutesViewController.swift in Sources */,

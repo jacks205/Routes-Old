@@ -259,7 +259,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     //IBAction for addButton to add a route and present a modal
     @IBAction func addDirection(sender: AnyObject) {
-        let vc : AddDirectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("addDirectionViewController") as AddDirectionViewController
+        let vc : AddStartRouteViewController = self.storyboard!.instantiateViewControllerWithIdentifier("addDirectionViewController") as AddStartRouteViewController
         vc.directionTableDelegate = self
 //        self.providesPresentationContextTransitionStyle = true
 //        self.definesPresentationContext = true
