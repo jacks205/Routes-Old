@@ -16,6 +16,8 @@
 		EA04E26E1ABE250E00EF47AE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E26D1ABE250E00EF47AE /* Constants.swift */; };
 		EA04E2701ABE26A600EF47AE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */; };
 		EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */; };
+		EA64B3811AC8F4AA000D9449 /* AddEndRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */; };
+		EA64B3831AC94062000D9449 /* DismissSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B3821AC94062000D9449 /* DismissSegue.swift */; };
 		EA86AF691ABEDEF7002BADF6 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF681ABEDEF7002BADF6 /* Colors.swift */; };
 		EA86AF6B1ABF9EBF002BADF6 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */; };
 		EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */; };
@@ -89,6 +91,8 @@
 		EA04E26D1ABE250E00EF47AE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEndRouteViewController.swift; sourceTree = "<group>"; };
+		EA64B3821AC94062000D9449 /* DismissSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissSegue.swift; sourceTree = "<group>"; };
 		EA86AF681ABEDEF7002BADF6 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
 		EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
@@ -191,6 +195,7 @@
 				EA04E24B1ABE22BD00EF47AE /* Supporting Files */,
 				EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */,
 				EA86AF6E1ABFD5B2002BADF6 /* AddStartRouteViewController.swift */,
+				EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */,
 			);
 			path = Routes;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 		EA04E24B1ABE22BD00EF47AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA64B3821AC94062000D9449 /* DismissSegue.swift */,
 				EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */,
 				EA04E26D1ABE250E00EF47AE /* Constants.swift */,
 				EA86AF681ABEDEF7002BADF6 /* Colors.swift */,
@@ -482,11 +488,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA64B3811AC8F4AA000D9449 /* AddEndRouteViewController.swift in Sources */,
 				EA86AF6F1ABFD5B2002BADF6 /* AddStartRouteViewController.swift in Sources */,
 				EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */,
 				EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */,
 				EA86AF691ABEDEF7002BADF6 /* Colors.swift in Sources */,
 				EA86AF6B1ABF9EBF002BADF6 /* RouteTableViewCell.swift in Sources */,
+				EA64B3831AC94062000D9449 /* DismissSegue.swift in Sources */,
 				EA04E2501ABE22BD00EF47AE /* RoutesViewController.swift in Sources */,
 				EA04E24E1ABE22BD00EF47AE /* AppDelegate.swift in Sources */,
 				EA04E26E1ABE250E00EF47AE /* Constants.swift in Sources */,
