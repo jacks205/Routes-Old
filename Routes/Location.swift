@@ -9,6 +9,7 @@ import CoreLocation
 
 class Location {
     
+    let streetNumber : String!
     let streetAddress : String!
     let city : String!
     let state : String!
@@ -20,7 +21,19 @@ class Location {
     
     let areaOfInterest : String!
     
+    init(areaOfInterest : String, streetNumber : String, streetAddress : String, city : String, state : String, county : String, postalCode : String, country : String){
+        self.areaOfInterest = areaOfInterest
+        self.streetNumber = streetNumber
+        self.streetAddress = streetAddress
+        self.city = city
+        self.state = state
+        self.county = county
+        self.postalCode = postalCode
+        self.country = country
+    }
+    
     init(addressString : String, place : CLPlacemark){
+        self.streetNumber = place.subThoroughfare
         self.streetAddress = place.thoroughfare
         self.city = place.locality
         self.state = place.administrativeArea

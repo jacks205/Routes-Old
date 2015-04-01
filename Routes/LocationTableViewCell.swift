@@ -18,5 +18,19 @@ class LocationTableViewCell: UITableViewCell {
         
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.removePinImage()
+    }
+    
+    func removePinImage(){
+        for subView in self.contentView.subviews{
+            println(subView)
+            if subView.tag == 100{
+                subView.removeFromSuperview()
+            }
+        }
+    }
+    
     
 }

@@ -43,6 +43,10 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         self.view.addGestureRecognizer(tap)
         
         self.locations = [Location]()
+        for i in 0...5{
+            let location : Location = Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US")
+            self.locations?.append(location)
+        }
     }
     
     func initializeSearchBar(){
@@ -119,6 +123,12 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println("prepareForSegue")
+        if(segue.identifier! == "endRoute"){
+            if let currentLocation = self.currentCoords{
+                let vc : AddEndRouteViewController = segue.destinationViewController as AddEndRouteViewController
+                vc.currentCoords = currentLocation
+            }
+        }
     }
     
     func createAlertView(title : String, message : String){
@@ -142,10 +152,13 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell") as LocationTableViewCell
         
         let autocorrectLocation : Location? = self.locations![indexPath.row]
-
         if let location = autocorrectLocation{
             cell.locationNameLabel.text = location.areaOfInterest
-            cell.locationAddressLabel.text = "\(location.streetAddress)\n\(location.city), \(location.state) \(location.postalCode)"
+            cell.locationAddressLabel.text = "\(location.streetNumber) \(location.streetAddress)\n\(location.city), \(location.state) \(location.postalCode)"
+            let pinImage : UIImageView = UIImageView(frame: CGRectMake(24, 26, 20, 24))
+            pinImage.image = UIImage(named: "pin", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)
+            pinImage.tag = 100
+            cell.contentView.addSubview(pinImage)
         }
         cell.backgroundColor = UIColor.clearColor()
         return cell
@@ -169,40 +182,42 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         println("searchBarSearchButtonClicked")
-        println(searchBar.text)
-//        if(countElements(searchBar.text) > 0){
-//            self.locations = [Location]()
-//            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
-//            query.input = searchBar.text // search key word
-//            println(self.currentCoords)
-//            if let location = self.currentCoords{
-//                query.location = location  // user's current location
-//            }
-//            query.radius = 50   // search addresses close to user
-//            query.language = "en" // optional
-//            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
-//            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
-//                if (error != nil){
-//                    println(error.localizedDescription)
+        println(countElements(searchBar.text))
+        if(countElements(searchBar.text) > 0){
+            self.locations = [Location]()
+            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
+            query.input = searchBar.text // search key word
+            println(self.currentCoords)
+            if let location = self.currentCoords{
+                query.location = location  // user's current location
+            }
+            query.radius = 50   // search addresses close to user
+            query.language = "en" // optional
+            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
+            println(query)
+            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
+                if (error != nil){
+                    println(error.localizedDescription)
+                }else{
+                    for place in places {
+                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
+                        if let placeMark = googlePlaceMark {
+                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
+                                if (error != nil){
+                                    println("Error \(error.localizedDescription)")
+                                    self.tableView.reloadData()
+                                }else{
+                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
+                                    self.locations?.append(newLocation)
+                                    self.tableView.reloadData()
+                                }
+                            })
+                        }
+                    }
 //                    self.tableView.reloadData()
-//                }else{
-//                    for place in places {
-//                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
-//                        if let placeMark = googlePlaceMark {
-//                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
-//                                if (error != nil){
-//                                    println(error.localizedDescription)
-//                                }else{
-//                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
-//                                    self.locations?.append(newLocation)
-//                                }
-//                            })
-//                        }
-//                    }
-//                    self.tableView.reloadData()
-//                }
-//            }
-//        }
+                }
+            }
+        }
         searchBar.resignFirstResponder()
     }
     

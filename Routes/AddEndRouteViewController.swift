@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SPGooglePlacesAutocomplete
 
 class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -16,6 +17,8 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var nextButton: UIButton!
     
     var directionTableDelegate : AddRouteProtocol?
+    var currentCoords : CLLocationCoordinate2D?
+    var locations : [Location]?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,35 +36,13 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         self.initializeSearchBar()
         
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-        //        tap.addTarget(self.searchBar, action: "handleTouch:")
-        //        tap.addTarget(self.searchBarView, action: "handleTouch:")
         self.view.addGestureRecognizer(tap)
-        //        var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
-        //        query.input = "13406 Ph"; // search key word
-        //        if let location = self.currentCoords{
-        //            query.location = location;  // user's current location
-        //        }
-        //        query.radius = 50;   // search addresses close to user
-        //        query.language = "en"; // optional
-        //        query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeGeocode; // Only return geocoding (address) results.
-        //        query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
-        //            if (error != nil){
-        //                println(error.localizedDescription)
-        //            }else{
-        //                for place in places {
-        //                    let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
-        //                    if let placeMark = googlePlaceMark {
-        //                        placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
-        //                            if (error != nil){
-        //                                println(error.localizedDescription)
-        //                            }else{
-        //                                println(addressString)
-        //                            }
-        //                        })
-        //                    }
-        //                }
-//            }
-//        }
+        
+        self.locations = [Location]()
+        for i in 0...5{
+            let location : Location = Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US")
+            self.locations?.append(location)
+        }
     }
     
     func initializeSearchBar(){
@@ -151,22 +132,25 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.locations!.count
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        println("CELL")
-        var cell : LocationTableViewCell? = self.tableView!.dequeueReusableCellWithIdentifier("LocationCell2") as? LocationTableViewCell
-        println(cell)
-        if let locationCell = cell {
-            locationCell.locationNameLabel.text = "Chapman University"
-            locationCell.locationAddressLabel.text = "1    University Drive\nOrange, CA 92886"
-            locationCell.backgroundColor = UIColor.clearColor()
         
-            return locationCell
+        var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell2") as LocationTableViewCell
+        
+        let autocorrectLocation : Location? = self.locations![indexPath.row]
+        if let location = autocorrectLocation{
+            cell.locationNameLabel.text = location.areaOfInterest
+            cell.locationAddressLabel.text = "\(location.streetNumber) \(location.streetAddress)\n\(location.city), \(location.state) \(location.postalCode)"
+            let pinImage : UIImageView = UIImageView(frame: CGRectMake(24, 26, 20, 24))
+            pinImage.image = UIImage(named: "pin", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)
+            pinImage.tag = 100
+            cell.contentView.addSubview(pinImage)
         }
-        return cell!
+        cell.backgroundColor = UIColor.clearColor()
+        return cell
     }
     
     //MARK: SearchBar Delegate Methods
@@ -182,25 +166,46 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //Check if user is searching for specific route
-//        if(countElements(searchText) > 0){
-//            //Populate searchDirections
-//            self.searchDirections = [Direction]()
-//            for route in self.directions! {
-//                println(route.endingLocation!.lowercaseString)
-//                let range : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.endIndex)
-//                if (route.endingLocation?.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: range, locale: nil) != nil) {
-//                    self.searchDirections?.append(route)
-//                }
-//            }
-//            self.isSearching = true
-//        }else{
-//            self.isSearching = false
-//        }
-//        self.tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         println("searchBarSearchButtonClicked")
+        println(countElements(searchBar.text))
+        if(countElements(searchBar.text) > 0){
+            self.locations = [Location]()
+            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
+            query.input = searchBar.text // search key word
+            println(self.currentCoords)
+            if let location = self.currentCoords{
+                query.location = location  // user's current location
+            }
+            query.radius = 50   // search addresses close to user
+            query.language = "en" // optional
+            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
+            println(query)
+            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
+                if (error != nil){
+                    println(error.localizedDescription)
+                }else{
+                    for place in places {
+                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
+                        if let placeMark = googlePlaceMark {
+                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
+                                if (error != nil){
+                                    println("Error \(error.localizedDescription)")
+                                    self.tableView.reloadData()
+                                }else{
+                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
+                                    self.locations?.append(newLocation)
+                                    self.tableView.reloadData()
+                                }
+                            })
+                        }
+                    }
+                    //                    self.tableView.reloadData()
+                }
+            }
+        }
         searchBar.resignFirstResponder()
     }
     

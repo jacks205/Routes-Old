@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="TMO-UV-JOS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -241,12 +240,6 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="MXP-9a-fhw">
-                                                    <rect key="frame" x="8" y="13" width="40" height="48"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="MXP-9a-fhw" secondAttribute="height" multiplier="5:6" id="VFF-cv-m9F"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8G-dv-xuY">
                                                     <rect key="frame" x="60" y="28" width="252" height="38"/>
                                                     <constraints>
@@ -259,23 +252,19 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="i8G-dv-xuY" firstAttribute="trailing" secondItem="iIc-BV-YrG" secondAttribute="trailingMargin" id="2wg-WL-75P"/>
-                                                <constraint firstItem="MXP-9a-fhw" firstAttribute="leading" secondItem="iIc-BV-YrG" secondAttribute="leadingMargin" id="3ah-gE-ay9"/>
-                                                <constraint firstAttribute="centerX" secondItem="MXP-9a-fhw" secondAttribute="centerX" constant="132" id="7Kb-Fc-wRt"/>
-                                                <constraint firstItem="u1a-Fe-h78" firstAttribute="leading" secondItem="MXP-9a-fhw" secondAttribute="trailing" constant="12" id="I2b-3F-cRO"/>
-                                                <constraint firstItem="i8G-dv-xuY" firstAttribute="leading" secondItem="MXP-9a-fhw" secondAttribute="trailing" constant="12" id="Iiz-TO-2OE"/>
                                                 <constraint firstItem="u1a-Fe-h78" firstAttribute="trailing" secondItem="iIc-BV-YrG" secondAttribute="trailingMargin" id="Npw-T5-u4o"/>
-                                                <constraint firstAttribute="centerY" secondItem="MXP-9a-fhw" secondAttribute="centerY" id="Ud9-Ep-LeX"/>
+                                                <constraint firstItem="u1a-Fe-h78" firstAttribute="leading" secondItem="iIc-BV-YrG" secondAttribute="leadingMargin" constant="52" id="Qdd-A1-qua"/>
                                                 <constraint firstItem="i8G-dv-xuY" firstAttribute="top" secondItem="u1a-Fe-h78" secondAttribute="bottom" constant="-1" id="gPN-kt-ZNQ"/>
                                                 <constraint firstAttribute="centerX" secondItem="i8G-dv-xuY" secondAttribute="centerX" constant="-26" id="l2f-3Y-zYt"/>
                                                 <constraint firstAttribute="centerX" secondItem="u1a-Fe-h78" secondAttribute="centerX" constant="-26" id="lEn-lv-CLz"/>
                                                 <constraint firstItem="u1a-Fe-h78" firstAttribute="top" secondItem="iIc-BV-YrG" secondAttribute="topMargin" id="nk6-TW-fwX"/>
                                                 <constraint firstAttribute="centerY" secondItem="i8G-dv-xuY" secondAttribute="centerY" constant="-10" id="wEk-43-zWC"/>
                                                 <constraint firstAttribute="centerY" secondItem="u1a-Fe-h78" secondAttribute="centerY" constant="18.5" id="xbw-BV-Cbr"/>
+                                                <constraint firstItem="i8G-dv-xuY" firstAttribute="leading" secondItem="iIc-BV-YrG" secondAttribute="leadingMargin" constant="52" id="xnU-Zy-M2f"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="imageView" destination="MXP-9a-fhw" id="nOW-AN-k1M"/>
                                             <outlet property="locationAddressLabel" destination="i8G-dv-xuY" id="jsA-Nx-pYk"/>
                                             <outlet property="locationNameLabel" destination="u1a-Fe-h78" id="jRX-iL-xb7"/>
                                         </connections>
@@ -392,18 +381,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="twh-dL-JKL" id="QZe-rq-DYi">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZX-JE-lks">
-                                                    <rect key="frame" x="60" y="8" width="252" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="XJP-Si-0C8">
-                                                    <rect key="frame" x="8" y="13" width="40" height="48"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="XJP-Si-0C8" secondAttribute="height" multiplier="5:6" id="mXq-aQ-NZi"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6q-YF-L02">
                                                     <rect key="frame" x="60" y="28" width="252" height="38"/>
                                                     <constraints>
@@ -413,26 +390,28 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZX-JE-lks">
+                                                    <rect key="frame" x="60" y="8" width="252" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="W6q-YF-L02" firstAttribute="leading" secondItem="XJP-Si-0C8" secondAttribute="trailing" constant="12" id="ACu-Uc-Sfv"/>
                                                 <constraint firstAttribute="centerX" secondItem="iZX-JE-lks" secondAttribute="centerX" constant="-26" id="BCJ-w0-zAN"/>
-                                                <constraint firstItem="XJP-Si-0C8" firstAttribute="leading" secondItem="QZe-rq-DYi" secondAttribute="leadingMargin" id="Hvx-Tp-gZl"/>
+                                                <constraint firstItem="W6q-YF-L02" firstAttribute="leading" secondItem="QZe-rq-DYi" secondAttribute="leadingMargin" constant="52" id="LSz-8U-PEC"/>
                                                 <constraint firstAttribute="centerY" secondItem="W6q-YF-L02" secondAttribute="centerY" constant="-10" id="ND5-v2-dtv"/>
                                                 <constraint firstAttribute="centerX" secondItem="W6q-YF-L02" secondAttribute="centerX" constant="-26" id="QUW-1y-wul"/>
-                                                <constraint firstAttribute="centerY" secondItem="XJP-Si-0C8" secondAttribute="centerY" id="RD5-qh-l69"/>
                                                 <constraint firstItem="iZX-JE-lks" firstAttribute="top" secondItem="QZe-rq-DYi" secondAttribute="topMargin" id="To3-xj-ysa"/>
                                                 <constraint firstItem="W6q-YF-L02" firstAttribute="trailing" secondItem="QZe-rq-DYi" secondAttribute="trailingMargin" id="Wg1-sp-lL3"/>
                                                 <constraint firstItem="iZX-JE-lks" firstAttribute="trailing" secondItem="QZe-rq-DYi" secondAttribute="trailingMargin" id="ZRO-2V-74k"/>
-                                                <constraint firstAttribute="centerX" secondItem="XJP-Si-0C8" secondAttribute="centerX" constant="132" id="c7S-GO-pit"/>
+                                                <constraint firstItem="iZX-JE-lks" firstAttribute="leading" secondItem="QZe-rq-DYi" secondAttribute="leadingMargin" constant="52" id="ayC-pR-14M"/>
                                                 <constraint firstAttribute="centerY" secondItem="iZX-JE-lks" secondAttribute="centerY" constant="18.5" id="dws-Xn-F9t"/>
                                                 <constraint firstItem="W6q-YF-L02" firstAttribute="top" secondItem="iZX-JE-lks" secondAttribute="bottom" constant="-1" id="kUr-hM-Eep"/>
-                                                <constraint firstItem="iZX-JE-lks" firstAttribute="leading" secondItem="XJP-Si-0C8" secondAttribute="trailing" constant="12" id="lDc-Cr-4bl"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="imageView" destination="XJP-Si-0C8" id="r4X-ss-lyp"/>
                                             <outlet property="locationAddressLabel" destination="W6q-YF-L02" id="a0c-TK-4aG"/>
                                             <outlet property="locationNameLabel" destination="iZX-JE-lks" id="7hd-jK-Roj"/>
                                         </connections>
@@ -495,7 +474,6 @@
     </scenes>
     <resources>
         <image name="Suv2-64" width="64" height="64"/>
-        <image name="pin" width="20" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
