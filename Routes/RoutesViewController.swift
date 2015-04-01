@@ -75,6 +75,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+//        self.locationManager?.startUpdatingLocation()
     }
     
     //Initialize Location Manager and update location
@@ -259,29 +260,31 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     //IBAction for addButton to add a route and present a modal
     @IBAction func addDirection(sender: AnyObject) {
-//        let vc : AddStartRouteViewController = self.storyboard!.instantiateViewControllerWithIdentifier("addStartRouteViewController") as AddStartRouteViewController
-//        vc.directionTableDelegate = self
-//        self.providesPresentationContextTransitionStyle = true
-//        self.definesPresentationContext = true
-//        vc.modalPresentationStyle = .OverCurrentContext
-//        vc.currentCoords = self.currentCoords
-//        self.presentViewController(vc, animated: true, completion: nil)
+
     }
     
 //    //Segue method
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(segue.identifier)
-        if(segue.identifier == "addRoute"){
-            let vc : AddStartRouteViewController = segue.destinationViewController as AddStartRouteViewController
-            vc.directionTableDelegate = self
-//            self.definesPresentationContext = true
-//            vc.view.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-//            self.providesPresentationContextTransitionStyle = true
-//            self.definesPresentationContext = true
-//            self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-//            vc.modalPresentationStyle = .OverCurrentContext
-            vc.currentCoords = self.currentCoords
-//            println(self.currentCoords)
+        println(segue.identifier! == "addRoute")
+        if(segue.identifier! == "addRoute"){
+            println(segue.destinationViewController)
+            let navController : UINavigationController = segue.destinationViewController as UINavigationController
+            println(navController.topViewController)
+            let vc : AddStartRouteViewController? = navController.topViewController as? AddStartRouteViewController
+            println(vc)
+            if let addStartRouteController = vc  {
+                println("CUURENTY COORDS")
+                println(self.currentCoords)
+                addStartRouteController.currentCoords = self.currentCoords
+                addStartRouteController.directionTableDelegate = self
+//              self.definesPresentationContext = true
+//              vc.view.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+//              self.providesPresentationContextTransitionStyle = true
+//              self.definesPresentationContext = true
+//              self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+//              vc.modalPresentationStyle = .OverCurrentContext
+//              println(self.currentCoords)
+            }
         }
     }
     
@@ -289,6 +292,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         let location : CLLocation = locations.last as CLLocation
         self.currentCoords = location.coordinate
+        println("locationManager")
     }
     
     //MARK: Convienence Methods

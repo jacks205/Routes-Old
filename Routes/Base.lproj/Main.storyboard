@@ -120,7 +120,7 @@
                                         </state>
                                         <connections>
                                             <action selector="addDirection:" destination="TMO-UV-JOS" eventType="touchUpInside" id="ROJ-Qf-rlc"/>
-                                            <segue destination="1n6-5r-uKl" kind="modal" id="vN3-m5-OeN"/>
+                                            <segue destination="1n6-5r-uKl" kind="modal" identifier="addRoute" id="vN3-m5-OeN"/>
                                         </connections>
                                     </button>
                                 </subviews>

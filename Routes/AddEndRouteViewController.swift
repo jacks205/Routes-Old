@@ -24,7 +24,6 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         //Initialization
-        println("viewDidLoad1")
         self.searchBarView.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
         self.nextButton.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
         self.view.backgroundColor = UIColor(CGColor: Colors.IndicatorBackground)
@@ -37,7 +36,6 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         //        tap.addTarget(self.searchBar, action: "handleTouch:")
         //        tap.addTarget(self.searchBarView, action: "handleTouch:")
         self.view.addGestureRecognizer(tap)
-        println("viewDidLoad2")
         //        var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
         //        query.input = "13406 Ph"; // search key word
         //        if let location = self.currentCoords{

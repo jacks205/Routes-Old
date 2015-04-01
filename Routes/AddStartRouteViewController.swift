@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Mark Jackson. All rights reserved.
 //
 import UIKit
-import CoreLocation
 import SPGooglePlacesAutocomplete
 
 protocol AddRouteProtocol{
@@ -22,6 +21,8 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     var directionTableDelegate : AddRouteProtocol?
     var currentCoords : CLLocationCoordinate2D?
+    
+    var locations : [Location]?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -39,36 +40,9 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         self.initializeSearchBar()
         
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-        //        tap.addTarget(self.searchBar, action: "handleTouch:")
-        //        tap.addTarget(self.searchBarView, action: "handleTouch:")
         self.view.addGestureRecognizer(tap)
         
-//        var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
-//        query.input = "13406 Ph"; // search key word
-//        if let location = self.currentCoords{
-//            query.location = location;  // user's current location
-//        }
-//        query.radius = 50;   // search addresses close to user
-//        query.language = "en"; // optional
-//        query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeGeocode; // Only return geocoding (address) results.
-//        query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
-//            if (error != nil){
-//                println(error.localizedDescription)
-//            }else{
-//                for place in places {
-//                    let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
-//                    if let placeMark = googlePlaceMark {
-//                        placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
-//                            if (error != nil){
-//                                println(error.localizedDescription)
-//                            }else{
-//                                println(addressString)
-//                            }
-//                        })
-//                    }
-//                }
-//            }
-//        }
+        self.locations = [Location]()
     }
     
     func initializeSearchBar(){
@@ -160,16 +134,19 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-        
+        return self.locations!.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell") as LocationTableViewCell
-        println(cell)
-        cell.locationNameLabel.text = "Chapman University"
-        cell.locationAddressLabel.text = "1 University Drive\nOrange, CA 92886"
+        
+        let autocorrectLocation : Location? = self.locations![indexPath.row]
+
+        if let location = autocorrectLocation{
+            cell.locationNameLabel.text = location.areaOfInterest
+            cell.locationAddressLabel.text = "\(location.streetAddress)\n\(location.city), \(location.state) \(location.postalCode)"
+        }
         cell.backgroundColor = UIColor.clearColor()
         return cell
     }
@@ -187,25 +164,45 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //Check if user is searching for specific route
-//        if(countElements(searchText) > 0){
-//            //Populate searchDirections
-//            self.searchDirections = [Direction]()
-//            for route in self.directions! {
-//                println(route.endingLocation!.lowercaseString)
-//                let range : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.endIndex)
-//                if (route.endingLocation?.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: range, locale: nil) != nil) {
-//                    self.searchDirections?.append(route)
-//                }
-//            }
-//            self.isSearching = true
-//        }else{
-//            self.isSearching = false
-//        }
-//        self.tableView.reloadData()
+        
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         println("searchBarSearchButtonClicked")
+        println(searchBar.text)
+//        if(countElements(searchBar.text) > 0){
+//            self.locations = [Location]()
+//            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
+//            query.input = searchBar.text // search key word
+//            println(self.currentCoords)
+//            if let location = self.currentCoords{
+//                query.location = location  // user's current location
+//            }
+//            query.radius = 50   // search addresses close to user
+//            query.language = "en" // optional
+//            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
+//            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
+//                if (error != nil){
+//                    println(error.localizedDescription)
+//                    self.tableView.reloadData()
+//                }else{
+//                    for place in places {
+//                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
+//                        if let placeMark = googlePlaceMark {
+//                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
+//                                if (error != nil){
+//                                    println(error.localizedDescription)
+//                                }else{
+//                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
+//                                    self.locations?.append(newLocation)
+//                                }
+//                            })
+//                        }
+//                    }
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
         searchBar.resignFirstResponder()
     }
     
