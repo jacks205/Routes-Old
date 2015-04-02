@@ -52,6 +52,27 @@ class Location {
         }
     }
     
+    func buildAddressString() -> String{
+        var address : String = ""
+        if let streetNumber = self.streetNumber{
+            address += streetNumber + " "
+        }
+        if let streetAddress = self.streetAddress{
+            address += streetAddress + " "
+        }
+        address += "\n"
+        if let city = self.city{
+            address += city + ", "
+        }
+        if let state = self.state{
+            address += state + " "
+        }
+        if let postalCode = self.postalCode{
+            address += postalCode
+        }
+        return address
+    }
+    
     private func getEstablishmentName(addressString : String) -> String?{
         let range : Range<String.Index>? = addressString.rangeOfString(",")
         if let rangeToComma = range{

@@ -25,7 +25,6 @@ class LocationTableViewCell: UITableViewCell {
     
     func removePinImage(){
         for subView in self.contentView.subviews{
-            println(subView)
             if subView.tag == 100{
                 subView.removeFromSuperview()
             }

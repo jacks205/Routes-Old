@@ -22,7 +22,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     var isSearching : Bool!
     @IBOutlet weak var searchBarView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -41,14 +40,12 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         self.initializeLocationManager()
         
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-        //        tap.addTarget(self.searchBar, action: "handleTouch:")
-        //        tap.addTarget(self.searchBarView, action: "handleTouch:")
         self.view.addGestureRecognizer(tap)
         
         
         //TODO: Remove and implement real dataset
         //Load in directions from user
-        self.directions = [Direction]()
+        self.directions = []
         for(var i = 0; i < 3; ++i){
             let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: "12345 A Street", city: "Some City", state: "CA",  zipcode: "12345")
             dir.distance = 123412
@@ -75,7 +72,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        self.locationManager?.startUpdatingLocation()
     }
     
     //Initialize Location Manager and update location
@@ -177,7 +173,8 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             directionEntry = self.searchDirections![indexPath.row]
         }
         if let direction = directionEntry {
-            cell.startToEndLocation.text = "\(direction.startingLocation!) -> \(direction.endingLocation!)"
+            cell.startLocation.text = direction.startingLocation
+            cell.endLocation.text =  direction.endingLocation
             cell.setViaRouteDescription(direction.viaDirections)
             
             let distance = direction.distance
@@ -192,40 +189,16 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             //Must set this in the cellForRowAtIndexPath: method
             cell.backgroundColor = UIColor.clearColor()
-//            let indicatorXPosition : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorRectXOffset
-//            let indicatorYPosition : CGFloat = cell.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
-//            let baseWidth : CGFloat = cell.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
-//            let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
-//            travelTimeLabel.text = trafficTimeString
-//            travelTimeLabel.textColor = UIColor.whiteColor()
-//            travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
-//            travelTimeLabel.tag = 100
-//            cell.contentView.addSubview(travelTimeLabel)
         }
         return cell
     }
     
-    //    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    //        println("You selected cell #\(indexPath.row)!")
-    //        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    //    }
-    
     //MARK: SearchBar Delegate Methods
-    func searchBarTextDidEndEditing(searchBar: UISearchBar){
-        println("searchBarTextDidEndEditing")
-        searchBar.resignFirstResponder()
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        println("searchBarCancelButtonClicked")
-        searchBar.resignFirstResponder()
-    }
-    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //Check if user is searching for specific route
         if(countElements(searchText) > 0){
             //Populate searchDirections
-            self.searchDirections = [Direction]()
+            self.searchDirections?.removeAll(keepCapacity: false)
             for route in self.directions! {
                 println(route.endingLocation!.lowercaseString)
                 let range : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.endIndex)
@@ -241,15 +214,12 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        println("searchBarSearchButtonClicked")
-        searchBar.resignFirstResponder()
+        self.searchBar.resignFirstResponder()
     }
     
-    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
-        println("searchBarShouldEndEditing")
-        return true
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.searchBar.resignFirstResponder()
     }
-    
     
     //MARK: AddRouteProtocol
     //AddRouteProtocol method
@@ -277,13 +247,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 println(self.currentCoords)
                 addStartRouteController.currentCoords = self.currentCoords
                 addStartRouteController.directionTableDelegate = self
-//              self.definesPresentationContext = true
-//              vc.view.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-//              self.providesPresentationContextTransitionStyle = true
-//              self.definesPresentationContext = true
-//              self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-//              vc.modalPresentationStyle = .OverCurrentContext
-//              println(self.currentCoords)
             }
         }
     }
@@ -292,7 +255,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         let location : CLLocation = locations.last as CLLocation
         self.currentCoords = location.coordinate
-        println("locationManager")
     }
     
     //MARK: Convienence Methods

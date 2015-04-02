@@ -16,7 +16,8 @@ struct RouteTableViewCellConst {
 }
 
 class RouteTableViewCell: UITableViewCell {
-    @IBOutlet weak var startToEndLocation : UILabel!
+    @IBOutlet weak var startLocation : UILabel!
+    @IBOutlet weak var endLocation: UILabel!
     @IBOutlet weak var viaRouteDescription : UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     
@@ -75,8 +76,9 @@ class RouteTableViewCell: UITableViewCell {
         
         //Fill rounded rectangle
         //TODO: Logic for setting colors
+        //TODO: Set as a solid color and remove all the gradient stuff (Save in gist)
         let colorLight : CGColorRef = Colors.TrafficColors.GreenLight
-        let colorDark : CGColorRef = Colors.TrafficColors.GreenDark
+        let colorDark : CGColorRef = Colors.TrafficColors.GreenLight
         let percentageFill : CGFloat = 0.7
         let fillWidth : CGFloat = baseWidth * percentageFill
         let fillRect : CGRect = CGRectMake(indicatorXPosition, indicatorYPosition -  RouteTableViewCellConst.IndicatorBaseHeight / 2, fillWidth, RouteTableViewCellConst.IndicatorBaseHeight)
