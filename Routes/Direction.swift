@@ -15,7 +15,6 @@ class Direction {
     var distance : Int?
     var baseTime : Int?
     var trafficTime : Int?
-    var travelTime : Int?
     
     init(startingLocation : Location, endingLocation : Location,  viaDirections : [String]){
         self.startingLocation = startingLocation

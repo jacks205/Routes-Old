@@ -51,9 +51,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
                 endingLocation: Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
                 viaDirections: ["I-55s", "Chapman"])
-            dir.distance = 123412
-            dir.trafficTime = 12313
-            dir.travelTime = 213131
+            dir.distance = 32167
+            dir.trafficTime = 2000
+            dir.baseTime = 2470
             self.directions?.append(dir)
         }
         for(var i = 0; i < 3; ++i){
@@ -61,9 +61,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
                 endingLocation: Location(areaOfInterest: "Work", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
                 viaDirections: ["I-55s", "Chapman"])
-            dir.distance = 13745
-            dir.trafficTime = 13445
-            dir.travelTime = 13445
+            dir.distance = 32167
+            dir.trafficTime = 2500 * 3/2
+            dir.baseTime = 2470
             self.directions?.append(dir)
         }
         for(var i = 0; i < 3; ++i){
@@ -71,9 +71,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
                 endingLocation: Location(areaOfInterest: "Winterfell", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
                 viaDirections: ["I-55s", "Chapman"])
-            dir.distance = 139995
-            dir.trafficTime = 135445
-            dir.travelTime = 135245
+            dir.distance = 32167
+            dir.trafficTime = 2514 * 5
+            dir.baseTime = 2470
             self.directions?.append(dir)
         }
         
@@ -122,6 +122,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     //For refreshing current routes and parsing data from API
     func refreshRoutes(){
+        //TODO: Create module/pod for this
         //Directions exist
         for direction in self.directions!{
             Alamofire.request(.GET, direction.buildUrl(self.currentCoords!)!, parameters: nil, encoding: ParameterEncoding.URL)
@@ -193,9 +194,10 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             let distanceString = metersToMilesString(Float(distance!))
             let trafficTimeString = secondsToHoursAndMinutesString(trafficTime!)
             
+            cell.baseTime = direction.baseTime
+            cell.trafficTime = direction.trafficTime
             cell.distanceLabel.text = distanceString;
             cell.totalTravelTime = trafficTimeString;
-            
             //Must set this in the cellForRowAtIndexPath: method
             cell.backgroundColor = UIColor.clearColor()
         }
@@ -237,7 +239,8 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     //AddRouteProtocol method
     func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location){
         //Create Direction out of locations
-        
+        println(startingLocation.location)
+        println(endingLocation.location)
 //        self.directions?.append(direction)
         self.tableView.reloadData()
     }

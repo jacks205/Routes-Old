@@ -24,11 +24,15 @@ class RouteTableViewCell: UITableViewCell {
     var totalDistance : String!
     var totalTravelTime : String!
     
+    var baseTime : Int?
+    var trafficTime : Int?
+    
     var trafficColor : UIColor!
     
     override func layoutSubviews() {
         super.layoutSubviews()
         self.createTravelTimeLabel()
+        self.setNeedsDisplay()
     }
     
     override func prepareForReuse() {
@@ -58,10 +62,9 @@ class RouteTableViewCell: UITableViewCell {
     
     override func drawRect(rect: CGRect) {
         //Drawing code
-        
+        println("drawRect")
         let ref  = UIGraphicsGetCurrentContext()
-//        println("drawRect")
-//        println("drawRect")
+        CGContextSaveGState(ref)
         //Draw Line across cell
         let lineWidth :CGFloat = 1
         let indicatorYPosition : CGFloat = self.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
@@ -77,12 +80,13 @@ class RouteTableViewCell: UITableViewCell {
         //Fill rounded rectangle
         //TODO: Logic for setting colors
         //TODO: Set as a solid color and remove all the gradient stuff (Save in gist)
-        let colorLight : CGColorRef = Colors.TrafficColors.GreenLight
-        let colorDark : CGColorRef = Colors.TrafficColors.GreenLight
-        let percentageFill : CGFloat = 0.7
+        let (color : CGColorRef, percentageFill : CGFloat) = determineTrafficIndicator()
+        let colorLight : CGColorRef = color
+        let colorDark : CGColorRef = color
         let fillWidth : CGFloat = baseWidth * percentageFill
         let fillRect : CGRect = CGRectMake(indicatorXPosition, indicatorYPosition -  RouteTableViewCellConst.IndicatorBaseHeight / 2, fillWidth, RouteTableViewCellConst.IndicatorBaseHeight)
         self.fillTrafficIndicatorBase(ref, rect: fillRect, cornerRadius: indicatorCornerRadius, colorLight: colorLight, colorDark: colorDark, fillWidth: fillWidth)
+        CGContextRestoreGState(ref)
     }
     
     func fillTrafficIndicatorBase(ref : CGContextRef, rect : CGRect, cornerRadius : CGFloat, colorLight : CGColorRef, colorDark: CGColorRef, fillWidth : CGFloat){
@@ -110,6 +114,23 @@ class RouteTableViewCell: UITableViewCell {
         CGContextAddLineToPoint(ref, self.frame.width, yPosition)
         CGContextStrokePath(ref)
         CGContextRestoreGState(ref)
+    }
+    
+    func determineTrafficIndicator() -> (CGColorRef, CGFloat){
+        var colorIndicator : CGColor = Colors.TrafficColors.GreenLight
+        var percentageFill : CGFloat = 0.6
+        if let base = self.baseTime {
+            if let traffic = self.trafficTime{
+                if traffic > base * 3/2 && traffic < base * 2{
+                    colorIndicator = Colors.TrafficColors.YellowLight
+                    percentageFill = 0.75
+                } else if traffic >= base * 2{
+                    colorIndicator = Colors.TrafficColors.RedLight
+                    percentageFill = 0.9
+                }
+            }
+        }
+        return (colorIndicator, percentageFill)
     }
     
     func setViaRouteDescription(mainRoads : [String]?){
