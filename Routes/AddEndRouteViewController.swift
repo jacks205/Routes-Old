@@ -18,6 +18,9 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     var directionTableDelegate : AddRouteProtocol?
     var currentCoords : CLLocationCoordinate2D?
+    
+    var startingLocation : Location?
+    
     var locations : [Location]?
     var selectedCellIndexPath : NSIndexPath?
     
@@ -58,7 +61,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     @IBAction func cancelModal(sender : AnyObject){
-        println("cancelModal")
+//        println("cancelModal")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -68,9 +71,30 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    //TODO: Clean this logic up
     @IBAction func routeClick(sender: AnyObject) {
-        if self.selectedCellIndexPath != nil{
-            self.dismissViewControllerAnimated(true, completion: nil)
+        if let cellIndexPath = self.selectedCellIndexPath {
+            let endingLocation : Location? = self.locations?[cellIndexPath.row]
+            let startingLocation : Location? = self.startingLocation
+            if let endLocation = endingLocation {
+                if endLocation.location == nil{
+                    Alert.createAlertView("Sorry!", message: "There was a problem with the ending address you provided.", sender: self)
+                }
+                if let startLocation = startingLocation {
+                    if startingLocation?.location == nil{
+                        Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
+                    }else{
+                    //Delegate stuff to send back to the RoutesViewController
+                        let vc : RoutesTableViewController = self.navigationController?.presentingViewController as RoutesTableViewController
+                        vc.addRouteViewControllerDismissed(startLocation, endingLocation: endLocation)
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                }else{
+                    Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
+                }
+            }else{
+                Alert.createAlertView("Sorry!", message: "There was a problem with the ending address you provided.", sender: self)
+            }
         }else{
             //TODO: Can change this by hiding next button instead
             Alert.createAlertView("Oops.", message: "Please select end location.", sender: self)
@@ -115,14 +139,14 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
             self.locations?.removeAll(keepCapacity: false)
             var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
             query.input = searchBar.text // search key word
-            println(self.currentCoords)
+//            println(self.currentCoords)
             if let location = self.currentCoords{
                 query.location = location  // user's current location
             }
             query.radius = 5000   // search addresses close to user
             query.language = "en" // optional
             query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
-            println(query)
+//            println(query)
             query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
                 if (error != nil){
                     println(error.localizedDescription)

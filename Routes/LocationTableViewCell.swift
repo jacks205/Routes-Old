@@ -31,5 +31,16 @@ class LocationTableViewCell: UITableViewCell {
         }
     }
     
+    override func drawRect(rect: CGRect) {
+        let ref = UIGraphicsGetCurrentContext()
+        //Draw Line across bottom of cell to give separation
+        let lineWidth :CGFloat = 1
+        CGContextSetLineWidth(ref, lineWidth)
+        CGContextSetStrokeColorWithColor(ref, UIColor.whiteColor().CGColor)
+        CGContextMoveToPoint(ref, 0, self.frame.height)
+        CGContextAddLineToPoint(ref, self.frame.width, self.frame.height)
+        CGContextStrokePath(ref)
+    }
+    
     
 }

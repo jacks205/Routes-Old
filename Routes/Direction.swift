@@ -8,35 +8,23 @@
 import CoreLocation
 
 class Direction {
-    var startingLocation : String?
-    var endingLocation : String?
+    var startingLocation : Location?
+    var endingLocation : Location?
     var viaDirections : [String]?
-
-    var address : String?
-    var city : String?
-    var zipcode : String?
-    var state : String?
     
     var distance : Int?
     var baseTime : Int?
     var trafficTime : Int?
     var travelTime : Int?
     
-    var latitude : Float?
-    var longitude : Float?
-    
-    init(startingLocation : String, endingLocation : String, viaDirections : [String], address : String, city: String, state : String, zipcode : String){
+    init(startingLocation : Location, endingLocation : Location,  viaDirections : [String]){
         self.startingLocation = startingLocation
         self.endingLocation = endingLocation
         self.viaDirections = viaDirections
-        self.address = address;
-        self.city = city;
-        self.state = state;
-        self.zipcode = zipcode;
     }
     
     func buildUrl(currentLocation : CLLocationCoordinate2D) -> NSURL?{
-        let stringUrl = "\(Constants.URL_1)app_id=\(Constants.APP_ID)&app_code=\(Constants.APP_CODE)&waypoint0=geo!\(currentLocation.latitude),\(currentLocation.longitude)&waypoint1=geo!\(self.latitude),\(self.longitude)&\(Constants.URL_2)"
+        let stringUrl = "\(Constants.URL_1)app_id=\(Constants.APP_ID)&app_code=\(Constants.APP_CODE)&waypoint0=geo!\(startingLocation?.location.coordinate.latitude),\(startingLocation?.location.coordinate.longitude)&waypoint1=geo!\(endingLocation?.location.coordinate.latitude),\(endingLocation?.location.coordinate.longitude)&\(Constants.URL_2)"
         return NSURL(string: stringUrl)
     }
     

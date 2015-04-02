@@ -9,7 +9,7 @@ import UIKit
 import SPGooglePlacesAutocomplete
 
 protocol AddRouteProtocol{
-    func addRouteViewControllerDismissed(direction : Direction)
+    func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location)
 }
 
 class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
@@ -60,29 +60,28 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         self.tableView.backgroundColor = UIColor.clearColor()
     }
     
-    func cancelModal(direction : Direction){
-        println("cancelModal")
-//        self.directionTableDelegate!.addRouteViewControllerDismissed(direction)
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     @IBAction func cancel(sender: AnyObject) {
-        println("cancel")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func nextClick(sender: AnyObject) {
-        println("nextClick")
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println("prepareForSegue")
         if(segue.identifier! == "endRoute"){
-            if self.selectedCellIndexPath != nil{
+            if let cellIndexPath = self.selectedCellIndexPath{
+                let vc : AddEndRouteViewController = segue.destinationViewController as AddEndRouteViewController
                 if let currentLocation = self.currentCoords{
-                    let vc : AddEndRouteViewController = segue.destinationViewController as AddEndRouteViewController
                     vc.currentCoords = currentLocation
+                }else{
+                    Alert.createAlertView("Warning!", message: "We do not have your current location, results may vary.", sender: self)
                 }
+                let startLocation : Location? = self.locations![cellIndexPath.row]
+                if let location = startLocation {
+                    vc.startingLocation = location
+                }
+                
             }else{
                 //TODO: Can change this by hiding next button instead
                 Alert.createAlertView("Oops.", message: "Please select start location.", sender: self)

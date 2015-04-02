@@ -33,7 +33,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         // Add gradient background
         self.addGradientLayer()
         
-        
         //Initializers
         self.initializeTableView()
         self.initializeSearchBar()
@@ -46,22 +45,32 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         //TODO: Remove and implement real dataset
         //Load in directions from user
         self.directions = []
+        self.searchDirections = []
         for(var i = 0; i < 3; ++i){
-            let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "School", viaDirections: ["I-55S","Chapman"], address: "12345 A Street", city: "Some City", state: "CA",  zipcode: "12345")
+            let dir : Direction = Direction(
+                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+                endingLocation: Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+                viaDirections: ["I-55s", "Chapman"])
             dir.distance = 123412
             dir.trafficTime = 12313
             dir.travelTime = 213131
             self.directions?.append(dir)
         }
         for(var i = 0; i < 3; ++i){
-            let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "Work", viaDirections: ["I-57S","Lambert"], address: "12345 A Road", city: "Some Town", state: "CA",  zipcode: "54321")
+            let dir : Direction = Direction(
+                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+                endingLocation: Location(areaOfInterest: "Work", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+                viaDirections: ["I-55s", "Chapman"])
             dir.distance = 13745
             dir.trafficTime = 13445
             dir.travelTime = 13445
             self.directions?.append(dir)
         }
         for(var i = 0; i < 3; ++i){
-            let dir : Direction = Direction(startingLocation: "Current Location", endingLocation: "Winterfell", viaDirections: ["Kings Road", "The Twins", "Kings Landing"], address: "12345 A Road", city: "Some Town", state: "CA",  zipcode: "54321")
+            let dir : Direction = Direction(
+                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+                endingLocation: Location(areaOfInterest: "Winterfell", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+                viaDirections: ["I-55s", "Chapman"])
             dir.distance = 139995
             dir.trafficTime = 135445
             dir.travelTime = 135245
@@ -173,8 +182,8 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             directionEntry = self.searchDirections![indexPath.row]
         }
         if let direction = directionEntry {
-            cell.startLocation.text = direction.startingLocation
-            cell.endLocation.text =  direction.endingLocation
+            cell.startLocation.text = direction.startingLocation?.areaOfInterest
+            cell.endLocation.text =  direction.endingLocation?.areaOfInterest
             cell.setViaRouteDescription(direction.viaDirections)
             
             let distance = direction.distance
@@ -200,9 +209,12 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             //Populate searchDirections
             self.searchDirections?.removeAll(keepCapacity: false)
             for route in self.directions! {
-                println(route.endingLocation!.lowercaseString)
-                let range : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.endIndex)
-                if (route.endingLocation?.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: range, locale: nil) != nil) {
+                let rangeStartLocation : Range = Range<String.Index>(start: searchText.startIndex, end: route.startingLocation!.areaOfInterest.endIndex)
+                if (route.startingLocation?.areaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeStartLocation, locale: nil) != nil) {
+                    self.searchDirections?.append(route)
+                }
+                let rangeEndLocation : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.areaOfInterest.endIndex)
+                if (route.endingLocation?.areaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeEndLocation, locale: nil) != nil) {
                     self.searchDirections?.append(route)
                 }
             }
@@ -223,8 +235,10 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     //MARK: AddRouteProtocol
     //AddRouteProtocol method
-    func addRouteViewControllerDismissed(direction : Direction){
-        self.directions?.append(direction)
+    func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location){
+        //Create Direction out of locations
+        
+//        self.directions?.append(direction)
         self.tableView.reloadData()
     }
     
