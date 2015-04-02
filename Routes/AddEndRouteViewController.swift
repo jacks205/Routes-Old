@@ -19,6 +19,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     var directionTableDelegate : AddRouteProtocol?
     var currentCoords : CLLocationCoordinate2D?
     var locations : [Location]?
+    var selectedCellIndexPath : NSIndexPath?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,8 +36,9 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         self.initializeTableView()
         self.initializeSearchBar()
         
-        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-        self.view.addGestureRecognizer(tap)
+        //TODO: Fix to add tap gesture only in certain states of the search bar
+//        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
+//        self.view.addGestureRecognizer(tap)
         
         self.locations = [Location]()
         for i in 0...5{
@@ -54,7 +56,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     func initializeTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.allowsSelection = false
+        self.tableView.allowsSelection = true
 //        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.backgroundColor = UIColor.clearColor()
     }
@@ -102,7 +104,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
 //        }
     }
     
-    func cancelModal(direction : Direction){
+    @IBAction func cancelModal(sender : AnyObject){
         println("cancelModal")
 //        self.directionTableDelegate!.addRouteViewControllerDismissed(direction)
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -115,16 +117,16 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func routeClick(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if self.selectedCellIndexPath != nil{
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }else{
+            //TODO: Can change this by hiding next button instead
+            Alert.createAlertView("Oops.", message: "Please select end location.", sender: self)
+        }
+        
         
     }
-    
-    func createAlertView(title : String, message : String){
-        var alert = UIAlertController(title: "Oops!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
+
     //MARK: Table View Delegate/Datasource Methods
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -149,6 +151,8 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
             pinImage.tag = 100
             cell.contentView.addSubview(pinImage)
         }
+        cell.selectedBackgroundView = UIView()
+        cell.selectedBackgroundView.backgroundColor = UIColor(CGColor: Colors.CellSelectionColor)
         cell.backgroundColor = UIColor.clearColor()
         return cell
     }
@@ -212,6 +216,23 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
         println("searchBarShouldEndEditing")
         return true
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //        println("didSelectRowAtIndexPath")
+        if let selectedRow = self.selectedCellIndexPath{
+            self.tableView.deselectRowAtIndexPath(selectedRow, animated: false)
+            if selectedRow == indexPath {
+                self.selectedCellIndexPath = nil
+                self.nextButton.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
+            }else{
+                self.selectedCellIndexPath = indexPath
+                self.nextButton.backgroundColor = UIColor.greenColor()
+            }
+        }else{
+            self.selectedCellIndexPath = indexPath
+            self.nextButton.backgroundColor = UIColor.greenColor()
+        }
     }
     
     // Handler for dismissing keyboard

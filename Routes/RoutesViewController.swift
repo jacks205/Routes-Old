@@ -331,3 +331,11 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
 }
 
+struct Alert {
+    static func createAlertView(title : String, message : String, sender : AnyObject){
+        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+        sender.presentViewController(alert, animated: true, completion: nil)
+    }
+}
+

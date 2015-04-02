@@ -23,6 +23,7 @@ struct Colors{
     static var ColorSpaceRef : CGColorSpaceRef?
     static var IndicatorBackground : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.20,0.26,0.28,1])
     static var TableText : CGColorRef = CGColorCreate(Colors.genericRGBSpace(),[125/255,126/255,126/255,1])
+    static var CellSelectionColor : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.31,0.57,0.87,1])
     struct TableViewGradient {
         static var Start    : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.02, 0.02, 0.02, 1])
         static var End      : CGColorRef = CGColorCreate(Colors.genericRGBSpace(), [0.28, 0.34, 0.38, 1])

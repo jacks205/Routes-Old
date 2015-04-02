@@ -23,6 +23,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     var currentCoords : CLLocationCoordinate2D?
     
     var locations : [Location]?
+    var selectedCellIndexPath : NSIndexPath?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -39,8 +40,9 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         self.initializeTableView()
         self.initializeSearchBar()
         
-        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-        self.view.addGestureRecognizer(tap)
+        //TODO: Fix to add tap gesture only in certain states of the search bar
+//        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
+//        self.view.addGestureRecognizer(tap)
         
         self.locations = [Location]()
         for i in 0...5{
@@ -58,7 +60,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     func initializeTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.allowsSelection = false
+        self.tableView.allowsSelection = true
 //        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.tableView.backgroundColor = UIColor.clearColor()
     }
@@ -75,7 +77,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         geocoder.geocodeAddressString(formattedAddress, completionHandler: { (placemarkObjects : [AnyObject]!, error : NSError!) -> Void in
             if(error != nil){
                 println(error.localizedDescription)
-                self.createAlertView("Oops", message: "There was an error generating the route. Please try again.")
+                Alert.createAlertView("Oops", message: "There was an error generating the route. Please try again.", sender: self)
             }else{
                 let placemarks : [CLPlacemark] = placemarkObjects as [CLPlacemark]
                 //One placemark
@@ -124,17 +126,16 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println("prepareForSegue")
         if(segue.identifier! == "endRoute"){
-            if let currentLocation = self.currentCoords{
-                let vc : AddEndRouteViewController = segue.destinationViewController as AddEndRouteViewController
-                vc.currentCoords = currentLocation
+            if self.selectedCellIndexPath != nil{
+                if let currentLocation = self.currentCoords{
+                    let vc : AddEndRouteViewController = segue.destinationViewController as AddEndRouteViewController
+                    vc.currentCoords = currentLocation
+                }
+            }else{
+                //TODO: Can change this by hiding next button instead
+                Alert.createAlertView("Oops.", message: "Please select start location.", sender: self)
             }
         }
-    }
-    
-    func createAlertView(title : String, message : String){
-        var alert = UIAlertController(title: "Oops!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     //MARK: Table View Delegate/Datasource Methods
@@ -158,11 +159,32 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
             let pinImage : UIImageView = UIImageView(frame: CGRectMake(24, 26, 20, 24))
             pinImage.image = UIImage(named: "pin", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)
             pinImage.tag = 100
+            pinImage.userInteractionEnabled = false
             cell.contentView.addSubview(pinImage)
         }
+        cell.selectedBackgroundView = UIView()
+        cell.selectedBackgroundView.backgroundColor = UIColor(CGColor: Colors.CellSelectionColor)
         cell.backgroundColor = UIColor.clearColor()
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        println("didSelectRowAtIndexPath")
+        if let selectedRow = self.selectedCellIndexPath{
+            self.tableView.deselectRowAtIndexPath(selectedRow, animated: false)
+            if selectedRow == indexPath {
+                self.selectedCellIndexPath = nil
+                self.nextButton.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
+            }else{
+                self.selectedCellIndexPath = indexPath
+                self.nextButton.backgroundColor = UIColor.greenColor()
+            }
+        }else{
+            self.selectedCellIndexPath = indexPath
+            self.nextButton.backgroundColor = UIColor.greenColor()
+        }
+    }
+    
     
     //MARK: SearchBar Delegate Methods
     func searchBarTextDidEndEditing(searchBar: UISearchBar){
@@ -182,19 +204,19 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         println("searchBarSearchButtonClicked")
-        println(countElements(searchBar.text))
+//        println(countElements(searchBar.text))
         if(countElements(searchBar.text) > 0){
             self.locations = [Location]()
             var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
             query.input = searchBar.text // search key word
-            println(self.currentCoords)
+//            println(self.currentCoords)
             if let location = self.currentCoords{
                 query.location = location  // user's current location
             }
             query.radius = 50   // search addresses close to user
             query.language = "en" // optional
             query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
-            println(query)
+//            println(query)
             query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
                 if (error != nil){
                     println(error.localizedDescription)

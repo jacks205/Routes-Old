@@ -173,14 +173,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa0-Ow-rhw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="poU-1u-arm">
-                                        <rect key="frame" x="257" y="26" width="55" height="30"/>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-vY-PnL">
+                                        <rect key="frame" x="8" y="19" width="264" height="44"/>
+                                        <color key="tintColor" red="0.49019607840000001" green="0.97584635419999999" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="barTintColor" red="0.18823529410000001" green="0.23137254900000001" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="light"/>
+                                    </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="poU-1u-arm">
+                                        <rect key="frame" x="272" y="22" width="40" height="37"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="NkT-CU-5F2"/>
-                                            <constraint firstAttribute="width" constant="55" id="Ybi-NB-3Bp"/>
+                                            <constraint firstAttribute="width" constant="40" id="ISz-Sa-Kii"/>
+                                            <constraint firstAttribute="height" constant="37" id="dKi-IU-6kR"/>
                                         </constraints>
                                         <color key="tintColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Cancel">
+                                        <state key="normal" image="cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -188,21 +194,14 @@
                                             <action selector="cancel:" destination="nZI-SD-im7" eventType="touchUpInside" id="hhk-AL-2Jj"/>
                                         </connections>
                                     </button>
-                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="rEx-vY-PnL">
-                                        <rect key="frame" x="8" y="19" width="249" height="44"/>
-                                        <color key="tintColor" red="0.49019607840000001" green="0.97584635419999999" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="barTintColor" red="0.18823529410000001" green="0.23137254900000001" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                        <textInputTraits key="textInputTraits" keyboardAppearance="light"/>
-                                    </searchBar>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="0mb-Ip-Qvb"/>
-                                    <constraint firstAttribute="trailing" secondItem="poU-1u-arm" secondAttribute="trailing" constant="8" id="IVS-DN-rgh"/>
-                                    <constraint firstItem="poU-1u-arm" firstAttribute="leading" secondItem="rEx-vY-PnL" secondAttribute="trailing" id="ZZX-YY-62y"/>
+                                    <constraint firstAttribute="trailing" secondItem="poU-1u-arm" secondAttribute="trailing" constant="8" id="Dim-t2-NGs"/>
+                                    <constraint firstItem="poU-1u-arm" firstAttribute="leading" secondItem="rEx-vY-PnL" secondAttribute="trailing" id="Ugr-So-Chg"/>
                                     <constraint firstItem="rEx-vY-PnL" firstAttribute="top" secondItem="aa0-Ow-rhw" secondAttribute="top" constant="19" id="g3g-Be-3KS"/>
-                                    <constraint firstItem="rEx-vY-PnL" firstAttribute="leading" secondItem="aa0-Ow-rhw" secondAttribute="leading" constant="8" id="meR-lT-Qf6"/>
-                                    <constraint firstAttribute="centerX" secondItem="poU-1u-arm" secondAttribute="centerX" constant="-124.5" id="t01-UW-Xv7"/>
-                                    <constraint firstItem="poU-1u-arm" firstAttribute="top" secondItem="aa0-Ow-rhw" secondAttribute="top" constant="26" id="u5p-sq-axW"/>
+                                    <constraint firstItem="rEx-vY-PnL" firstAttribute="leading" secondItem="aa0-Ow-rhw" secondAttribute="leading" constant="8" id="mO7-P4-S9F"/>
+                                    <constraint firstItem="poU-1u-arm" firstAttribute="top" secondItem="aa0-Ow-rhw" secondAttribute="top" constant="22" id="mQ6-xW-x0i"/>
                                 </constraints>
                             </view>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2tR-qZ-aoX">
@@ -221,7 +220,7 @@
                                     <segue destination="84B-mc-LuK" kind="push" identifier="endRoute" id="1pa-vS-pFq"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X8J-VJ-vTJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X8J-VJ-vTJ">
                                 <rect key="frame" x="0.0" y="71" width="320" height="453"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -320,36 +319,51 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBr-C0-tpA">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7MY-oo-oOA">
-                                        <rect key="frame" x="257" y="26" width="55" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7MY-oo-oOA">
+                                        <rect key="frame" x="272" y="22" width="40" height="37"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Cnn-To-8cV"/>
-                                            <constraint firstAttribute="width" constant="55" id="RCj-2E-blU"/>
+                                            <constraint firstAttribute="width" constant="40" id="CpK-Ir-3ZM"/>
+                                            <constraint firstAttribute="height" constant="37" id="DVn-pc-hiu"/>
                                         </constraints>
                                         <color key="tintColor" red="0.49019607840000001" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Back">
+                                        <state key="normal" image="cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="back:" destination="84B-mc-LuK" eventType="touchUpInside" id="i0d-Hl-X3y"/>
+                                            <action selector="cancelModal:" destination="84B-mc-LuK" eventType="touchUpInside" id="lhC-Sy-uUy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJ1-Vv-jhZ">
+                                        <rect key="frame" x="8" y="22" width="40" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="37" id="26s-PO-nMY"/>
+                                            <constraint firstAttribute="width" constant="40" id="deo-s1-BF3"/>
+                                        </constraints>
+                                        <state key="normal" image="back">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="back:" destination="84B-mc-LuK" eventType="touchUpInside" id="e4u-Qs-ww6"/>
                                         </connections>
                                     </button>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="z97-ZS-wDJ">
-                                        <rect key="frame" x="8" y="19" width="249" height="44"/>
+                                        <rect key="frame" x="48" y="19" width="224" height="44"/>
                                         <color key="tintColor" red="0.49019607840000001" green="0.97584635419999999" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="barTintColor" red="0.18823529410000001" green="0.23137254900000001" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                         <textInputTraits key="textInputTraits" keyboardAppearance="light"/>
                                     </searchBar>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="7MY-oo-oOA" secondAttribute="trailing" constant="8" id="0gu-UU-8PF"/>
-                                    <constraint firstItem="z97-ZS-wDJ" firstAttribute="top" secondItem="EBr-C0-tpA" secondAttribute="top" constant="19" id="11Q-KS-8RT"/>
-                                    <constraint firstAttribute="centerX" secondItem="7MY-oo-oOA" secondAttribute="centerX" constant="-124.5" id="7XV-B5-VyI"/>
+                                    <constraint firstItem="7MY-oo-oOA" firstAttribute="top" secondItem="EBr-C0-tpA" secondAttribute="top" constant="22" id="3um-xX-DJ2"/>
+                                    <constraint firstItem="YJ1-Vv-jhZ" firstAttribute="top" secondItem="EBr-C0-tpA" secondAttribute="top" constant="22" id="7Ar-tK-kM9"/>
+                                    <constraint firstItem="YJ1-Vv-jhZ" firstAttribute="leading" secondItem="EBr-C0-tpA" secondAttribute="leading" constant="8" id="81G-G9-9AE"/>
                                     <constraint firstAttribute="height" constant="63" id="LW4-Z3-vvF"/>
-                                    <constraint firstItem="7MY-oo-oOA" firstAttribute="leading" secondItem="z97-ZS-wDJ" secondAttribute="trailing" id="tzv-wK-wXo"/>
-                                    <constraint firstItem="z97-ZS-wDJ" firstAttribute="leading" secondItem="EBr-C0-tpA" secondAttribute="leading" constant="8" id="xRB-gi-Dgr"/>
-                                    <constraint firstItem="7MY-oo-oOA" firstAttribute="top" secondItem="EBr-C0-tpA" secondAttribute="top" constant="26" id="yau-GK-GVR"/>
+                                    <constraint firstItem="z97-ZS-wDJ" firstAttribute="leading" secondItem="YJ1-Vv-jhZ" secondAttribute="trailing" id="Pus-Ng-MBQ"/>
+                                    <constraint firstItem="7MY-oo-oOA" firstAttribute="leading" secondItem="z97-ZS-wDJ" secondAttribute="trailing" id="lgZ-K0-Et9"/>
+                                    <constraint firstItem="z97-ZS-wDJ" firstAttribute="top" secondItem="EBr-C0-tpA" secondAttribute="top" constant="19" id="msu-Fu-bxY"/>
+                                    <constraint firstAttribute="trailing" secondItem="7MY-oo-oOA" secondAttribute="trailing" constant="8" id="vmG-0X-DAb"/>
                                 </constraints>
                             </view>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qDg-Qk-d4v">
@@ -367,7 +381,7 @@
                                     <action selector="routeClick:" destination="84B-mc-LuK" eventType="touchUpInside" id="Boz-nJ-Tdo"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ej7-Fk-xru">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ej7-Fk-xru">
                                 <rect key="frame" x="0.0" y="71" width="320" height="453"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -474,6 +488,8 @@
     </scenes>
     <resources>
         <image name="Suv2-64" width="64" height="64"/>
+        <image name="back" width="21" height="21"/>
+        <image name="cancel" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
