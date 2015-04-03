@@ -74,6 +74,18 @@ class Location {
         return address
     }
     
+    func print(){
+        println(self.areaOfInterest)
+        println(self.streetNumber)
+        println(self.streetAddress)
+        println(self.city)
+        println(self.state)
+        println(self.county)
+        println(self.postalCode)
+        println(self.country)
+        println(self.location)
+    }
+    
     private func getEstablishmentName(addressString : String) -> String?{
         let range : Range<String.Index>? = addressString.rangeOfString(",")
         if let rangeToComma = range{

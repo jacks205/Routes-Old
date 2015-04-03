@@ -62,7 +62,6 @@ class RouteTableViewCell: UITableViewCell {
     
     override func drawRect(rect: CGRect) {
         //Drawing code
-        println("drawRect")
         let ref  = UIGraphicsGetCurrentContext()
         CGContextSaveGState(ref)
         //Draw Line across cell

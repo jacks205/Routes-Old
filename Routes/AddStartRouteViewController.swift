@@ -6,11 +6,23 @@
 //  Copyright (c) 2015 Mark Jackson. All rights reserved.
 //
 import UIKit
-import SPGooglePlacesAutocomplete
 import MapKit
 
 protocol AddRouteProtocol{
     func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location)
+}
+
+extension Array {
+    
+    // Safely lookup an index that might be out of bounds,
+    // returning nil if it does not exist
+    func get(index: Int) -> T? {
+        if 0 <= index && index < count {
+            return self[index]
+        } else {
+            return nil
+        }
+    }
 }
 
 class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
@@ -23,10 +35,11 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     var directionTableDelegate : AddRouteProtocol?
     var currentCoords : CLLocationCoordinate2D?
     
-    var locations : [Location]?
+    var locations : [Location]
     var selectedCellIndexPath : NSIndexPath?
     
     required init(coder aDecoder: NSCoder) {
+        self.locations = []
         super.init(coder: aDecoder)
     }
     
@@ -40,8 +53,6 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         self.view.alpha = 1
         self.initializeTableView()
         self.initializeSearchBar()
-        
-        self.locations = []
     }
     
     func initializeSearchBar(){
@@ -74,9 +85,10 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
                 }else{
                     Alert.createAlertView("Warning!", message: "We do not have your current location, results may vary.", sender: self)
                 }
-                let startLocation : Location? = self.locations![cellIndexPath.row]
-                if let location = startLocation {
-                    vc.startingLocation = location
+                if let  startLocation : Location? = self.locations.get(cellIndexPath.row){
+                    if let location = startLocation {
+                        vc.startingLocation = location
+                    }
                 }
                 
             }else{
@@ -93,15 +105,14 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.locations!.count
+        return self.locations.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell") as LocationTableViewCell
         
-        let autocorrectLocation : Location? = self.locations![indexPath.row]
-        if let location = autocorrectLocation{
+        if let location = self.locations.get(indexPath.row){
             cell.locationNameLabel.text = location.areaOfInterest
             cell.locationAddressLabel.text = location.buildAddressString()
             let pinImage : UIImageView = UIImageView(frame: CGRectMake(24, 26, 20, 24))
@@ -139,11 +150,11 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if countElements(searchText) > 0 {
+            self.selectedCellIndexPath = nil
             self.changeSelectedCell(self.selectedCellIndexPath)
-            self.locations?.removeAll(keepCapacity: false)
+            self.locations.removeAll(keepCapacity: false)
             let req : MKLocalSearchRequest = MKLocalSearchRequest()
             if let currentPosition = self.currentCoords{
-                println(currentPosition.latitude)
                 req.region = MKCoordinateRegionMakeWithDistance(currentPosition, 50000, 50000)
             }
             req.naturalLanguageQuery = searchText
@@ -158,7 +169,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
                         for item in mapItems{
                             if let placemark = item.placemark{
                                 let newLocation : Location = Location(addressString: item.name, place: placemark)
-                                self.locations?.append(newLocation)
+                                self.locations.append(newLocation)
                                 self.tableView.reloadData()
                             }
                         }
@@ -171,43 +182,6 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     //MARK: SearchBar Delegate Methods
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        println("=====================================")
-        println("=====================================")
-        
-//        if(countElements(searchBar.text) > 0){
-//            self.changeSelectedCell(self.selectedCellIndexPath)
-//            self.locations?.removeAll(keepCapacity: false)
-//            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
-//            query.input = searchBar.text // search key word
-//            if let location = self.currentCoords{
-//                query.location = location  // user's current location
-//            }
-//            query.radius = 5000   // search addresses close to user
-//            query.language = "en" // optional
-//            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
-//            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
-//                if (error != nil){
-//                    println(error.localizedDescription)
-//                }else{
-//                    for place in places {
-//                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
-//                        if let placeMark = googlePlaceMark {
-//                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
-//                                if (error != nil){
-//                                    println("Error \(error.localizedDescription)")
-//                                    self.tableView.reloadData()
-//                                }else{
-//                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
-//                                    self.locations?.append(newLocation)
-//                                    self.tableView.reloadData()
-//                                }
-//                            })
-//                        }
-//                    }
-////                    self.tableView.reloadData()
-//                }
-//            }
-//        }
         self.searchBar.resignFirstResponder()
     }
     

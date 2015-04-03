@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SPGooglePlacesAutocomplete
 import MapKit
 
 class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
@@ -22,10 +21,11 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     var startingLocation : Location?
     
-    var locations : [Location]?
+    var locations : [Location]
     var selectedCellIndexPath : NSIndexPath?
     
     required init(coder aDecoder: NSCoder) {
+        self.locations = []
         super.init(coder: aDecoder)
     }
     
@@ -39,8 +39,6 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         self.view.alpha = 1
         self.initializeTableView()
         self.initializeSearchBar()
-
-        self.locations = []
     }
     
     func initializeSearchBar(){
@@ -71,20 +69,19 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     //TODO: Clean this logic up
     @IBAction func routeClick(sender: AnyObject) {
         if let cellIndexPath = self.selectedCellIndexPath {
-            let endingLocation : Location? = self.locations?[cellIndexPath.row]
-            let startingLocation : Location? = self.startingLocation
-            if let endLocation = endingLocation {
+            if let endLocation = self.locations.get(cellIndexPath.row) {
                 if endLocation.location == nil{
                     Alert.createAlertView("Sorry!", message: "There was a problem with the ending address you provided.", sender: self)
                 }
-                if let startLocation = startingLocation {
-                    if startingLocation?.location == nil{
+                if let startLocation = self.startingLocation {
+                    if startLocation.location == nil{
                         Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
                     }else{
                     //Delegate stuff to send back to the RoutesViewController
                         let vc : RoutesTableViewController = self.navigationController?.presentingViewController as RoutesTableViewController
-                        vc.addRouteViewControllerDismissed(startLocation, endingLocation: endLocation)
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                            vc.addRouteViewControllerDismissed(startLocation, endingLocation: endLocation)
+                        })
                     }
                 }else{
                     Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
@@ -96,8 +93,6 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
             //TODO: Can change this by hiding next button instead
             Alert.createAlertView("Oops.", message: "Please select end location.", sender: self)
         }
-        
-        
     }
 
     //MARK: Table View Delegate/Datasource Methods
@@ -107,7 +102,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.locations!.count
+        return self.locations.count
         
     }
     
@@ -115,8 +110,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         
         var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell2") as LocationTableViewCell
         
-        let autocorrectLocation : Location? = self.locations![indexPath.row]
-        if let location = autocorrectLocation{
+        if let location = self.locations.get(indexPath.row){
             cell.locationNameLabel.text = location.areaOfInterest
             cell.locationAddressLabel.text = location.buildAddressString()
             let pinImage : UIImageView = UIImageView(frame: CGRectMake(24, 26, 20, 24))
@@ -132,16 +126,16 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: SearchBar Delegate Methods
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-                self.searchBar.resignFirstResponder()
+        self.searchBar.resignFirstResponder()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if(countElements(searchBar.text) > 0){
+            self.selectedCellIndexPath = nil
             self.changeSelectedCell(self.selectedCellIndexPath)
-            self.locations?.removeAll(keepCapacity: false)
+            self.locations.removeAll(keepCapacity: false)
             let req : MKLocalSearchRequest = MKLocalSearchRequest()
             if let currentPosition = self.currentCoords{
-                println(currentPosition.latitude)
                 req.region = MKCoordinateRegionMakeWithDistance(currentPosition, 50000, 50000)
             }
             req.naturalLanguageQuery = searchText
@@ -156,7 +150,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
                         for item in mapItems{
                             if let placemark = item.placemark{
                                 let newLocation : Location = Location(addressString: item.name, place: placemark)
-                                self.locations?.append(newLocation)
+                                self.locations.append(newLocation)
                                 self.tableView.reloadData()
                             }
                         }

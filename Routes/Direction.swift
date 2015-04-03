@@ -22,8 +22,21 @@ class Direction {
         self.viaDirections = viaDirections
     }
     
-    func buildUrl(currentLocation : CLLocationCoordinate2D) -> NSURL?{
-        let stringUrl = "\(Constants.URL_1)app_id=\(Constants.APP_ID)&app_code=\(Constants.APP_CODE)&waypoint0=geo!\(startingLocation?.location.coordinate.latitude),\(startingLocation?.location.coordinate.longitude)&waypoint1=geo!\(endingLocation?.location.coordinate.latitude),\(endingLocation?.location.coordinate.longitude)&\(Constants.URL_2)"
+    func buildUrl() -> NSURL?{
+        var stringUrl : String = "\(Constants.URL_1)app_id=\(Constants.APP_ID)&app_code=\(Constants.APP_CODE)"
+        println("Creating URL")
+        if let startLocation = self.startingLocation{
+            stringUrl += "&waypoint0=geo!\(startLocation.location.coordinate.latitude),\(startLocation.location.coordinate.longitude)"
+        }else{
+            return nil
+        }
+        if let endLocation = self.endingLocation{
+            stringUrl += "&waypoint1=geo!\(endLocation.location.coordinate.latitude),\(endLocation.location.coordinate.longitude)"
+        }else{
+            return nil
+        }
+        stringUrl += "&\(Constants.URL_2)"
+        println("Created URL")
         return NSURL(string: stringUrl)
     }
     

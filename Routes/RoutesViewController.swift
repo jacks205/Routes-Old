@@ -13,10 +13,12 @@ import Alamofire
 import SwiftyJSON
 
 class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate, AddRouteProtocol {
+
+    
     
     var locationManager : CLLocationManager?
-    var directions : [Direction]?
-    var searchDirections : [Direction]?
+    var directions : [Direction]
+    var searchDirections : [Direction]
     var currentCoords : CLLocationCoordinate2D?
     
     var isSearching : Bool!
@@ -24,6 +26,11 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    required init(coder aDecoder: NSCoder) {
+        self.directions = []
+        self.searchDirections = []
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,43 +51,42 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         //TODO: Remove and implement real dataset
         //Load in directions from user
-        self.directions = []
-        self.searchDirections = []
-        for(var i = 0; i < 3; ++i){
-            let dir : Direction = Direction(
-                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-                endingLocation: Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-                viaDirections: ["I-55s", "Chapman"])
-            dir.distance = 32167
-            dir.trafficTime = 2000
-            dir.baseTime = 2470
-            self.directions?.append(dir)
-        }
-        for(var i = 0; i < 3; ++i){
-            let dir : Direction = Direction(
-                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-                endingLocation: Location(areaOfInterest: "Work", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-                viaDirections: ["I-55s", "Chapman"])
-            dir.distance = 32167
-            dir.trafficTime = 2500 * 3/2
-            dir.baseTime = 2470
-            self.directions?.append(dir)
-        }
-        for(var i = 0; i < 3; ++i){
-            let dir : Direction = Direction(
-                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-                endingLocation: Location(areaOfInterest: "Winterfell", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-                viaDirections: ["I-55s", "Chapman"])
-            dir.distance = 32167
-            dir.trafficTime = 2514 * 5
-            dir.baseTime = 2470
-            self.directions?.append(dir)
-        }
+//        for(var i = 0; i < 3; ++i){
+//            let dir : Direction = Direction(
+//                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+//                endingLocation: Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+//                viaDirections: ["I-55s", "Chapman"])
+//            dir.distance = 32167
+//            dir.trafficTime = 2000
+//            dir.baseTime = 2470
+//            self.directions.append(dir)
+//        }
+//        for(var i = 0; i < 3; ++i){
+//            let dir : Direction = Direction(
+//                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+//                endingLocation: Location(areaOfInterest: "Work", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+//                viaDirections: ["I-55s", "Chapman"])
+//            dir.distance = 32167
+//            dir.trafficTime = 2500 * 3/2
+//            dir.baseTime = 2470
+//            self.directions.append(dir)
+//        }
+//        for(var i = 0; i < 3; ++i){
+//            let dir : Direction = Direction(
+//                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+//                endingLocation: Location(areaOfInterest: "Winterfell", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
+//                viaDirections: ["I-55s", "Chapman"])
+//            dir.distance = 32167
+//            dir.trafficTime = 2514 * 5
+//            dir.baseTime = 2470
+//            self.directions.append(dir)
+//        }
         
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.refreshRoutes()
     }
     
     //Initialize Location Manager and update location
@@ -124,51 +130,61 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     func refreshRoutes(){
         //TODO: Create module/pod for this
         //Directions exist
-        for direction in self.directions!{
-            Alamofire.request(.GET, direction.buildUrl(self.currentCoords!)!, parameters: nil, encoding: ParameterEncoding.URL)
-                .responseJSON(options: nil, completionHandler: { (
-                    req, res, json, error) -> Void in
-                    if(error != nil){
-                        println("Error: \(error)")
-                        println(req)
-                        println(res)
-                    }else{
-                        let json = JSON(json!)
-                        if let summary = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY].string{
-                            println(summary)
-                            //TODO: Fix SwiftyJSON Parsing
-                            //                                if let distance = summary[Constants.DISTANCE_KEY].int{
-                            //                                    dir.distance = distance
-                            //                                }
-                            //                                if let baseTime = summary[Constants.BASE_TIME_KEY].int{
-                            //                                    dir.baseTime = baseTime
-                            //                                }
-                            //                                if let trafficTime = summary[Constants.TRAFFIC_TIME_KEY].int{
-                            //                                    dir.trafficTime = trafficTime
-                            //                                }
-                            //                                if let travelTime = summary[Constants.TRAVEL_TIME_KEY].int{
-                            //                                    dir.travelTime = travelTime
-                            //                                }
+        for direction in self.directions{
+            if let url = direction.buildUrl(){
+                println(url)
+                Alamofire.request(.GET, url, parameters: nil, encoding: ParameterEncoding.URL)
+                    .responseJSON({ (req, res, json, error) -> Void in
+                        if let err = error{
+                            println("Error: \(err)")
+                            println(req)
+                            println(res)
                         }else{
-                            println("Error: \(json.string)")
+                            let json : JSON = JSON(json!)
+                            let summary : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY]
+//                            println("route")
+//                            println(json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY])
+//                            println("summary")
+//                            println(json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY])
+                            //Distance
+                            if let distance = summary[Constants.DISTANCE_KEY].int{
+                                direction.distance = distance
+                            }else{
+                                println(summary[Constants.DISTANCE_KEY].error!)
+                            }
+                            //Traffic Time
+                            if let trafficTime = summary[Constants.TRAFFIC_TIME_KEY].int{
+                                direction.trafficTime = trafficTime
+                            }else{
+                                println(summary[Constants.TRAFFIC_TIME_KEY].error!)
+                            }
+                            //Base Time
+                            if let baseTime = summary[Constants.BASE_TIME_KEY].int{
+                                direction.baseTime = baseTime
+                            }else{
+                                println(summary[Constants.BASE_TIME_KEY].error!)
+                            }
+
                         }
-                    }
-                })
-            self.tableView.reloadData()
+                        self.tableView.reloadData()
+                    })
+            }else{
+                Alert.createAlertView("Oops!", message: "One of your routes is invalid", sender: self)
+            }
+            
         }
     }
     
     //MARK: TableView Delegate Methods
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
         return 1;
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.isSearching! {
-            return self.searchDirections!.count
+            return self.searchDirections.count
         }else{
-            return self.directions!.count
+            return self.directions.count
         }
         
     }
@@ -178,9 +194,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         var cell : RouteTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as RouteTableViewCell
         var directionEntry : Direction?
         if !self.isSearching! {
-            directionEntry = self.directions![indexPath.row]
+            directionEntry = self.directions.get(indexPath.row)
         }else{
-            directionEntry = self.searchDirections![indexPath.row]
+            directionEntry = self.searchDirections.get(indexPath.row)
         }
         if let direction = directionEntry {
             cell.startLocation.text = direction.startingLocation?.areaOfInterest
@@ -209,15 +225,15 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         //Check if user is searching for specific route
         if(countElements(searchText) > 0){
             //Populate searchDirections
-            self.searchDirections?.removeAll(keepCapacity: false)
-            for route in self.directions! {
+            self.searchDirections.removeAll(keepCapacity: false)
+            for route in self.directions{
                 let rangeStartLocation : Range = Range<String.Index>(start: searchText.startIndex, end: route.startingLocation!.areaOfInterest.endIndex)
                 if (route.startingLocation?.areaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeStartLocation, locale: nil) != nil) {
-                    self.searchDirections?.append(route)
+                    self.searchDirections.append(route)
                 }
                 let rangeEndLocation : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.areaOfInterest.endIndex)
                 if (route.endingLocation?.areaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeEndLocation, locale: nil) != nil) {
-                    self.searchDirections?.append(route)
+                    self.searchDirections.append(route)
                 }
             }
             self.isSearching = true
@@ -239,10 +255,12 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     //AddRouteProtocol method
     func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location){
         //Create Direction out of locations
-        println(startingLocation.location)
-        println(endingLocation.location)
-//        self.directions?.append(direction)
-        self.tableView.reloadData()
+        println(startingLocation.print())
+        println(endingLocation.print())
+        let newDirection : Direction = Direction(startingLocation: startingLocation, endingLocation: endingLocation, viaDirections: ["I-55s", "Chapman"])
+        self.directions.append(newDirection)
+        println("Appended")
+        self.refreshRoutes()
     }
     
     //IBAction for addButton to add a route and present a modal
