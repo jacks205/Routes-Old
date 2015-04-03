@@ -41,15 +41,16 @@ class Location {
         self.postalCode = place.postalCode
         self.country = place.country
         self.location = place.location
-        if let areaOfInt = getEstablishmentName(addressString){
-            self.areaOfInterest = areaOfInt
-        }else{
-            if let areaOfInt = place.areasOfInterest{
-                self.areaOfInterest = areaOfInt[0] as String
-            }else{
-                self.areaOfInterest = place.name
-            }
-        }
+        self.areaOfInterest = addressString
+//        if let areaOfInt = getEstablishmentName(addressString){
+//            self.areaOfInterest = areaOfInt
+//        }else{
+//            if let areaOfInt = place.areasOfInterest{
+//                self.areaOfInterest = areaOfInt[0] as String
+//            }else{
+//                self.areaOfInterest = place.name
+//            }
+//        }
     }
     
     func buildAddressString() -> String{

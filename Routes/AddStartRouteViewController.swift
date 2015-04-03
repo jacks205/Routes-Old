@@ -7,6 +7,7 @@
 //
 import UIKit
 import SPGooglePlacesAutocomplete
+import MapKit
 
 protocol AddRouteProtocol{
     func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location)
@@ -41,10 +42,6 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         self.initializeSearchBar()
         
         self.locations = []
-        for i in 0...5{
-            let location : Location = Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US")
-            self.locations?.append(location)
-        }
     }
     
     func initializeSearchBar(){
@@ -140,43 +137,77 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
     
-    
-    //MARK: SearchBar Delegate Methods
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if(countElements(searchBar.text) > 0){
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if countElements(searchText) > 0 {
             self.changeSelectedCell(self.selectedCellIndexPath)
             self.locations?.removeAll(keepCapacity: false)
-            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
-            query.input = searchBar.text // search key word
-            if let location = self.currentCoords{
-                query.location = location  // user's current location
+            let req : MKLocalSearchRequest = MKLocalSearchRequest()
+            if let currentPosition = self.currentCoords{
+                println(currentPosition.latitude)
+                req.region = MKCoordinateRegionMakeWithDistance(currentPosition, 50000, 50000)
             }
-            query.radius = 5000   // search addresses close to user
-            query.language = "en" // optional
-            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
-            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
-                if (error != nil){
+            req.naturalLanguageQuery = searchText
+            let localSearch : MKLocalSearch = MKLocalSearch(request: req)
+            localSearch.startWithCompletionHandler { (res : MKLocalSearchResponse!, error : NSError!) -> Void in
+                if error != nil{
                     println(error.localizedDescription)
+    //                self.tableView.reloadData()
                 }else{
-                    for place in places {
-                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
-                        if let placeMark = googlePlaceMark {
-                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
-                                if (error != nil){
-                                    println("Error \(error.localizedDescription)")
-                                    self.tableView.reloadData()
-                                }else{
-                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
-                                    self.locations?.append(newLocation)
-                                    self.tableView.reloadData()
-                                }
-                            })
+                    println()
+                    if let mapItems = res.mapItems as? [MKMapItem]{
+                        for item in mapItems{
+                            if let placemark = item.placemark{
+                                let newLocation : Location = Location(addressString: item.name, place: placemark)
+                                self.locations?.append(newLocation)
+                                self.tableView.reloadData()
+                            }
                         }
                     }
-//                    self.tableView.reloadData()
                 }
             }
         }
+    }
+    
+    
+    //MARK: SearchBar Delegate Methods
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        println("=====================================")
+        println("=====================================")
+        
+//        if(countElements(searchBar.text) > 0){
+//            self.changeSelectedCell(self.selectedCellIndexPath)
+//            self.locations?.removeAll(keepCapacity: false)
+//            var query : SPGooglePlacesAutocompleteQuery = SPGooglePlacesAutocompleteQuery(apiKey: Constants.GOOGLE_PLACE_API_KEY)
+//            query.input = searchBar.text // search key word
+//            if let location = self.currentCoords{
+//                query.location = location  // user's current location
+//            }
+//            query.radius = 5000   // search addresses close to user
+//            query.language = "en" // optional
+//            query.types = SPGooglePlacesAutocompletePlaceType.PlaceTypeAll; // Only return geocoding (address) results.
+//            query.fetchPlaces { (places : [AnyObject]!, error : NSError!) -> Void in
+//                if (error != nil){
+//                    println(error.localizedDescription)
+//                }else{
+//                    for place in places {
+//                        let googlePlaceMark : SPGooglePlacesAutocompletePlace? = place as? SPGooglePlacesAutocompletePlace
+//                        if let placeMark = googlePlaceMark {
+//                            placeMark.resolveToPlacemark({ (clPlace : CLPlacemark!, addressString : String!, error : NSError!) -> Void in
+//                                if (error != nil){
+//                                    println("Error \(error.localizedDescription)")
+//                                    self.tableView.reloadData()
+//                                }else{
+//                                    let newLocation : Location = Location(addressString: addressString, place: clPlace)
+//                                    self.locations?.append(newLocation)
+//                                    self.tableView.reloadData()
+//                                }
+//                            })
+//                        }
+//                    }
+////                    self.tableView.reloadData()
+//                }
+//            }
+//        }
         self.searchBar.resignFirstResponder()
     }
     
