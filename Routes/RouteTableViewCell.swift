@@ -21,13 +21,13 @@ class RouteTableViewCell: UITableViewCell {
     @IBOutlet weak var viaRouteDescription : UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     
-    var totalDistance : String!
-    var totalTravelTime : String!
+    var totalDistance : String?
+    var totalTravelTime : String?
     
     var baseTime : Int?
     var trafficTime : Int?
     
-    var trafficColor : UIColor!
+    var trafficColor : UIColor?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,7 +53,11 @@ class RouteTableViewCell: UITableViewCell {
         let indicatorYPosition : CGFloat = self.frame.height * RouteTableViewCellConst.TrafficIndicatorOffsetPercentage
         let baseWidth : CGFloat = self.frame.width * RouteTableViewCellConst.IndicatorBaseWidthPercentage
         let travelTimeLabel : UILabel = UILabel(frame: CGRectMake(indicatorXPosition + 10, indicatorYPosition - 15, baseWidth, RouteTableViewCellConst.IndicatorBaseHeight))
-        travelTimeLabel.text = self.totalTravelTime
+        if let totalTravelTime = self.totalTravelTime{
+            travelTimeLabel.text = totalTravelTime
+        }else{
+            travelTimeLabel.text = "N/A"
+        }
         travelTimeLabel.textColor = UIColor.whiteColor()
         travelTimeLabel.font = UIFont(name: "Helvetica Neue", size: 11)
         travelTimeLabel.tag = 100
@@ -132,6 +136,8 @@ class RouteTableViewCell: UITableViewCell {
         return (colorIndicator, percentageFill)
     }
     
+    //Sets the via description to give an idea of the route that the information is for
+    //Can accept nil value
     func setViaRouteDescription(mainRoads : [String]?){
         var description : String = "via"
         if let roads = mainRoads{
@@ -144,6 +150,8 @@ class RouteTableViewCell: UITableViewCell {
                     description += " ,"
                 }
             }
+        }else{
+            description += " Unknown"
         }
         self.viaRouteDescription.text = description
     }

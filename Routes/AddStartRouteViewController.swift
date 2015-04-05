@@ -113,8 +113,12 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
         var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell") as LocationTableViewCell
         
         if let location = self.locations.get(indexPath.row){
-            cell.locationNameLabel.text = location.areaOfInterest
-            cell.locationAddressLabel.text = location.buildAddressString()
+            if let areaOfInterest = location.areaOfInterest{
+                cell.locationNameLabel.text = areaOfInterest
+            }
+            if let addressString = location.buildAddressString(){
+                cell.locationAddressLabel.text = addressString
+            }
             let pinImage : UIImageView = UIImageView(frame: CGRectMake(24, 26, 20, 24))
             pinImage.image = UIImage(named: "pin", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)
             pinImage.tag = 100

@@ -105,11 +105,13 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 println(url)
                 Alamofire.request(.GET, url, parameters: nil, encoding: ParameterEncoding.URL)
                     .responseJSON({ (req, res, json, error) -> Void in
+                        println("responseJSON")
                         if let err = error{
                             println("Error: \(err)")
                             println(req)
                             println(res)
                         }else{
+                            println(json)
                             let json : JSON = JSON(json!)
                             let summary : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY]
 //                            println("route")
@@ -171,21 +173,28 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             directionEntry = self.searchDirections.get(indexPath.row)
         }
         if let direction = directionEntry {
-            cell.startLocation.text = direction.startingLocation?.areaOfInterest
-            cell.endLocation.text =  direction.endingLocation?.areaOfInterest
+            if let startAreaOfInterest = direction.startingLocation?.areaOfInterest{
+                cell.startLocation.text = startAreaOfInterest
+            }
+            if let endAreaOfInterest = direction.endingLocation?.areaOfInterest{
+                cell.endLocation.text = endAreaOfInterest
+            }
+            //Setting via description
+            //Can accept nil value
             cell.setViaRouteDescription(direction.viaDirections)
-            
-            let distance = direction.distance
-            let trafficTime = direction.trafficTime
-            
             //Calculate user friendly values for distance and time
-            let distanceString = metersToMilesString(Float(distance!))
-            let trafficTimeString = secondsToHoursAndMinutesString(trafficTime!)
-            
-            cell.baseTime = direction.baseTime
-            cell.trafficTime = direction.trafficTime
-            cell.distanceLabel.text = distanceString;
-            cell.totalTravelTime = trafficTimeString;
+            if let dist = direction.distance{
+                let distanceString = metersToMilesString(Float(dist))
+                cell.distanceLabel.text = distanceString;
+            }
+            if let trafficTime = direction.trafficTime{
+                cell.trafficTime = direction.trafficTime
+                let trafficTimeString = secondsToHoursAndMinutesString(trafficTime)
+                cell.totalTravelTime = trafficTimeString
+            }
+            if let baseTime = direction.baseTime{
+                cell.baseTime = baseTime
+            }
             //Must set this in the cellForRowAtIndexPath: method
             cell.backgroundColor = UIColor.clearColor()
         }
@@ -209,14 +218,20 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             //Populate searchDirections
             self.searchDirections.removeAll(keepCapacity: false)
             for route in self.directions{
-                let rangeStartLocation : Range = Range<String.Index>(start: searchText.startIndex, end: route.startingLocation!.areaOfInterest.endIndex)
-                if (route.startingLocation?.areaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeStartLocation, locale: nil) != nil) {
-                    self.searchDirections.append(route)
+                if let startAreaOfInterest = route.startingLocation?.areaOfInterest{
+                    let rangeStartLocation : Range = Range<String.Index>(start: searchText.startIndex, end: startAreaOfInterest.endIndex)
+                    if (startAreaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeStartLocation, locale: nil) != nil) {
+                        self.searchDirections.append(route)
+                    }
                 }
-                let rangeEndLocation : Range = Range<String.Index>(start: searchText.startIndex, end: route.endingLocation!.areaOfInterest.endIndex)
-                if (route.endingLocation?.areaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeEndLocation, locale: nil) != nil) {
-                    self.searchDirections.append(route)
+                if let endAreaOfInterest = route.endingLocation?.areaOfInterest{
+                    let rangeEndLocation : Range = Range<String.Index>(start: searchText.startIndex, end: endAreaOfInterest.endIndex)
+                    if (endAreaOfInterest.lowercaseString.rangeOfString(searchText.lowercaseString, options: NSStringCompareOptions.AnchoredSearch, range: rangeEndLocation, locale: nil) != nil) {
+                        self.searchDirections.append(route)
+                    }
                 }
+                
+                
             }
             self.isSearching = true
         }else{
@@ -239,7 +254,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         //Create Direction out of locations
         println(startingLocation.print())
         println(endingLocation.print())
-        let newDirection : Direction = Direction(startingLocation: startingLocation, endingLocation: endingLocation, viaDirections: ["I-55s", "Chapman"])
+        let newDirection : Direction = Direction(startingLocation: startingLocation, endingLocation: endingLocation, viaDirections: nil)
         self.directions.append(newDirection)
         println("Appended")
         self.refreshRoutes()

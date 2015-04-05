@@ -9,17 +9,17 @@ import CoreLocation
 
 class Location {
     
-    let streetNumber : String!
-    let streetAddress : String!
-    let city : String!
-    let state : String!
-    let county : String!
-    let postalCode : String!
-    let country : String!
+    let streetNumber : String?
+    let streetAddress : String?
+    let city : String?
+    let state : String?
+    let county : String?
+    let postalCode : String?
+    let country : String?
 
-    let location : CLLocation!
+    let location : CLLocation?
     
-    let areaOfInterest : String!
+    let areaOfInterest : String?
     
     init(areaOfInterest : String, streetNumber : String, streetAddress : String, city : String, state : String, county : String, postalCode : String, country : String){
         self.areaOfInterest = areaOfInterest
@@ -53,7 +53,7 @@ class Location {
 //        }
     }
     
-    func buildAddressString() -> String{
+    func buildAddressString() -> String?{
         var address : String = ""
         if let streetNumber = self.streetNumber{
             address += streetNumber + " "
