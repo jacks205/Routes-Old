@@ -130,6 +130,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 //        println("didSelectRowAtIndexPath")
         self.changeSelectedCell(indexPath)
+        self.searchBar.resignFirstResponder()
     }
     
     func changeSelectedCell(indexPath : NSIndexPath?){

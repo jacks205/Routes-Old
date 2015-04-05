@@ -163,6 +163,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.changeSelectedCell(indexPath)
+        self.searchBar.resignFirstResponder()
     }
     
     func changeSelectedCell(indexPath : NSIndexPath?){

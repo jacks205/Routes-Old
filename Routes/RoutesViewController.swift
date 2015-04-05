@@ -20,8 +20,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     var directions : [Direction]
     var searchDirections : [Direction]
     var currentCoords : CLLocationCoordinate2D?
-    
     var isSearching : Bool!
+    var refreshControl : UIRefreshControl!
+    
     @IBOutlet weak var searchBarView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -47,40 +48,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
         self.view.addGestureRecognizer(tap)
-        
-        
-        //TODO: Remove and implement real dataset
-        //Load in directions from user
-//        for(var i = 0; i < 3; ++i){
-//            let dir : Direction = Direction(
-//                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-//                endingLocation: Location(areaOfInterest: "Chapman University", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-//                viaDirections: ["I-55s", "Chapman"])
-//            dir.distance = 32167
-//            dir.trafficTime = 2000
-//            dir.baseTime = 2470
-//            self.directions.append(dir)
-//        }
-//        for(var i = 0; i < 3; ++i){
-//            let dir : Direction = Direction(
-//                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-//                endingLocation: Location(areaOfInterest: "Work", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-//                viaDirections: ["I-55s", "Chapman"])
-//            dir.distance = 32167
-//            dir.trafficTime = 2500 * 3/2
-//            dir.baseTime = 2470
-//            self.directions.append(dir)
-//        }
-//        for(var i = 0; i < 3; ++i){
-//            let dir : Direction = Direction(
-//                startingLocation: Location(areaOfInterest: "Home", streetNumber: "1", streetAddress: "Somewhere", city: "Sometown", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-//                endingLocation: Location(areaOfInterest: "Winterfell", streetNumber: "1", streetAddress: "University Dr", city: "Orange", state: "CA", county: "Orange", postalCode: "92866", country: "US"),
-//                viaDirections: ["I-55s", "Chapman"])
-//            dir.distance = 32167
-//            dir.trafficTime = 2514 * 5
-//            dir.baseTime = 2470
-//            self.directions.append(dir)
-//        }
         
     }
     
@@ -109,6 +76,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         self.tableView.allowsSelection = false
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.backgroundColor = UIColor.clearColor()
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: "pullToRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(self.refreshControl)
     }
     
     //Initializes search bar and sets delegates
@@ -167,12 +137,14 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
 
                         }
                         self.tableView.reloadData()
+                        self.refreshControl.endRefreshing()
                     })
             }else{
                 Alert.createAlertView("Oops!", message: "One of your routes is invalid", sender: self)
             }
             
         }
+        
     }
     
     //MARK: TableView Delegate Methods
@@ -219,6 +191,16 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
         return cell
     }
+    
+    //MARK: Pull to refresh listener method
+    func pullToRefresh(sender : AnyObject){
+        if self.directions.count == 0{
+            self.refreshControl.endRefreshing()
+        }else{
+            self.refreshRoutes()
+        }
+    }
+    
     
     //MARK: SearchBar Delegate Methods
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
