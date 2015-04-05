@@ -106,7 +106,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 Alamofire.request(.GET, url, parameters: nil, encoding: ParameterEncoding.URL)
                     .responseJSON({ (req, res, json, error) -> Void in
                         println("responseJSON")
-                        if let err = error{
+                        if let err = error {
                             println("Error: \(err)")
                             println(req)
                             println(res)
@@ -301,6 +301,9 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         let intSeconds = seconds;
         let hours = intSeconds / 3600;
         let minutes = intSeconds % 3600 / 60;
+        if hours == 1{
+            return "\(hours) hr \(minutes) min"
+        }
         return "\(hours) hrs \(minutes) min"
     }
     

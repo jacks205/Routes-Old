@@ -81,24 +81,19 @@ class RouteTableViewCell: UITableViewCell {
         self.drawTrafficIndicatorBase(indicatorRect, cornerRadius: indicatorCornerRadius)
         
         //Fill rounded rectangle
-        //TODO: Logic for setting colors
-        //TODO: Set as a solid color and remove all the gradient stuff (Save in gist)
         let (color : CGColorRef, percentageFill : CGFloat) = determineTrafficIndicator()
-        let colorLight : CGColorRef = color
-        let colorDark : CGColorRef = color
         let fillWidth : CGFloat = baseWidth * percentageFill
         let fillRect : CGRect = CGRectMake(indicatorXPosition, indicatorYPosition -  RouteTableViewCellConst.IndicatorBaseHeight / 2, fillWidth, RouteTableViewCellConst.IndicatorBaseHeight)
-        self.fillTrafficIndicatorBase(ref, rect: fillRect, cornerRadius: indicatorCornerRadius, colorLight: colorLight, colorDark: colorDark, fillWidth: fillWidth)
+        self.fillTrafficIndicatorBase(ref, rect: fillRect, cornerRadius: indicatorCornerRadius, color: color, fillWidth: fillWidth)
         CGContextRestoreGState(ref)
     }
     
-    func fillTrafficIndicatorBase(ref : CGContextRef, rect : CGRect, cornerRadius : CGFloat, colorLight : CGColorRef, colorDark: CGColorRef, fillWidth : CGFloat){
+    func fillTrafficIndicatorBase(ref : CGContextRef, rect : CGRect, cornerRadius : CGFloat, color : CGColorRef, fillWidth : CGFloat){
         CGContextSaveGState(ref)
-        let gradient : CGGradientRef = CGGradientCreateWithColors(Colors.genericRGBSpace(), [colorLight, colorDark], nil)
+        UIColor(CGColor: color).setFill()
         let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
         path.fill()
         path.addClip()
-        CGContextDrawLinearGradient(ref, gradient, CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect)), CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect)), 0)
         CGContextRestoreGState(ref)
     }
     

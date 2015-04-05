@@ -191,7 +191,6 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     //Handles dismissing keyboard when uitableview is selectable
-    //TODO: add in gist for future reference
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.searchBar.resignFirstResponder()
     }
