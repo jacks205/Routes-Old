@@ -151,14 +151,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="uXV-A6-3Gr" firstAttribute="leading" secondItem="V01-eE-UXt" secondAttribute="leadingMargin" constant="-16" id="8ye-BG-MqH"/>
+                            <constraint firstItem="zq2-Ip-iGO" firstAttribute="top" secondItem="uXV-A6-3Gr" secondAttribute="bottom" constant="8" id="9Qn-FE-6GJ"/>
                             <constraint firstAttribute="centerY" secondItem="zq2-Ip-iGO" secondAttribute="centerY" constant="-35.5" id="BsZ-ea-bI4"/>
-                            <constraint firstAttribute="centerX" secondItem="uXV-A6-3Gr" secondAttribute="centerX" id="DWy-iW-x8l"/>
-                            <constraint firstItem="uXV-A6-3Gr" firstAttribute="leading" secondItem="V01-eE-UXt" secondAttribute="leadingMargin" constant="-16" id="G79-2r-BGa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zq2-Ip-iGO" secondAttribute="trailing" constant="-16" id="TCn-7a-IWX"/>
                             <constraint firstItem="6kG-nN-fLE" firstAttribute="top" secondItem="zq2-Ip-iGO" secondAttribute="bottom" id="VBN-RN-e9r"/>
                             <constraint firstAttribute="centerX" secondItem="zq2-Ip-iGO" secondAttribute="centerX" id="VCl-4M-o74"/>
-                            <constraint firstAttribute="centerY" secondItem="uXV-A6-3Gr" secondAttribute="centerY" constant="252.5" id="d5R-MJ-anm"/>
-                            <constraint firstItem="uXV-A6-3Gr" firstAttribute="top" secondItem="V01-eE-UXt" secondAttribute="topMargin" id="jH9-sw-kMC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uXV-A6-3Gr" secondAttribute="trailing" constant="-16" id="lkK-VL-WNm"/>
+                            <constraint firstItem="uXV-A6-3Gr" firstAttribute="top" secondItem="V01-eE-UXt" secondAttribute="topMargin" id="qUO-ZT-AGF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XM3-ku-tiX"/>
