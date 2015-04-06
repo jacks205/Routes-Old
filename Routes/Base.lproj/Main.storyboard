@@ -181,7 +181,7 @@
                         <viewControllerLayoutGuide type="bottom" id="9G7-BL-380"/>
                     </layoutGuides>
                     <view key="view" alpha="0.80000001192092896" contentMode="scaleToFill" id="jZN-eV-rc1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa0-Ow-rhw">
@@ -327,7 +327,7 @@
                         <viewControllerLayoutGuide type="bottom" id="xNa-gJ-HxD"/>
                     </layoutGuides>
                     <view key="view" alpha="0.80000001192092896" contentMode="scaleToFill" id="Ctk-0K-8S5">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBr-C0-tpA">
@@ -384,15 +384,14 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="YAE-wg-ntn"/>
-                                    <constraint firstAttribute="width" constant="320" id="gU5-xx-urr"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="onH-OS-pEI"/>
                                 </constraints>
-                                <state key="normal" title="Route">
+                                <state key="normal" title="Next">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="routeClick:" destination="84B-mc-LuK" eventType="touchUpInside" id="Boz-nJ-Tdo"/>
+                                    <segue destination="ILx-Da-p5H" kind="push" identifier="receiptRoute" id="cHa-wQ-0s7"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ej7-Fk-xru">
@@ -481,12 +480,64 @@
             </objects>
             <point key="canvasLocation" x="3147" y="-751"/>
         </scene>
+        <!--Receipt-->
+        <scene sceneID="9UH-4m-Fks">
+            <objects>
+                <viewController id="ILx-Da-p5H" customClass="ReceiptViewController" customModule="Routes" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dVb-MH-3fZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="eFg-Ug-txC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PTz-1h-wqe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="niH-Rn-UVb">
+                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="O3i-d9-7N6"/>
+                                </constraints>
+                                <state key="normal" title="Route">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addRoute:" destination="ILx-Da-p5H" eventType="touchUpInside" id="hIc-N0-sx1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eFg-Ug-txC" firstAttribute="top" secondItem="niH-Rn-UVb" secondAttribute="bottom" id="8Ap-vl-327"/>
+                            <constraint firstItem="niH-Rn-UVb" firstAttribute="leading" secondItem="PTz-1h-wqe" secondAttribute="leadingMargin" constant="-16" id="jpt-Nl-82B"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="niH-Rn-UVb" secondAttribute="trailing" constant="-16" id="tNC-Iz-O9y"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Receipt" id="hJN-l0-pZk">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="GHh-TD-cXI">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="back:" destination="ILx-Da-p5H" id="ogx-fC-MmR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="routeButton" destination="niH-Rn-UVb" id="bh7-pr-fCd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W93-U5-KJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3555" y="-752"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Frp-J2-JDE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="1n6-5r-uKl" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xZv-Ii-uZO">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="xZv-Ii-uZO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -68,30 +68,24 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     //TODO: Clean this logic up
     @IBAction func routeClick(sender: AnyObject) {
-        if let cellIndexPath = self.selectedCellIndexPath {
-            if let endLocation = self.locations.get(cellIndexPath.row) {
-                if endLocation.location == nil{
-                    Alert.createAlertView("Sorry!", message: "There was a problem with the ending address you provided.", sender: self)
-                }
-                if let startLocation = self.startingLocation {
-                    if startLocation.location == nil{
-                        Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
-                    }else{
-                    //Delegate stuff to send back to the RoutesViewController
-                        let vc : RoutesTableViewController = self.navigationController?.presentingViewController as RoutesTableViewController
-                        self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                            vc.addRouteViewControllerDismissed(startLocation, endingLocation: endLocation)
-                        })
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier! == "receiptRoute"){
+            if let cellIndexPath = self.selectedCellIndexPath{
+                let vc : ReceiptViewController = segue.destinationViewController as ReceiptViewController
+                if let  endLocation : Location? = self.locations.get(cellIndexPath.row){
+                    if let location = endLocation {
+                        vc.startingLocation = self.startingLocation
+                        vc.endingLocation = location
                     }
-                }else{
-                    Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
                 }
+                
             }else{
-                Alert.createAlertView("Sorry!", message: "There was a problem with the ending address you provided.", sender: self)
+                //TODO: Can change this by hiding next button instead
+                Alert.createAlertView("Oops.", message: "Please select end location.", sender: self)
             }
-        }else{
-            //TODO: Can change this by hiding next button instead
-            Alert.createAlertView("Oops.", message: "Please select end location.", sender: self)
         }
     }
 
@@ -136,8 +130,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if(countElements(searchBar.text) > 0){
-            self.selectedCellIndexPath = nil
-            self.changeSelectedCell(self.selectedCellIndexPath)
+            self.changeSelectedCell(nil)
             self.locations.removeAll(keepCapacity: false)
             let req : MKLocalSearchRequest = MKLocalSearchRequest()
             if let currentPosition = self.currentCoords{
@@ -182,8 +175,13 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
                 self.nextButton.backgroundColor = UIColor(CGColor: Colors.TrafficColors.GreenLight)
             }
         }else{
-            self.selectedCellIndexPath = indexPath
-            self.nextButton.backgroundColor = UIColor(CGColor: Colors.TrafficColors.GreenLight)
+            if let index = indexPath{
+                self.selectedCellIndexPath = index
+                self.nextButton.backgroundColor = UIColor(CGColor: Colors.TrafficColors.GreenLight)
+            }else{
+                self.nextButton.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
+            }
+            
         }
     }
     

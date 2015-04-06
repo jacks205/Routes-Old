@@ -148,15 +148,19 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
                 self.nextButton.backgroundColor = UIColor(CGColor: Colors.TrafficColors.GreenLight)
             }
         }else{
-            self.selectedCellIndexPath = indexPath
-            self.nextButton.backgroundColor = UIColor(CGColor: Colors.TrafficColors.GreenLight)
+            if let index = indexPath{
+                self.selectedCellIndexPath = index
+                self.nextButton.backgroundColor = UIColor(CGColor: Colors.TrafficColors.GreenLight)
+            }else{
+                self.nextButton.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
+            }
+            
         }
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if countElements(searchText) > 0 {
-            self.selectedCellIndexPath = nil
-            self.changeSelectedCell(self.selectedCellIndexPath)
+            self.changeSelectedCell(nil)
             self.locations.removeAll(keepCapacity: false)
             let req : MKLocalSearchRequest = MKLocalSearchRequest()
             if let currentPosition = self.currentCoords{
