@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import MapKit
 
 struct RouteTableViewCellConst {
     static let IndicatorRectXOffset : CGFloat = 0.025
     static let TrafficIndicatorOffsetPercentage : CGFloat = 0.75
     static let IndicatorBaseWidthPercentage : CGFloat = 0.45
     static let IndicatorBaseHeight : CGFloat = 30
+    
+    static let MinimumVisibleLatitude = 0.1
 }
 
 class RouteTableViewCell: UITableViewCell {

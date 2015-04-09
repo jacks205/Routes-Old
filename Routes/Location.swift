@@ -5,7 +5,7 @@
 //  Created by Mark Jackson on 3/31/15.
 //  Copyright (c) 2015 Mark Jackson. All rights reserved.
 //
-import CoreLocation
+import MapKit
 
 class Location {
     
@@ -20,6 +20,9 @@ class Location {
     let location : CLLocation?
     
     let areaOfInterest : String?
+    var shortName : String?
+    
+    let mapItem : MKMapItem?
     
     init(areaOfInterest : String, streetNumber : String, streetAddress : String, city : String, state : String, county : String, postalCode : String, country : String){
         self.areaOfInterest = areaOfInterest
@@ -32,25 +35,28 @@ class Location {
         self.country = country
     }
     
-    init(addressString : String, place : CLPlacemark){
-        self.streetNumber = place.subThoroughfare
-        self.streetAddress = place.thoroughfare
-        self.city = place.locality
-        self.state = place.administrativeArea
-        self.county = place.subAdministrativeArea
-        self.postalCode = place.postalCode
-        self.country = place.country
-        self.location = place.location
-        self.areaOfInterest = addressString
-//        if let areaOfInt = getEstablishmentName(addressString){
-//            self.areaOfInterest = areaOfInt
-//        }else{
-//            if let areaOfInt = place.areasOfInterest{
-//                self.areaOfInterest = areaOfInt[0] as String
+    init(addressString : String, mapItem : MKMapItem){
+        self.mapItem = mapItem
+        if let place = mapItem.placemark{
+            self.streetNumber = place.subThoroughfare
+            self.streetAddress = place.thoroughfare
+            self.city = place.locality
+            self.state = place.administrativeArea
+            self.county = place.subAdministrativeArea
+            self.postalCode = place.postalCode
+            self.country = place.country
+            self.location = place.location
+            self.areaOfInterest = addressString
+//            if let areaOfInt = getEstablishmentName(addressString){
+//                self.areaOfInterest = areaOfInt
 //            }else{
-//                self.areaOfInterest = place.name
+//                if let areaOfInt = place.areasOfInterest{
+//                    self.areaOfInterest = areaOfInt[0] as String
+//                }else{
+//                    self.areaOfInterest = place.name
+//                }
 //            }
-//        }
+        }
     }
     
     func buildAddressString() -> String?{

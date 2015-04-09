@@ -11,6 +11,7 @@ class Direction {
     var startingLocation : Location?
     var endingLocation : Location?
     var viaDirections : [String]?
+    var maneuvars : [Maneuver]?
     
     var distance : Int?
     var baseTime : Int?
@@ -42,6 +43,25 @@ class Direction {
         stringUrl += "&\(Constants.URL_2)"
         println("Created URL")
         return NSURL(string: stringUrl)
+    }
+    
+}
+
+struct Maneuver {
+    var location : CLLocationCoordinate2D?
+    var instruction : String?
+    var length : Float?
+    var travelTime : Float?
+    
+    init(location :CLLocationCoordinate2D?, instruction : String?, length : Float?, travelTime : Float?){
+        self.location = location
+        self.instruction = instruction
+        self.length = length
+        self.travelTime = travelTime
+    }
+    
+    init(){
+        
     }
     
 }

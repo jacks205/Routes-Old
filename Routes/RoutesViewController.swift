@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreLocation
 import MapKit
 import Alamofire
 import SwiftyJSON
@@ -105,19 +104,16 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                 println(url)
                 Alamofire.request(.GET, url, parameters: nil, encoding: ParameterEncoding.URL)
                     .responseJSON({ (req, res, json, error) -> Void in
-                        println("responseJSON")
+//                        println("responseJSON")
                         if let err = error {
                             println("Error: \(err)")
                             println(req)
                             println(res)
                         }else{
-                            println(json)
+//                            println(json)
                             let json : JSON = JSON(json!)
                             let summary : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY]
-//                            println("route")
-//                            println(json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY])
-//                            println("summary")
-//                            println(json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY])
+                            
                             //Distance
                             if let distance = summary[Constants.DISTANCE_KEY].int{
                                 direction.distance = distance
@@ -135,6 +131,39 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                                 direction.baseTime = baseTime
                             }else{
                                 println(summary[Constants.BASE_TIME_KEY].error!)
+                            }
+                            let leg : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.LEG_KEY]
+                            let maneuver : JSON = leg[0][Constants.MANEUVER_KEY]
+                            var maneuvars : [Maneuver] = []
+                            for (index: String, subManeuver: JSON) in maneuver {
+                                //Do something you want
+                                
+                                let position = subManeuver[Constants.POSITION_KEY]
+                                
+                                var location : CLLocationCoordinate2D?
+                                if let lat = position[Constants.LATITUDE_KEY].double{
+                                    if let long = position[Constants.LONGITUDE_KEY].double {
+                                        location = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                                    }
+                                }
+                                var instruction : String?
+                                if let instructionString = subManeuver[Constants.INSTRUCTION_KEY].string{
+                                    instruction = instructionString
+                                }
+                                var travelTime : Float?
+                                if let totalTime = subManeuver[Constants.TRAVEL_TIME_KEY].float{
+                                    travelTime = totalTime
+                                }
+                                var length : Float?
+                                if let distanceLength = subManeuver[Constants.LENGTH_KEY].float{
+                                    length = distanceLength
+                                }
+                                var maneuverObj : Maneuver = Maneuver(location: location, instruction: instruction, length: length, travelTime: travelTime)
+                                maneuvars.append(maneuverObj)
+                            }
+                            //Don't assign it if its an empty array since we have an optional in Direction that'll handle empty maneuvars
+                            if maneuvars.count > 0 {
+                                direction.maneuvars = maneuvars
                             }
 
                         }
@@ -173,11 +202,19 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             directionEntry = self.searchDirections.get(indexPath.row)
         }
         if let direction = directionEntry {
-            if let startAreaOfInterest = direction.startingLocation?.areaOfInterest{
-                cell.startLocation.text = startAreaOfInterest
+            if let shortName = direction.startingLocation?.shortName{
+                cell.startLocation.text = shortName
+            }else{
+                if let startAreaOfInterest = direction.startingLocation?.areaOfInterest{
+                    cell.startLocation.text = startAreaOfInterest
+                }
             }
-            if let endAreaOfInterest = direction.endingLocation?.areaOfInterest{
-                cell.endLocation.text = endAreaOfInterest
+            if let shortName = direction.endingLocation?.shortName{
+                cell.endLocation.text = shortName
+            }else{
+                if let endAreaOfInterest = direction.endingLocation?.areaOfInterest{
+                    cell.endLocation.text = endAreaOfInterest
+                }
             }
             //Setting via description
             //Can accept nil value
@@ -195,6 +232,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             if let baseTime = direction.baseTime{
                 cell.baseTime = baseTime
             }
+
             //Must set this in the cellForRowAtIndexPath: method
             cell.backgroundColor = UIColor.clearColor()
         }
@@ -252,11 +290,11 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     //AddRouteProtocol method
     func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location){
         //Create Direction out of locations
-        println(startingLocation.print())
-        println(endingLocation.print())
+//        println(startingLocation.print())
+//        println(endingLocation.print())
         let newDirection : Direction = Direction(startingLocation: startingLocation, endingLocation: endingLocation, viaDirections: nil)
         self.directions.append(newDirection)
-        println("Appended")
+//        println("Appended")
         self.refreshRoutes()
     }
     
@@ -267,16 +305,14 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
 //    //Segue method
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(segue.identifier! == "addRoute")
         if(segue.identifier! == "addRoute"){
-            println(segue.destinationViewController)
+//            println(segue.destinationViewController)
             let navController : UINavigationController = segue.destinationViewController as UINavigationController
-            println(navController.topViewController)
+//            println(navController.topViewController)
             let vc : AddStartRouteViewController? = navController.topViewController as? AddStartRouteViewController
-            println(vc)
+//            println(vc)
             if let addStartRouteController = vc  {
-                println("CUURENTY COORDS")
-                println(self.currentCoords)
+//                println(self.currentCoords)
                 addStartRouteController.currentCoords = self.currentCoords
                 addStartRouteController.directionTableDelegate = self
             }
@@ -291,20 +327,38 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     //MARK: Convienence Methods
     //Converts meters to a string containing miles and formated .2f
-    func metersToMilesString(meters : Float) -> String{
-        let distance = meters * 0.000621371
-        return String(format: "%.1f mi", distance)
+    func metersToMilesString(meters : Float?) -> String?{
+        if let distance = metersToMiles(meters){
+            return String(format: "%.1f mi", distance)
+        }
+        return nil
+    }
+    
+    func metersToMiles(meters : Float?) -> Float?{
+        if let total = meters{
+            return total * 0.000621371
+        }
+        return nil
     }
     
     //Takes in total seconds and converts it to a string formatted "00h 00m"
-    func secondsToHoursAndMinutesString(seconds : Int) -> String{
-        let intSeconds = seconds;
-        let hours = intSeconds / 3600;
-        let minutes = intSeconds % 3600 / 60;
-        if hours == 1{
-            return "\(hours) hr \(minutes) min"
+    func secondsToHoursAndMinutesString(seconds : Int?) -> String?{
+        if let intSeconds = seconds{
+            let time = self.secondsToHoursAndMinutes(intSeconds)
+            if time.hours! == 1{
+                return "\(time.hours!) hr \(time.minutes!) min"
+            }
+            return "\(time.hours!) hrs \(time.minutes!) min"
         }
-        return "\(hours) hrs \(minutes) min"
+        return nil
+        
+    }
+    
+    func secondsToHoursAndMinutes(seconds : Int?) -> (hours : Int?, minutes : Int?){
+        if let intSeconds = seconds{
+            return (intSeconds / 3600, intSeconds % 3600 / 60)
+        }
+        return (nil, nil)
     }
     
     // Handler for dismissing keyboard

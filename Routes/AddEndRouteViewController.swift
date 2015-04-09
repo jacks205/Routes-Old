@@ -56,7 +56,6 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     @IBAction func cancelModal(sender : AnyObject){
-//        println("cancelModal")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -143,14 +142,11 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
                     println(error.localizedDescription)
                     //                self.tableView.reloadData()
                 }else{
-                    println()
                     if let mapItems = res.mapItems as? [MKMapItem]{
                         for item in mapItems{
-                            if let placemark = item.placemark{
-                                let newLocation : Location = Location(addressString: item.name, place: placemark)
-                                self.locations.append(newLocation)
-                                self.tableView.reloadData()
-                            }
+                            let newLocation : Location = Location(addressString: item.name, mapItem: item)
+                            self.locations.append(newLocation)
+                            self.tableView.reloadData()
                         }
                     }
                 }

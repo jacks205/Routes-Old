@@ -83,7 +83,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
                 if let currentLocation = self.currentCoords{
                     vc.currentCoords = currentLocation
                 }else{
-                    Alert.createAlertView("Warning!", message: "We do not have your current location, results may vary.", sender: self)
+//                    Alert.createAlertView("Warning!", message: "We do not have your current location, results may vary.", sender: self)
                 }
                 if let  startLocation : Location? = self.locations.get(cellIndexPath.row){
                     if let location = startLocation {
@@ -173,14 +173,11 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
                     println(error.localizedDescription)
     //                self.tableView.reloadData()
                 }else{
-                    println()
                     if let mapItems = res.mapItems as? [MKMapItem]{
                         for item in mapItems{
-                            if let placemark = item.placemark{
-                                let newLocation : Location = Location(addressString: item.name, place: placemark)
-                                self.locations.append(newLocation)
-                                self.tableView.reloadData()
-                            }
+                            let newLocation : Location = Location(addressString: item.name, mapItem: item)
+                            self.locations.append(newLocation)
+                            self.tableView.reloadData()
                         }
                     }
                 }
