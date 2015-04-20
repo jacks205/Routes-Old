@@ -24,7 +24,7 @@ class Direction {
     }
     
     func buildUrl() -> NSURL?{
-        var stringUrl : String = "\(Constants.URL_1)app_id=\(Constants.APP_ID)&app_code=\(Constants.APP_CODE)"
+        var stringUrl : String = "\(Constants.HERE.URL.DOMAIN)app_id=\(Constants.HERE.APP_ID)&app_code=\(Constants.HERE.APP_CODE)"
         println("Creating URL")
         if let startLocation = self.startingLocation{
             if let coordinate = startLocation.location?.coordinate{
@@ -40,7 +40,7 @@ class Direction {
         }else{
             return nil
         }
-        stringUrl += "&\(Constants.URL_2)"
+        stringUrl += "&\(Constants.HERE.URL.SETTINGS)"
         println("Created URL")
         return NSURL(string: stringUrl)
     }

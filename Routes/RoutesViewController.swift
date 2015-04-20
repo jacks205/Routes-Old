@@ -111,50 +111,50 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                         }else{
                             //                            println(json)
                             let json : JSON = JSON(json!)
-                            let summary : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY]
+                            let summary : JSON = json[Constants.HERE.KEY.RESPONSE][Constants.HERE.KEY.ROUTE][0][Constants.HERE.KEY.SUMMARY]
                             
                             //Distance
-                            if let distance = summary[Constants.DISTANCE_KEY].int{
+                            if let distance = summary[Constants.HERE.KEY.DISTANCE].int{
                                 direction.distance = distance
                             }else{
-                                println(summary[Constants.DISTANCE_KEY].error!)
+                                println(summary[Constants.HERE.KEY.DISTANCE].error!)
                             }
                             //Traffic Time
-                            if let trafficTime = summary[Constants.TRAFFIC_TIME_KEY].int{
+                            if let trafficTime = summary[Constants.HERE.KEY.TRAFFIC_TIME].int{
                                 direction.trafficTime = trafficTime
                             }else{
-                                println(summary[Constants.TRAFFIC_TIME_KEY].error!)
+                                println(summary[Constants.HERE.KEY.TRAFFIC_TIME].error!)
                             }
                             //Base Time
-                            if let baseTime = summary[Constants.BASE_TIME_KEY].int{
+                            if let baseTime = summary[Constants.HERE.KEY.BASE_TIME].int{
                                 direction.baseTime = baseTime
                             }else{
-                                println(summary[Constants.BASE_TIME_KEY].error!)
+                                println(summary[Constants.HERE.KEY.BASE_TIME].error!)
                             }
-                            let leg : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.LEG_KEY]
-                            let maneuver : JSON = leg[0][Constants.MANEUVER_KEY]
+                            let leg : JSON = json[Constants.HERE.KEY.RESPONSE][Constants.HERE.KEY.ROUTE][0][Constants.HERE.KEY.LEG]
+                            let maneuver : JSON = leg[0][Constants.HERE.KEY.MANEUVER]
                             var maneuvars : [Maneuver] = []
                             for (index: String, subManeuver: JSON) in maneuver {
                                 //Do something you want
                                 
-                                let position = subManeuver[Constants.POSITION_KEY]
+                                let position = subManeuver[Constants.HERE.KEY.POSITION]
                                 
                                 var location : CLLocationCoordinate2D?
-                                if let lat = position[Constants.LATITUDE_KEY].double{
-                                    if let long = position[Constants.LONGITUDE_KEY].double {
+                                if let lat = position[Constants.HERE.KEY.LATITUDE].double{
+                                    if let long = position[Constants.HERE.KEY.LONGITUDE].double {
                                         location = CLLocationCoordinate2D(latitude: lat, longitude: long)
                                     }
                                 }
                                 var instruction : String?
-                                if let instructionString = subManeuver[Constants.INSTRUCTION_KEY].string{
+                                if let instructionString = subManeuver[Constants.HERE.KEY.INSTRUCTION].string{
                                     instruction = instructionString
                                 }
                                 var travelTime : Float?
-                                if let totalTime = subManeuver[Constants.TRAVEL_TIME_KEY].float{
+                                if let totalTime = subManeuver[Constants.HERE.KEY.TRAVEL_TIME].float{
                                     travelTime = totalTime
                                 }
                                 var length : Float?
-                                if let distanceLength = subManeuver[Constants.LENGTH_KEY].float{
+                                if let distanceLength = subManeuver[Constants.HERE.KEY.LENGTH].float{
                                     length = distanceLength
                                 }
                                 var maneuverObj : Maneuver = Maneuver(location: location, instruction: instruction, length: length, travelTime: travelTime)
