@@ -8,28 +8,57 @@
 
 import UIKit
 
-class ManeuvarsViewController: UIViewController {
+class ManeuversViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    var direction : Direction?
+    var maneuvars : [Maneuver]?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.initializeTableView()
+        println(self.direction)
+        if let maneuvars = self.direction?.maneuvars {
+            self.maneuvars = maneuvars
+        }else{
+            self.maneuvars = []
+        }
+        
+        
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func initializeTableView(){
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: Table View Delegate/Datasource Methods
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
-    */
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.maneuvars!.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell : UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ManeuverCell") as! UITableViewCell
+        
+        if let maneuver = self.maneuvars!.get(indexPath.row){
+            cell.textLabel!.text = maneuver.instruction
+        }
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //        println("didSelectRowAtIndexPath")
+    }
+
 
 }

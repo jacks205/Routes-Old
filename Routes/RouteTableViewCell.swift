@@ -93,7 +93,7 @@ class RouteTableViewCell: UITableViewCell {
     
     func fillTrafficIndicatorBase(ref : CGContextRef, rect : CGRect, cornerRadius : CGFloat, color : CGColorRef, fillWidth : CGFloat){
         CGContextSaveGState(ref)
-        UIColor(CGColor: color).setFill()
+        UIColor(CGColor: color)!.setFill()
         let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
         path.fill()
         path.addClip()
@@ -101,7 +101,7 @@ class RouteTableViewCell: UITableViewCell {
     }
     
     func drawTrafficIndicatorBase(rect : CGRect, cornerRadius : CGFloat){
-        let color : UIColor = UIColor(CGColor: Colors.IndicatorBackground)
+        let color : UIColor = UIColor(CGColor: Colors.IndicatorBackground)!
         color.setFill()
         let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
         path.fill()
@@ -136,7 +136,7 @@ class RouteTableViewCell: UITableViewCell {
     
     //Sets the via description to give an idea of the route that the information is for
     //Can accept nil value
-    func setViaRouteDescription(mainRoads : [String]?){
+    func setViaDescription(mainRoads : [String]?){
         var description : String = "via"
         if let roads = mainRoads{
             for (var i = 0; i < roads.count; ++i){

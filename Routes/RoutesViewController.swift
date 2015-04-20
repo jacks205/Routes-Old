@@ -45,8 +45,8 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         self.initializeSearchBar()
         self.initializeLocationManager()
         
-        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
-        self.view.addGestureRecognizer(tap)
+//        var tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTouch:")
+//        self.view.addGestureRecognizer(tap)
         
     }
     
@@ -72,7 +72,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     func initializeTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.allowsSelection = false
+        self.tableView.allowsSelection = true
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.backgroundColor = UIColor.clearColor()
         self.refreshControl = UIRefreshControl()
@@ -103,14 +103,13 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             if let url = direction.buildUrl(){
                 println(url)
                 Alamofire.request(.GET, url, parameters: nil, encoding: ParameterEncoding.URL)
-                    .responseJSON({ (req, res, json, error) -> Void in
-//                        println("responseJSON")
+                    .responseJSON(options: nil, completionHandler: { (req, res, json, error) -> Void in
                         if let err = error {
                             println("Error: \(err)")
                             println(req)
                             println(res)
                         }else{
-//                            println(json)
+                            //                            println(json)
                             let json : JSON = JSON(json!)
                             let summary : JSON = json[Constants.RESPONSE_KEY][Constants.ROUTE_KEY][0][Constants.SUMMARY_KEY]
                             
@@ -165,7 +164,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                             if maneuvars.count > 0 {
                                 direction.maneuvars = maneuvars
                             }
-
+                            
                         }
                         self.tableView.reloadData()
                         self.refreshControl.endRefreshing()
@@ -194,7 +193,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : RouteTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as RouteTableViewCell
+        var cell : RouteTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! RouteTableViewCell
         var directionEntry : Direction?
         if !self.isSearching! {
             directionEntry = self.directions.get(indexPath.row)
@@ -218,7 +217,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
             }
             //Setting via description
             //Can accept nil value
-            cell.setViaRouteDescription(direction.viaDirections)
+            cell.setViaDescription(direction.viaDirections)
             //Calculate user friendly values for distance and time
             if let dist = direction.distance{
                 let distanceString = metersToMilesString(Float(dist))
@@ -239,6 +238,13 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("Cell Selected \(indexPath.row)")
+        let selectedDirection : Direction = self.directions.get(indexPath.row)!
+        let directionSender : DirectionSender = DirectionSender(direction: selectedDirection)
+        self.performSegueWithIdentifier("ManeuverSegue", sender: directionSender)
+    }
+    
     //MARK: Pull to refresh listener method
     func pullToRefresh(sender : AnyObject){
         if self.directions.count == 0{
@@ -252,7 +258,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: SearchBar Delegate Methods
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         //Check if user is searching for specific route
-        if(countElements(searchText) > 0){
+        if(count(searchText) > 0){
             //Populate searchDirections
             self.searchDirections.removeAll(keepCapacity: false)
             for route in self.directions{
@@ -290,11 +296,8 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     //AddRouteProtocol method
     func addRouteViewControllerDismissed(startingLocation : Location, endingLocation : Location){
         //Create Direction out of locations
-//        println(startingLocation.print())
-//        println(endingLocation.print())
         let newDirection : Direction = Direction(startingLocation: startingLocation, endingLocation: endingLocation, viaDirections: nil)
         self.directions.append(newDirection)
-//        println("Appended")
         self.refreshRoutes()
     }
     
@@ -305,23 +308,30 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
     
 //    //Segue method
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier! == "addRoute"){
-//            println(segue.destinationViewController)
-            let navController : UINavigationController = segue.destinationViewController as UINavigationController
-//            println(navController.topViewController)
+        if segue.identifier! == "addRoute" {
+            let navController : UINavigationController = segue.destinationViewController as! UINavigationController
             let vc : AddStartRouteViewController? = navController.topViewController as? AddStartRouteViewController
-//            println(vc)
             if let addStartRouteController = vc  {
 //                println(self.currentCoords)
                 addStartRouteController.currentCoords = self.currentCoords
                 addStartRouteController.directionTableDelegate = self
             }
+        }else if segue.identifier! == "ManeuverSegue"{
+            let vc : ManeuversViewController? = segue.destinationViewController as? ManeuversViewController
+            println(sender as? DirectionSender)
+            println(vc)
+            if let maneuversViewController = vc, directionSender = sender as? DirectionSender {
+                println(directionSender.direction)
+                maneuversViewController.direction = directionSender.direction
+            }
+
         }
+        
     }
     
     //MARK: Current Location Delegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        let location : CLLocation = locations.last as CLLocation
+        let location : CLLocation = locations.last as! CLLocation
         self.currentCoords = location.coordinate
     }
     
@@ -376,10 +386,18 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
         destination.name = name;
         let items = [destination]
         let options = NSDictionary(object: MKLaunchOptionsDirectionsModeDriving, forKey: MKLaunchOptionsDirectionsModeKey)
-        MKMapItem.openMapsWithItems(items, launchOptions: options)
+        MKMapItem.openMapsWithItems(items, launchOptions: options as [NSObject : AnyObject])
     }
     
     
+}
+
+//Sender class for sending data from tableView to segue
+class DirectionSender : NSObject{
+    var direction : Direction?
+    init(direction : Direction) {
+        self.direction = direction
+    }
 }
 
 struct Alert {

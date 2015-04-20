@@ -13,8 +13,8 @@
 		EA04E2551ABE22BD00EF47AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA04E2541ABE22BD00EF47AE /* Images.xcassets */; };
 		EA04E2581ABE22BD00EF47AE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA04E2561ABE22BD00EF47AE /* LaunchScreen.xib */; };
 		EA04E2641ABE22BD00EF47AE /* RoutesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E2631ABE22BD00EF47AE /* RoutesTests.swift */; };
-		EA04E26E1ABE250E00EF47AE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E26D1ABE250E00EF47AE /* Constants.swift */; };
 		EA04E2701ABE26A600EF47AE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */; };
+		EA1F58001AD8B9CB008F6B30 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F57FF1AD8B9CB008F6B30 /* Constants.swift */; };
 		EA629D4C1AD210B100ADE40A /* ReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA629D4B1AD210B100ADE40A /* ReceiptViewController.swift */; };
 		EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */; };
 		EA64B3811AC8F4AA000D9449 /* AddEndRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */; };
@@ -28,7 +28,9 @@
 		EA97063A1AC2161200805E72 /* RoutesModulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9706391AC2161200805E72 /* RoutesModulesTests.swift */; };
 		EA97063D1AC2161200805E72 /* RoutesModules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9706261AC2161100805E72 /* RoutesModules.framework */; };
 		EA97063E1AC2161200805E72 /* RoutesModules.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA9706261AC2161100805E72 /* RoutesModules.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FDF0C1C65BFD4AA97AB7E78C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB67944D67BD7CA2AAB6A5A /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		EADEE11D1AE4523000183A07 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB67944D67BD7CA2AAB6A5A /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EADEE11F1AE4685700183A07 /* ManeuversViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADEE11E1AE4685700183A07 /* ManeuversViewController.swift */; };
+		FDF0C1C65BFD4AA97AB7E78C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DB67944D67BD7CA2AAB6A5A /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				EADEE11D1AE4523000183A07 /* Pods.framework in Embed Frameworks */,
 				EA97063E1AC2161200805E72 /* RoutesModules.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -89,8 +92,8 @@
 		EA04E25D1ABE22BD00EF47AE /* RoutesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA04E2621ABE22BD00EF47AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA04E2631ABE22BD00EF47AE /* RoutesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTests.swift; sourceTree = "<group>"; };
-		EA04E26D1ABE250E00EF47AE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EA1F57FF1AD8B9CB008F6B30 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EA629D4B1AD210B100ADE40A /* ReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptViewController.swift; sourceTree = "<group>"; };
 		EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEndRouteViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 		EA9706301AC2161200805E72 /* RoutesModulesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoutesModulesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA9706381AC2161200805E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA9706391AC2161200805E72 /* RoutesModulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesModulesTests.swift; sourceTree = "<group>"; };
+		EADEE11E1AE4685700183A07 /* ManeuversViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManeuversViewController.swift; sourceTree = "<group>"; };
 		F4856C3EE9852339B381BB8B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,11 +196,13 @@
 				EA629D4D1AD210CB00ADE40A /* AddingRoute */,
 				EA04E24D1ABE22BD00EF47AE /* AppDelegate.swift */,
 				EA04E24F1ABE22BD00EF47AE /* RoutesViewController.swift */,
+				EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */,
+				EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */,
+				EADEE11E1AE4685700183A07 /* ManeuversViewController.swift */,
 				EA04E2511ABE22BD00EF47AE /* Main.storyboard */,
 				EA04E2541ABE22BD00EF47AE /* Images.xcassets */,
 				EA04E2561ABE22BD00EF47AE /* LaunchScreen.xib */,
 				EA04E24B1ABE22BD00EF47AE /* Supporting Files */,
-				EA86AF6C1ABFA4E3002BADF6 /* Direction.swift */,
 			);
 			path = Routes;
 			sourceTree = "<group>";
@@ -204,8 +210,7 @@
 		EA04E24B1ABE22BD00EF47AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EA86AF6A1ABF9EBF002BADF6 /* RouteTableViewCell.swift */,
-				EA04E26D1ABE250E00EF47AE /* Constants.swift */,
+				EA1F57FF1AD8B9CB008F6B30 /* Constants.swift */,
 				EA86AF681ABEDEF7002BADF6 /* Colors.swift */,
 				EA04E24C1ABE22BD00EF47AE /* Info.plist */,
 			);
@@ -501,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA64B3811AC8F4AA000D9449 /* AddEndRouteViewController.swift in Sources */,
+				EA1F58001AD8B9CB008F6B30 /* Constants.swift in Sources */,
 				EA64B3851ACBA967000D9449 /* Location.swift in Sources */,
 				EA86AF6F1ABFD5B2002BADF6 /* AddStartRouteViewController.swift in Sources */,
 				EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */,
@@ -508,9 +514,9 @@
 				EA86AF691ABEDEF7002BADF6 /* Colors.swift in Sources */,
 				EA86AF6B1ABF9EBF002BADF6 /* RouteTableViewCell.swift in Sources */,
 				EA04E2501ABE22BD00EF47AE /* RoutesViewController.swift in Sources */,
+				EADEE11F1AE4685700183A07 /* ManeuversViewController.swift in Sources */,
 				EA629D4C1AD210B100ADE40A /* ReceiptViewController.swift in Sources */,
 				EA04E24E1ABE22BD00EF47AE /* AppDelegate.swift in Sources */,
-				EA04E26E1ABE250E00EF47AE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +672,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Routes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -680,6 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Routes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

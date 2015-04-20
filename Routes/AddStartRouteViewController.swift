@@ -58,6 +58,9 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     func initializeSearchBar(){
         self.searchBar.delegate = self
         UITextField.appearance().textColor = UIColor.whiteColor()
+        
+        //TODO: For convienence 
+        self.searchBar.text = "Chapman University"
     }
     
     //Initializes table view and sets delegates
@@ -79,18 +82,13 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier! == "endRoute"){
             if let cellIndexPath = self.selectedCellIndexPath{
-                let vc : AddEndRouteViewController = segue.destinationViewController as AddEndRouteViewController
+                let vc : AddEndRouteViewController = segue.destinationViewController as! AddEndRouteViewController
                 if let currentLocation = self.currentCoords{
                     vc.currentCoords = currentLocation
-                }else{
-//                    Alert.createAlertView("Warning!", message: "We do not have your current location, results may vary.", sender: self)
                 }
-                if let  startLocation : Location? = self.locations.get(cellIndexPath.row){
-                    if let location = startLocation {
-                        vc.startingLocation = location
-                    }
+                if let startLocation : Location? = self.locations.get(cellIndexPath.row), location = startLocation{
+                    vc.startingLocation = location
                 }
-                
             }else{
                 //TODO: Can change this by hiding next button instead
                 Alert.createAlertView("Oops.", message: "Please select start location.", sender: self)
@@ -110,7 +108,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell") as LocationTableViewCell
+        var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell") as! LocationTableViewCell
         
         if let location = self.locations.get(indexPath.row){
             if let areaOfInterest = location.areaOfInterest{
@@ -159,7 +157,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if countElements(searchText) > 0 {
+        if count(searchText) > 0 {
             self.changeSelectedCell(nil)
             self.locations.removeAll(keepCapacity: false)
             let req : MKLocalSearchRequest = MKLocalSearchRequest()

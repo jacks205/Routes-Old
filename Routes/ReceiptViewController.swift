@@ -29,31 +29,26 @@ class ReceiptViewController: UIViewController, UITextFieldDelegate {
         self.startingShortNameTextField.delegate = self
         self.endingShortNameTextField.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
         self.endingShortNameTextField.delegate = self
-        if let startLocation = self.startingLocation {
+        if let startLocation = self.startingLocation, endLocation = self.endingLocation {
             self.startingShortNameTextField.text = startLocation.areaOfInterest
-        }
-        if let endLocation = self.endingLocation {
             self.endingShortNameTextField.text = endLocation.areaOfInterest
         }
-        
     }
     
     
     @IBAction func addRoute(sender: AnyObject) {
-        if let endLocation = self.endingLocation{
-            if let startLocation = self.startingLocation {
-                //Delegate stuff to send back to the RoutesViewController
-                startLocation.shortName = self.startingShortNameTextField.text
-                endLocation.shortName = self.endingShortNameTextField.text
-                let vc : RoutesTableViewController = self.navigationController?.presentingViewController as RoutesTableViewController
-                self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    vc.addRouteViewControllerDismissed(startLocation, endingLocation: endLocation)
-                })
-            }else{
-                Alert.createAlertView("Sorry!", message: "There was a problem with the starting address you provided.", sender: self)
-            }
+        if let endLocation = self.endingLocation, startLocation = self.startingLocation{
+            //Delegate stuff to send back to the RoutesViewController
+            startLocation.shortName = self.startingShortNameTextField.text
+            endLocation.shortName = self.endingShortNameTextField.text
+            println((self.navigationController?.presentingViewController as! UINavigationController).topViewController)
+            let nc : UINavigationController = self.navigationController?.presentingViewController as! UINavigationController
+            let vc : RoutesTableViewController = nc.topViewController as! RoutesTableViewController
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                vc.addRouteViewControllerDismissed(startLocation, endingLocation: endLocation)
+            })
         }else{
-            Alert.createAlertView("Sorry!", message: "There was a problem with the ending address you provided.", sender: self)
+            Alert.createAlertView("Sorry!", message: "There was a problem with one of the addresses you provided.", sender: self)
         }
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {

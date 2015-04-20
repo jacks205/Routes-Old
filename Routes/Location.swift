@@ -33,30 +33,31 @@ class Location {
         self.county = county
         self.postalCode = postalCode
         self.country = country
+        
+        self.location = nil
+        self.mapItem = nil
     }
     
     init(addressString : String, mapItem : MKMapItem){
         self.mapItem = mapItem
-        if let place = mapItem.placemark{
-            self.streetNumber = place.subThoroughfare
-            self.streetAddress = place.thoroughfare
-            self.city = place.locality
-            self.state = place.administrativeArea
-            self.county = place.subAdministrativeArea
-            self.postalCode = place.postalCode
-            self.country = place.country
-            self.location = place.location
-            self.areaOfInterest = addressString
-//            if let areaOfInt = getEstablishmentName(addressString){
-//                self.areaOfInterest = areaOfInt
+        self.streetNumber = mapItem.placemark.subThoroughfare
+        self.streetAddress = mapItem.placemark.thoroughfare
+        self.city = mapItem.placemark.locality
+        self.state = mapItem.placemark.administrativeArea
+        self.county = mapItem.placemark.subAdministrativeArea
+        self.postalCode = mapItem.placemark.postalCode
+        self.country = mapItem.placemark.country
+        self.location = mapItem.placemark.location
+        self.areaOfInterest = addressString
+//        if let areaOfInt = getEstablishmentName(addressString){
+//            self.areaOfInterest = areaOfInt
+//        }else{
+//            if let areaOfInt = place.areasOfInterest{
+//                self.areaOfInterest = areaOfInt[0] as String
 //            }else{
-//                if let areaOfInt = place.areasOfInterest{
-//                    self.areaOfInterest = areaOfInt[0] as String
-//                }else{
-//                    self.areaOfInterest = place.name
-//                }
+//                self.areaOfInterest = place.name
 //            }
-        }
+//        }
     }
     
     func buildAddressString() -> String?{

@@ -44,6 +44,9 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     func initializeSearchBar(){
         self.searchBar.delegate = self
         UITextField.appearance().textColor = UIColor.whiteColor()
+        
+        //TODO: For convienence
+        self.searchBar.text = "Whittier College"
     }
     
     //Initializes table view and sets delegates
@@ -65,22 +68,18 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    //TODO: Clean this logic up
     @IBAction func routeClick(sender: AnyObject) {
         
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier! == "receiptRoute"){
-            if let cellIndexPath = self.selectedCellIndexPath{
-                let vc : ReceiptViewController = segue.destinationViewController as ReceiptViewController
-                if let  endLocation : Location? = self.locations.get(cellIndexPath.row){
-                    if let location = endLocation {
-                        vc.startingLocation = self.startingLocation
-                        vc.endingLocation = location
-                    }
+            if let cellIndexPath = self.selectedCellIndexPath, endLocation : Location? = self.locations.get(cellIndexPath.row){
+                let vc : ReceiptViewController = segue.destinationViewController as! ReceiptViewController
+                if let location = endLocation {
+                    vc.startingLocation = self.startingLocation
+                    vc.endingLocation = location
                 }
-                
             }else{
                 //TODO: Can change this by hiding next button instead
                 Alert.createAlertView("Oops.", message: "Please select end location.", sender: self)
@@ -101,7 +100,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell2") as LocationTableViewCell
+        var cell : LocationTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("LocationCell2") as! LocationTableViewCell
         
         if let location = self.locations.get(indexPath.row){
             if let areaOfInterest = location.areaOfInterest{
@@ -128,7 +127,7 @@ class AddEndRouteViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if(countElements(searchBar.text) > 0){
+        if(count(searchBar.text) > 0){
             self.changeSelectedCell(nil)
             self.locations.removeAll(keepCapacity: false)
             let req : MKLocalSearchRequest = MKLocalSearchRequest()
