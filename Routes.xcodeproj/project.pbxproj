@@ -14,6 +14,7 @@
 		EA04E2581ABE22BD00EF47AE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA04E2561ABE22BD00EF47AE /* LaunchScreen.xib */; };
 		EA04E2641ABE22BD00EF47AE /* RoutesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA04E2631ABE22BD00EF47AE /* RoutesTests.swift */; };
 		EA04E2701ABE26A600EF47AE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */; };
+		EA2CA70E1AF6431700F59BF3 /* ZCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CA70D1AF6431700F59BF3 /* ZCarousel.swift */; };
 		EA629D4C1AD210B100ADE40A /* ReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA629D4B1AD210B100ADE40A /* ReceiptViewController.swift */; };
 		EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */; };
 		EA64B3811AC8F4AA000D9449 /* AddEndRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */; };
@@ -66,6 +67,7 @@
 		EA04E2621ABE22BD00EF47AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA04E2631ABE22BD00EF47AE /* RoutesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesTests.swift; sourceTree = "<group>"; };
 		EA04E26F1ABE26A600EF47AE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EA2CA70D1AF6431700F59BF3 /* ZCarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZCarousel.swift; sourceTree = "<group>"; };
 		EA629D4B1AD210B100ADE40A /* ReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptViewController.swift; sourceTree = "<group>"; };
 		EA64B37E1AC8EB3C000D9449 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		EA64B3801AC8F4AA000D9449 /* AddEndRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEndRouteViewController.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				EAF1F3D11AE4D1DA002BC81A /* Constants.swift */,
+				EA2CA70B1AF642F100F59BF3 /* Open Source Plugins */,
 				EA86AF681ABEDEF7002BADF6 /* Colors.swift */,
 				EA04E24C1ABE22BD00EF47AE /* Info.plist */,
 			);
@@ -179,6 +182,22 @@
 				EA04E2621ABE22BD00EF47AE /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EA2CA70B1AF642F100F59BF3 /* Open Source Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				EA2CA70C1AF6430100F59BF3 /* ZCarousel */,
+			);
+			name = "Open Source Plugins";
+			sourceTree = "<group>";
+		};
+		EA2CA70C1AF6430100F59BF3 /* ZCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				EA2CA70D1AF6431700F59BF3 /* ZCarousel.swift */,
+			);
+			name = ZCarousel;
 			sourceTree = "<group>";
 		};
 		EA629D4D1AD210CB00ADE40A /* AddingRoute */ = {
@@ -348,6 +367,7 @@
 			files = (
 				EA64B3811AC8F4AA000D9449 /* AddEndRouteViewController.swift in Sources */,
 				EA64B3851ACBA967000D9449 /* Location.swift in Sources */,
+				EA2CA70E1AF6431700F59BF3 /* ZCarousel.swift in Sources */,
 				EA86AF6F1ABFD5B2002BADF6 /* AddStartRouteViewController.swift in Sources */,
 				EA86AF6D1ABFA4E3002BADF6 /* Direction.swift in Sources */,
 				EA64B37F1AC8EB3C000D9449 /* LocationTableViewCell.swift in Sources */,
