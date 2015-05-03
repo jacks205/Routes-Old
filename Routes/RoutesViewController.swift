@@ -109,7 +109,7 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                             println(req)
                             println(res)
                         }else{
-                            //                            println(json)
+//                            println(json)
                             let json : JSON = JSON(json!)
                             let summary : JSON = json[Constants.HERE.KEY.RESPONSE][Constants.HERE.KEY.ROUTE][0][Constants.HERE.KEY.SUMMARY]
                             
@@ -135,8 +135,6 @@ class RoutesTableViewController: UIViewController, UITableViewDelegate, UITableV
                             let maneuver : JSON = leg[0][Constants.HERE.KEY.MANEUVER]
                             var maneuvars : [Maneuver] = []
                             for (index: String, subManeuver: JSON) in maneuver {
-                                //Do something you want
-                                
                                 let position = subManeuver[Constants.HERE.KEY.POSITION]
                                 
                                 var location : CLLocationCoordinate2D?

@@ -9,55 +9,56 @@ import MapKit
 
 class Location {
     
-    let streetNumber : String?
-    let streetAddress : String?
-    let city : String?
-    let state : String?
-    let county : String?
-    let postalCode : String?
-    let country : String?
+    var streetNumber : String?{
+        get {
+            return self.mapItem?.placemark.subThoroughfare
+        }
+    }
+    var streetAddress : String?{
+        get {
+            return self.mapItem?.placemark.thoroughfare
+        }
+    }
+    var city : String?{
+        get {
+            return self.mapItem?.placemark.locality
+        }
+    }
+    var state : String?{
+        get {
+            return self.mapItem?.placemark.administrativeArea
+        }
+    }
+    var county : String?{
+        get {
+            return self.mapItem?.placemark.subAdministrativeArea
+        }
+    }
+    var postalCode : String?{
+        get {
+            return self.mapItem?.placemark.postalCode
+        }
+    }
+    var country : String?{
+        get {
+            return self.mapItem?.placemark.country
+        }
+    }
 
-    let location : CLLocation?
+    var location : CLLocation?{
+        get {
+            return self.mapItem?.placemark.location
+        }
+    }
     
     let areaOfInterest : String?
     var shortName : String?
     
     let mapItem : MKMapItem?
     
-    init(areaOfInterest : String, streetNumber : String, streetAddress : String, city : String, state : String, county : String, postalCode : String, country : String){
-        self.areaOfInterest = areaOfInterest
-        self.streetNumber = streetNumber
-        self.streetAddress = streetAddress
-        self.city = city
-        self.state = state
-        self.county = county
-        self.postalCode = postalCode
-        self.country = country
-        
-        self.location = nil
-        self.mapItem = nil
-    }
-    
-    init(addressString : String, mapItem : MKMapItem){
+    init(areaOfInterest : String, mapItem : MKMapItem){
         self.mapItem = mapItem
-        self.streetNumber = mapItem.placemark.subThoroughfare
-        self.streetAddress = mapItem.placemark.thoroughfare
-        self.city = mapItem.placemark.locality
-        self.state = mapItem.placemark.administrativeArea
-        self.county = mapItem.placemark.subAdministrativeArea
-        self.postalCode = mapItem.placemark.postalCode
-        self.country = mapItem.placemark.country
-        self.location = mapItem.placemark.location
-        self.areaOfInterest = addressString
-//        if let areaOfInt = getEstablishmentName(addressString){
-//            self.areaOfInterest = areaOfInt
-//        }else{
-//            if let areaOfInt = place.areasOfInterest{
-//                self.areaOfInterest = areaOfInt[0] as String
-//            }else{
-//                self.areaOfInterest = place.name
-//            }
-//        }
+        self.areaOfInterest = areaOfInterest
     }
     
     func buildAddressString() -> String?{

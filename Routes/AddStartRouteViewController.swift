@@ -173,7 +173,7 @@ class AddStartRouteViewController: UIViewController, UITableViewDataSource, UITa
                 }else{
                     if let mapItems = res.mapItems as? [MKMapItem]{
                         for item in mapItems{
-                            let newLocation : Location = Location(addressString: item.name, mapItem: item)
+                            let newLocation : Location = Location(areaOfInterest: item.name, mapItem: item)
                             self.locations.append(newLocation)
                             self.tableView.reloadData()
                         }

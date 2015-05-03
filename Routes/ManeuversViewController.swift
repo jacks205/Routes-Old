@@ -49,7 +49,7 @@ class ManeuversViewController: UIViewController, UITableViewDataSource, UITableV
         
         var cell : UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ManeuverCell") as! UITableViewCell
         
-        if let maneuver = self.maneuvars!.get(indexPath.row){
+        if let maneuver = self.maneuvars?.get(indexPath.row){
             cell.textLabel!.text = maneuver.instruction
         }
         
