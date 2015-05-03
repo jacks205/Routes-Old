@@ -26,21 +26,20 @@ class ZCarousel: UIScrollView, UIScrollViewDelegate {
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        fatalError("init(coder:) has not been implemented")
+        self.initalizeScrollViewProperties()
     }
     
     init() {
         super.init(frame: CGRectZero)
-        super.pagingEnabled = true
-        super.contentSize = CGSize(width: 0, height: self.frame.height)
-        super.clipsToBounds = false
-        super.delegate = self
-        super.showsHorizontalScrollIndicator = false
-        isImage = false
+        self.initalizeScrollViewProperties()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.initalizeScrollViewProperties()
+    }
+    
+    func initalizeScrollViewProperties(){
         super.pagingEnabled = true
         super.contentSize = CGSize(width: 0, height: self.frame.height)
         super.clipsToBounds = false

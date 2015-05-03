@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReceiptViewController: UIViewController, UITextFieldDelegate {
+class ReceiptViewController: UIViewController, UITextFieldDelegate, ZCarouselDelegate {
     @IBOutlet weak var startingShortNameTextField: UITextField!
     @IBOutlet weak var endingShortNameTextField: UITextField!
     
@@ -17,6 +17,7 @@ class ReceiptViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var routeButton: UIButton!
+    @IBOutlet weak var mapCarousel: ZCarousel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,10 @@ class ReceiptViewController: UIViewController, UITextFieldDelegate {
         self.view.backgroundColor = UIColor(CGColor: Colors.IndicatorBackground)
         self.view.opaque = true
         self.view.alpha = 1
+        
+        self.mapCarousel.ZCdelegate = self
+        self.mapCarousel.addButtons(["Map1", "Map2", "Map3"])
+        
         self.startingShortNameTextField.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
         self.startingShortNameTextField.delegate = self
         self.endingShortNameTextField.backgroundColor = UIColor(CGColor: Colors.TableViewGradient.End)
@@ -63,6 +68,13 @@ class ReceiptViewController: UIViewController, UITextFieldDelegate {
     @IBAction func back(sender: AnyObject) {
         if let navController = self.navigationController {
             navController.popViewControllerAnimated(true)
+        }
+    }
+    
+    //MARK: ZCarousel Delegate Method
+    func ZCarouselShowingIndex(scrollview: ZCarousel, index: Int) {
+        if scrollview == self.mapCarousel {
+            println("Showing Button at index \(index)")
         }
     }
 
